@@ -27,6 +27,7 @@ module.exports = async function (env, argv) {
     'unicode-segmenter/grapheme': require
       .resolve('unicode-segmenter/grapheme')
       .replace(/\.cjs$/, '.js'),
+    '@sentry-internal/replay': false, // not used, ~300kb of dead weight
   })
   config.module.rules = [
     ...(config.module.rules || []),
@@ -60,12 +61,6 @@ module.exports = async function (env, argv) {
           // fallback needed for Render.com deployments
           name: process.env.SENTRY_RELEASE || version,
           dist: process.env.SENTRY_DIST,
-        },
-        bundleSizeOptimizations: {
-          excludeDebugStatements: true,
-          excludeReplayShadowDom: true,
-          excludeReplayIframe: true,
-          excludeReplayWorker: true,
         },
       }),
     )
