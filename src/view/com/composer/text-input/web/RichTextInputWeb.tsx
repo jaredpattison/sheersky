@@ -196,16 +196,6 @@ export default function RichTextInputWeb({
       editable: true,
       injectCSS: true,
       shouldRerenderOnTransaction: false,
-      onCreate({editor: editorProp}) {
-        // HACK
-        // the 'enter' animation sometimes causes autofocus to fail
-        // (see Composer.web.tsx in shell)
-        // so we wait 200ms (the anim is 150ms) and then focus manually
-        // -prf
-        setTimeout(() => {
-          editorProp.chain().focus('end').run()
-        }, 200)
-      },
       onUpdate({editor: editorProp}) {
         const json = editorProp.getJSON()
         const newText = editorJsonToText(json)
