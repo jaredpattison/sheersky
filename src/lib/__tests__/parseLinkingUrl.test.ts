@@ -3,11 +3,11 @@ import {describe, expect, it} from '@jest/globals'
 import {parseLinkingUrl} from '../parseLinkingUrl'
 
 describe('parseLinkingUrl', () => {
-  it('should correctly parse bluesky:// URLs', () => {
+  it('should correctly parse sheersky:// URLs', () => {
     const url =
-      'bluesky://intent/age-assurance?result=success&actorDid=did:example:123'
+      'sheersky://intent/age-assurance?result=success&actorDid=did:example:123'
     const urlp = parseLinkingUrl(url)
-    expect(urlp.protocol).toBe('bluesky:')
+    expect(urlp.protocol).toBe('sheersky:')
     expect(urlp.host).toBe('')
     expect(urlp.pathname).toBe('/intent/age-assurance')
   })

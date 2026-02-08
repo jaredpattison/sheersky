@@ -12,9 +12,11 @@ export const BSKY_SERVICE_DID = 'did:web:bsky.social'
 export const PUBLIC_BSKY_SERVICE = 'https://public.api.bsky.app'
 export const DEFAULT_SERVICE = BSKY_SERVICE
 const HELP_DESK_LANG = 'en-us'
+// TODO: Set up SheerSky help desk and replace this URL
 export const HELP_DESK_URL = `https://blueskyweb.zendesk.com/hc/${HELP_DESK_LANG}`
 export const EMBED_SERVICE = 'https://embed.bsky.app'
 export const EMBED_SCRIPT = `${EMBED_SERVICE}/static/embed.js`
+// TODO: Replace with SheerSky download URL when available
 export const BSKY_DOWNLOAD_URL = 'https://bsky.app/download'
 export const STARTER_PACK_MAX_SIZE = 150
 export const CARD_ASPECT_RATIO = 1200 / 630
@@ -200,6 +202,7 @@ export type SupportedMimeTypes = (typeof SUPPORTED_MIME_TYPES)[number]
 
 export const EMOJI_REACTION_LIMIT = 5
 
+// TODO: Replace with SheerSky website URLs when available
 export const urls = {
   website: {
     blog: {
@@ -245,6 +248,7 @@ export const BLUESKY_NOTIF_SERVICE_HEADERS = {
   'atproto-proxy': `${BLUESKY_PROXY_DID}#bsky_notif`,
 }
 
+// TODO: Replace with SheerSky legal pages when available
 export const webLinks = {
   tos: `https://bsky.social/about/support/tos`,
   privacy: `https://bsky.social/about/support/privacy-policy`,

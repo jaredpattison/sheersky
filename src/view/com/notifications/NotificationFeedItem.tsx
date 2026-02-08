@@ -23,8 +23,7 @@ import {useLingui} from '@lingui/react'
 import {useNavigation} from '@react-navigation/native'
 import {useQueryClient} from '@tanstack/react-query'
 
-import {MAX_POST_LINES} from '#/lib/constants'
-import {DM_SERVICE_HEADERS} from '#/lib/constants'
+import {DM_SERVICE_HEADERS, MAX_POST_LINES} from '#/lib/constants'
 import {useAnimatedValue} from '#/lib/hooks/useAnimatedValue'
 import {usePalette} from '#/lib/hooks/usePalette'
 import {makeProfileLink} from '#/lib/routes/links'
@@ -369,9 +368,9 @@ let NotificationFeedItem = ({
     }
     icon = <PersonPlusIcon size="xl" style={{color: t.palette.primary_500}} />
   } else if (item.type === 'contact-match') {
-    a11yLabel = _(msg`Your contact ${firstAuthorName} is on Bluesky`)
+    a11yLabel = _(msg`Your contact ${firstAuthorName} is on SheerSky`)
     notificationContent = (
-      <Trans>Your contact {firstAuthorLink} is on Bluesky</Trans>
+      <Trans>Your contact {firstAuthorLink} is on SheerSky</Trans>
     )
     icon = (
       <ContactsIconFilled size="xl" style={{color: t.palette.primary_500}} />
@@ -880,7 +879,7 @@ function SayHelloBtn({profile}: {profile: AppBskyActorDefs.ProfileView}) {
           setIsLoading(true)
           const res = await agent.api.chat.bsky.convo.getConvoForMembers(
             {
-              members: [profile.did, agent.session!.did!],
+              members: [profile.did, agent.session!.did],
             },
             {headers: DM_SERVICE_HEADERS},
           )

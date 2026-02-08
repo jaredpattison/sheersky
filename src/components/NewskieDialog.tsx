@@ -29,7 +29,7 @@ export function NewskieDialog({
   const {_} = useLingui()
   const control = useDialogControl()
 
-  const createdAt = profile.createdAt as string | undefined
+  const createdAt = profile.createdAt
 
   const [now] = useState(() => Date.now())
   const daysOld = useMemo(() => {
@@ -99,18 +99,18 @@ function DialogInner({
     if (isMe) {
       if (profile.joinedViaStarterPack) {
         return _(
-          msg`You joined Bluesky using a starter pack ${timeAgoString} ago`,
+          msg`You joined SheerSky using a starter pack ${timeAgoString} ago`,
         )
       } else {
-        return _(msg`You joined Bluesky ${timeAgoString} ago`)
+        return _(msg`You joined SheerSky ${timeAgoString} ago`)
       }
     } else {
       if (profile.joinedViaStarterPack) {
         return _(
-          msg`${profileName} joined Bluesky using a starter pack ${timeAgoString} ago`,
+          msg`${profileName} joined SheerSky using a starter pack ${timeAgoString} ago`,
         )
       } else {
-        return _(msg`${profileName} joined Bluesky ${timeAgoString} ago`)
+        return _(msg`${profileName} joined SheerSky ${timeAgoString} ago`)
       }
     }
   }

@@ -38,10 +38,10 @@ module.exports = function (_config) {
   return {
     expo: {
       version: VERSION,
-      name: 'Bluesky',
-      slug: 'bluesky',
-      scheme: 'bluesky',
-      owner: 'blueskysocial',
+      name: 'SheerSky',
+      slug: 'sheersky',
+      scheme: 'sheersky',
+      owner: 'sheersky',
       runtimeVersion: {
         policy: 'appVersion',
       },
@@ -51,7 +51,7 @@ module.exports = function (_config) {
       newArchEnabled: false,
       ios: {
         supportsTablet: false,
-        bundleIdentifier: 'xyz.blueskyweb.app',
+        bundleIdentifier: 'com.sheersky.app',
         config: {
           usesNonExemptEncryption: false,
         },
@@ -69,7 +69,7 @@ module.exports = function (_config) {
             'Used to save images to your library.',
           NSPhotoLibraryUsageDescription:
             'Used for profile pictures, posts, and other kinds of content',
-          CFBundleSpokenName: 'Blue Sky',
+          CFBundleSpokenName: 'Sheer Sky',
           CFBundleLocalizations: [
             'en',
             'an',
@@ -118,7 +118,7 @@ module.exports = function (_config) {
         entitlements: {
           'com.apple.developer.kernel.increased-memory-limit': true,
           'com.apple.developer.kernel.extended-virtual-addressing': true,
-          'com.apple.security.application-groups': 'group.app.bsky',
+          'com.apple.security.application-groups': 'group.com.sheersky.app',
           // 'com.apple.developer.device-information.user-assigned-device-name': true,
         },
         privacyManifests: {
@@ -188,7 +188,7 @@ module.exports = function (_config) {
           backgroundColor: '#006AFF',
         },
         googleServicesFile: './google-services.json',
-        package: 'xyz.blueskyweb.app',
+        package: 'com.sheersky.app',
         intentFilters: [
           {
             action: 'VIEW',
@@ -242,7 +242,7 @@ module.exports = function (_config) {
               /** @type {[string, any]} */ ([
                 '@sentry/react-native/expo',
                 {
-                  organization: 'blueskyweb',
+                  organization: 'sheersky',
                   project: 'app',
                   url: 'https://sentry.io',
                 },
@@ -408,7 +408,7 @@ module.exports = function (_config) {
           'expo-contacts',
           {
             contactsPermission:
-              'I agree to allow Bluesky to use my contacts for friend discovery until I opt out.',
+              'I agree to allow SheerSky to use my contacts for friend discovery until I opt out.',
           },
         ],
       ],
@@ -419,26 +419,26 @@ module.exports = function (_config) {
               ios: {
                 appExtensions: [
                   {
-                    targetName: 'Share-with-Bluesky',
-                    bundleIdentifier: 'xyz.blueskyweb.app.Share-with-Bluesky',
+                    targetName: 'Share-with-SheerSky',
+                    bundleIdentifier: 'com.sheersky.app.Share-with-SheerSky',
                     entitlements: {
                       'com.apple.security.application-groups': [
-                        'group.app.bsky',
+                        'group.com.sheersky.app',
                       ],
                     },
                   },
                   {
-                    targetName: 'BlueskyNSE',
-                    bundleIdentifier: 'xyz.blueskyweb.app.BlueskyNSE',
+                    targetName: 'SheerSkyNSE',
+                    bundleIdentifier: 'com.sheersky.app.SheerSkyNSE',
                     entitlements: {
                       'com.apple.security.application-groups': [
-                        'group.app.bsky',
+                        'group.com.sheersky.app',
                       ],
                     },
                   },
                   {
-                    targetName: 'BlueskyClip',
-                    bundleIdentifier: 'xyz.blueskyweb.app.AppClip',
+                    targetName: 'SheerSkyClip',
+                    bundleIdentifier: 'com.sheersky.app.AppClip',
                   },
                 ],
               },

@@ -93,10 +93,10 @@ export function AppIconSettingsScreen({}: Props) {
                 a.font_semi_bold,
                 t.atoms.text_contrast_medium,
               ]}>
-              <Trans>Bluesky+</Trans>
+              <Trans>SheerSky+</Trans>
             </Text>
             <Group
-              label={_(msg`Bluesky+ icons`)}
+              label={_(msg`SheerSky+ icons`)}
               value={currentAppIcon}
               onChange={onSetAppIcon}>
               {sets.core.map((icon, i) => (
@@ -128,7 +128,7 @@ function getAppIconName(icon: string | false): DynamicAppIcon.IconName {
   if (!icon || icon === 'DEFAULT') {
     return 'default_light'
   } else {
-    return icon as DynamicAppIcon.IconName
+    return icon
   }
 }
 
@@ -150,7 +150,7 @@ function Group({
       values={[value]}
       maxSelections={1}
       onChange={vals => {
-        if (vals[0]) onChange(vals[0] as DynamicAppIcon.IconName)
+        if (vals[0]) onChange(vals[0])
       }}>
       <View style={[a.flex_1, a.rounded_md, a.overflow_hidden]}>
         {children}

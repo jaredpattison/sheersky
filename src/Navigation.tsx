@@ -815,8 +815,8 @@ const FlatNavigator = ({
 
 const LINKING = {
   // TODO figure out what we are going to use
-  // note: `bluesky://` is what is used in app.config.js
-  prefixes: ['bsky://', 'bluesky://', 'https://bsky.app'],
+  // note: `sheersky://` is what is used in app.config.js
+  prefixes: ['bsky://', 'sheersky://', 'https://bsky.app'],
 
   getPathFromState(state: State) {
     // find the current node in the navigation tree
