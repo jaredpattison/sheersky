@@ -93,15 +93,15 @@ export function Provider({children}: React.PropsWithChildren<{}>) {
       }
     }
     const author = opts.replyTo?.author || opts.quote?.author
-    const isBlocked = Boolean(
-      author &&
-        (author.viewer?.blocking ||
-          author.viewer?.blockedBy ||
-          author.viewer?.blockingByList),
+    const isBlockingAuthor = Boolean(
+      author && (author.viewer?.blocking || author.viewer?.blockingByList),
     )
-    if (isBlocked) {
+    const isBlockedByAuthor = Boolean(author && author.viewer?.blockedBy)
+    if (isBlockingAuthor || isBlockedByAuthor) {
       Toast.show(
-        _(msg`Cannot interact with a blocked user`),
+        isBlockedByAuthor
+          ? _(msg`This user has blocked you`)
+          : _(msg`Cannot interact with a blocked user`),
         'exclamation-circle',
       )
     } else {

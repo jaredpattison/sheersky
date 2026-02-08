@@ -24,6 +24,7 @@ import {useRequireAuth, useSession} from '#/state/session'
 import {ProfileMenu} from '#/view/com/profile/ProfileMenu'
 import {atoms as a, platform, useBreakpoints, useTheme} from '#/alf'
 import {SubscribeProfileButton} from '#/components/activity-notifications/SubscribeProfileButton'
+import {Admonition} from '#/components/Admonition'
 import {Button, ButtonIcon, ButtonText} from '#/components/Button'
 import {DebugFieldDisplay} from '#/components/DebugFieldDisplay'
 import {useDialogControl} from '#/components/Dialog'
@@ -73,10 +74,10 @@ let ProfileHeaderStandard = ({
   const [, queueUnblock] = useProfileBlockMutationQueue(profile)
   const unblockPromptControl = Prompt.usePromptControl()
   const [showSuggestedFollows, setShowSuggestedFollows] = useState(false)
-  const isBlockedUser =
-    profile.viewer?.blocking ||
-    profile.viewer?.blockedBy ||
-    profile.viewer?.blockingByList
+  const isBlockingUser = !!(
+    profile.viewer?.blocking || profile.viewer?.blockingByList
+  )
+  const isBlockedByUser = !!profile.viewer?.blockedBy
 
   const unblockAccount = async () => {
     try {
@@ -147,7 +148,7 @@ let ProfileHeaderStandard = ({
             </View>
             <ProfileHeaderHandle profile={profile} />
           </View>
-          {!isPlaceholderProfile && !isBlockedUser && (
+          {!isPlaceholderProfile && !isBlockingUser && (
             <View style={a.gap_md}>
               <ProfileHeaderMetrics profile={profile} />
               {descriptionRT && !moderation.ui('profileView').blur ? (
@@ -164,7 +165,7 @@ let ProfileHeaderStandard = ({
               ) : undefined}
 
               {!isMe &&
-                !isBlockedUser &&
+                !isBlockingUser &&
                 shouldShowKnownFollowers(profile.viewer?.knownFollowers) && (
                   <View style={[a.flex_row, a.align_center, a.gap_sm]}>
                     <KnownFollowers
@@ -174,6 +175,14 @@ let ProfileHeaderStandard = ({
                   </View>
                 )}
             </View>
+          )}
+
+          {!isPlaceholderProfile && isBlockedByUser && !isBlockingUser && (
+            <Admonition type="info" style={[a.mt_sm]}>
+              <Trans>
+                This user has blocked you. Some interactions may be limited.
+              </Trans>
+            </Admonition>
           )}
 
           <DebugFieldDisplay subject={profile} />

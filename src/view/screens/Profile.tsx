@@ -16,6 +16,7 @@ import {useOpenComposer} from '#/lib/hooks/useOpenComposer'
 import {useRequireEmailVerification} from '#/lib/hooks/useRequireEmailVerification'
 import {useSetTitle} from '#/lib/hooks/useSetTitle'
 import {ComposeIcon2} from '#/lib/icons'
+import {filterBlockedByCauses} from '#/lib/moderation/soft-block'
 import {
   type CommonNavigatorParams,
   type NativeStackScreenProps,
@@ -211,6 +212,7 @@ function ProfileScreenLoaded({
     () => moderateProfile(profile, moderationOpts),
     [profile, moderationOpts],
   )
+  const profileViewModui = filterBlockedByCauses(moderation.ui('profileView'))
 
   const isMe = profile.did === currentAccount?.did
   const hasLabeler = !!profile.associated?.labeler
@@ -382,7 +384,7 @@ function ProfileScreenLoaded({
       testID="profileView"
       style={styles.container}
       screenDescription={_(msg`profile`)}
-      modui={moderation.ui('profileView')}>
+      modui={profileViewModui}>
       <PagerWithHeader
         testID="profilePager"
         isHeaderReady={!showPlaceholder}

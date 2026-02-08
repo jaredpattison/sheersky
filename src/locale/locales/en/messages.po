@@ -93,12 +93,12 @@ msgstr ""
 msgid "{0, plural, one {1 more post} other {# more posts}}"
 msgstr ""
 
-#: src/components/ProfileHoverCard/index.web.tsx:445
+#: src/components/ProfileHoverCard/index.web.tsx:446
 #: src/screens/Profile/Header/Metrics.tsx:22
 msgid "{0, plural, one {follower} other {followers}}"
 msgstr ""
 
-#: src/components/ProfileHoverCard/index.web.tsx:449
+#: src/components/ProfileHoverCard/index.web.tsx:450
 #: src/screens/Profile/Header/Metrics.tsx:26
 msgid "{0, plural, one {following} other {following}}"
 msgstr ""
@@ -127,7 +127,7 @@ msgstr ""
 msgid "{0, plural, other {{1} posts}}"
 msgstr ""
 
-#. Number of users (always at least 25) who have joined Bluesky using a specific starter pack
+#. Number of users (always at least 25) who have joined SheerSky using a specific starter pack
 #: src/screens/StarterPack/StarterPackScreen.tsx:496
 msgid "{0, plural, other {# people have}} used this starter pack!"
 msgstr ""
@@ -406,7 +406,7 @@ msgstr ""
 msgid "{firstAuthorName} verified you"
 msgstr ""
 
-#: src/components/ProfileHoverCard/index.web.tsx:578
+#: src/components/ProfileHoverCard/index.web.tsx:579
 msgid "{following} following"
 msgstr ""
 
@@ -422,7 +422,7 @@ msgstr ""
 msgid "{hours, plural, one {# hour} other {# hours}}"
 msgstr ""
 
-#. Number of users (always at least 50) who have joined Bluesky using a specific starter pack
+#. Number of users (always at least 50) who have joined SheerSky using a specific starter pack
 #: src/components/StarterPack/StarterPackCard.tsx:101
 msgid "{joinedAllTimeCount, plural, other {# users have}} joined!"
 msgstr ""
@@ -440,11 +440,11 @@ msgid "{numMatches, plural, one {# contact found} other {# contacts found}}"
 msgstr ""
 
 #: src/components/NewskieDialog.tsx:113
-msgid "{profileName} joined Bluesky {timeAgoString} ago"
+msgid "{profileName} joined SheerSky {timeAgoString} ago"
 msgstr ""
 
 #: src/components/NewskieDialog.tsx:110
-msgid "{profileName} joined Bluesky using a starter pack {timeAgoString} ago"
+msgid "{profileName} joined SheerSky using a starter pack {timeAgoString} ago"
 msgstr ""
 
 #. The trending topic rank, i.e. "1. March Madness", "2. The Bachelor"
@@ -512,7 +512,7 @@ msgstr ""
 
 #: src/screens/Hashtag.tsx:238
 #: src/screens/Search/SearchResults.tsx:294
-msgid "<0>Sign in</0><1> or </1><2>create an account</2><3> </3><4>to search for news, sports, politics, and everything else happening on Bluesky.</4>"
+msgid "<0>Sign in</0><1> or </1><2>create an account</2><3> </3><4>to search for news, sports, politics, and everything else happening on SheerSky.</4>"
 msgstr ""
 
 #: src/screens/StarterPack/Wizard/index.tsx:503
@@ -540,7 +540,7 @@ msgid "7 days"
 msgstr ""
 
 #: src/screens/Onboarding/StepFinished/ValuePropositionPager.shared.tsx:17
-msgid "A collection of popular feeds you can find on Bluesky, including News, Booksky, Game Dev, Blacksky, and Fountain Pens"
+msgid "A collection of popular feeds you can find on SheerSky, including News, Booksky, Game Dev, Blacksky, and Fountain Pens"
 msgstr ""
 
 #. If last message does not contain text, fall back to "{user} reacted to {a message}"
@@ -567,7 +567,7 @@ msgstr ""
 
 #. Contains a post that originally appeared in English. Consider translating the post text if it makes sense in your language, and noting that the post was translated from English.
 #: src/components/dialogs/nuxs/LiveNowBetaDialog.tsx:146
-msgid "A screenshot of a post from @esb.lol, showing the user is currently livestreaming content on Twitch. The post reads: \"Hello! I'm live on Twitch, and I'm testing Bluesky's latest feature too!\""
+msgid "A screenshot of a post from @esb.lol, showing the user is currently livestreaming content on Twitch. The post reads: \"Hello! I'm live on Twitch, and I'm testing SheerSky's latest feature too!\""
 msgstr ""
 
 #. Contains a post that originally appeared in English. Consider translating the post text if it makes sense in your language, and noting that the post was translated from English.
@@ -581,7 +581,7 @@ msgstr ""
 
 #. Contains a post that originally appeared in English. Consider translating the post text if it makes sense in your language, and noting that the post was translated from English.
 #: src/components/dialogs/nuxs/DraftsAnnouncement.tsx:97
-msgid "A screenshot of a the post composer with a new button next to the post button that says \"Drafts\", with a rainbow firework effect. Below, the text in the composer reads \"Hey, did you hear the news? Bluesky has drafts now???\"."
+msgid "A screenshot of a the post composer with a new button next to the post button that says \"Drafts\", with a rainbow firework effect. Below, the text in the composer reads \"Hey, did you hear the news? SheerSky has drafts now???\"."
 msgstr ""
 
 #: src/Navigation.tsx:535
@@ -670,8 +670,8 @@ msgstr ""
 msgid "Account removed from quick access"
 msgstr ""
 
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:84
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:290
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:85
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:299
 #: src/view/com/profile/ProfileMenu.tsx:172
 msgctxt "toast"
 msgid "Account unblocked"
@@ -689,7 +689,7 @@ msgid "Account unmuted"
 msgstr ""
 
 #: src/components/verification/VerifierDialog.tsx:98
-msgid "Accounts with a scalloped blue check mark <0><1/></0> can verify others. These trusted verifiers are selected by Bluesky."
+msgid "Accounts with a scalloped blue check mark <0><1/></0> can verify others. These trusted verifiers are selected by SheerSky."
 msgstr ""
 
 #: src/lib/hooks/useNotificationHandler.ts:185
@@ -1123,16 +1123,16 @@ msgstr ""
 
 #: src/components/contacts/components/HeroImage.tsx:28
 #: src/components/dialogs/nuxs/FindContactsAnnouncement.tsx:78
-msgid "An illustration depicting user avatars flowing from a contact book into the Bluesky app"
+msgid "An illustration depicting user avatars flowing from a contact book into the SheerSky app"
 msgstr ""
 
 #: src/screens/Onboarding/StepFinished/ValuePropositionPager.shared.tsx:35
-msgid "An illustration of several Bluesky posts alongside repost, like, and comment icons"
+msgid "An illustration of several SheerSky posts alongside repost, like, and comment icons"
 msgstr ""
 
 #: src/components/dialogs/nuxs/InitialVerificationAnnouncement.tsx:85
 #: src/components/verification/VerifierDialog.tsx:87
-msgid "An illustration showing that Bluesky selects trusted verifiers, and trusted verifiers in turn verify individual user accounts."
+msgid "An illustration showing that SheerSky selects trusted verifiers, and trusted verifiers in turn verify individual user accounts."
 msgstr ""
 
 #: src/components/moderation/ReportDialog/utils/useReportOptions.ts:239
@@ -1149,15 +1149,15 @@ msgstr ""
 
 #: src/components/hooks/useFollowMethods.ts:35
 #: src/components/hooks/useFollowMethods.ts:50
-#: src/components/ProfileCard.tsx:519
-#: src/components/ProfileCard.tsx:540
+#: src/components/ProfileCard.tsx:517
+#: src/components/ProfileCard.tsx:538
 #: src/view/com/notifications/NotificationFeedItem.tsx:779
 #: src/view/com/notifications/NotificationFeedItem.tsx:799
 msgid "An issue occurred, please try again."
 msgstr ""
 
 #: src/components/dialogs/nuxs/InitialVerificationAnnouncement.tsx:119
-msgid "An mockup of a iPhone showing the Bluesky app open to the profile of a verified user with a blue checkmark next to their display name."
+msgid "An mockup of a iPhone showing the SheerSky app open to the profile of a verified user with a blue checkmark next to their display name."
 msgstr ""
 
 #: src/features/liveEvents/components/LiveEventFeedOptionsMenu.tsx:164
@@ -1194,7 +1194,7 @@ msgid "Announcement"
 msgstr ""
 
 #: src/components/dialogs/nuxs/InitialVerificationAnnouncement.tsx:38
-msgid "Announcing verification on Bluesky"
+msgid "Announcing verification on SheerSky"
 msgstr ""
 
 #: src/components/dialogs/PostInteractionSettingsDialog.tsx:454
@@ -1438,7 +1438,7 @@ msgstr ""
 #: src/components/dialogs/StarterPackDialog.tsx:71
 #: src/components/StarterPack/ProfileStarterPacks.tsx:263
 #: src/components/StarterPack/ProfileStarterPacks.tsx:273
-#: src/view/screens/Profile.tsx:351
+#: src/view/screens/Profile.tsx:353
 msgid "Before creating a starter pack, you must first verify your email."
 msgstr ""
 
@@ -1482,7 +1482,7 @@ msgid "Birthday"
 msgstr ""
 
 #: src/components/PostControls/PostMenu/PostMenuItems.tsx:821
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:190
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:199
 #: src/view/com/profile/ProfileMenu.tsx:551
 msgid "Block"
 msgstr ""
@@ -1573,76 +1573,6 @@ msgstr ""
 
 #: src/view/com/auth/SplashScreen.web.tsx:179
 msgid "Blog"
-msgstr ""
-
-#: src/components/dialogs/ServerInput.tsx:147
-#: src/components/dialogs/ServerInput.tsx:149
-msgid "Bluesky"
-msgstr ""
-
-#: src/screens/PostThread/components/ThreadItemAnchor.tsx:699
-msgid "Bluesky cannot confirm the authenticity of the claimed date."
-msgstr ""
-
-#: src/screens/Settings/AppIconSettings/useAppIconSets.ts:165
-msgctxt "Name of app icon variant"
-msgid "Bluesky Classic™"
-msgstr ""
-
-#: src/components/contacts/screens/GetContacts.tsx:234
-msgid "Bluesky helps friends find each other by creating an encoded digital fingerprint, called a \"hash\", and then looking for matching hashes."
-msgstr ""
-
-#: src/components/dialogs/ServerInput.tsx:217
-msgid "Bluesky is an open network where you can choose your hosting provider. If you're a developer, you can host your own server."
-msgstr ""
-
-#: src/components/dialogs/ServerInput.tsx:165
-msgid "Bluesky is an open network where you can choose your own provider. If you're new here, we recommend sticking with the default Bluesky Social option."
-msgstr ""
-
-#: src/components/ProgressGuide/List.tsx:103
-msgid "Bluesky is better with friends!"
-msgstr ""
-
-#: src/screens/Onboarding/StepFindContactsIntro/index.tsx:42
-msgid "Bluesky is more fun with friends"
-msgstr ""
-
-#: src/components/dialogs/nuxs/FindContactsAnnouncement.tsx:106
-msgid "Bluesky is more fun with friends! Import your contacts to see who’s already here."
-msgstr ""
-
-#: src/components/contacts/screens/ViewMatches.tsx:314
-msgid "Bluesky is more fun with friends. Do you want to invite some of yours? <0/>"
-msgstr ""
-
-#: src/screens/Takendown.tsx:215
-msgid "Bluesky Social Terms of Service"
-msgstr ""
-
-#: src/screens/Settings/FindContactsSettings.tsx:548
-msgid "Bluesky stores your contacts as encoded data. Removing your contacts will immediately delete this data."
-msgstr ""
-
-#: src/components/StarterPack/ProfileStarterPacks.tsx:339
-msgid "Bluesky will choose a set of recommended accounts from people in your network."
-msgstr ""
-
-#: src/screens/Settings/components/PwiOptOut.tsx:99
-msgid "Bluesky will not show your profile and posts to logged-out users. Other apps may not honor this request. This does not make your account private."
-msgstr ""
-
-#: src/components/dialogs/nuxs/InitialVerificationAnnouncement.tsx:133
-msgid "Bluesky will proactively verify notable and authentic accounts."
-msgstr ""
-
-#: src/screens/Settings/AppIconSettings/index.tsx:96
-msgid "Bluesky+"
-msgstr ""
-
-#: src/screens/Settings/AppIconSettings/index.tsx:99
-msgid "Bluesky+ icons"
 msgstr ""
 
 #: src/lib/moderation/useLabelBehaviorDescription.ts:56
@@ -1821,9 +1751,7 @@ msgstr ""
 msgid "Cancel search"
 msgstr ""
 
-#: src/components/PostControls/index.tsx:108
-#: src/components/PostControls/index.tsx:139
-#: src/components/PostControls/index.tsx:167
+#: src/components/PostControls/index.tsx:107
 #: src/state/shell/composer/index.tsx:104
 msgid "Cannot interact with a blocked user"
 msgstr ""
@@ -2650,8 +2578,8 @@ msgstr ""
 msgid "Create a starter pack"
 msgstr ""
 
-#: src/view/screens/Profile.tsx:563
-#: src/view/screens/Profile.tsx:564
+#: src/view/screens/Profile.tsx:565
+#: src/view/screens/Profile.tsx:566
 msgid "Create a Starter Pack"
 msgstr ""
 
@@ -2742,7 +2670,7 @@ msgid "Customization options"
 msgstr ""
 
 #: src/screens/Onboarding/Layout.tsx:60
-msgid "Customizes your Bluesky experience"
+msgid "Customizes your SheerSky experience"
 msgstr ""
 
 #: src/components/moderation/ReportDialog/utils/useReportOptions.ts:200
@@ -3167,13 +3095,13 @@ msgstr ""
 msgid "Double tap to like"
 msgstr ""
 
-#: src/screens/StarterPack/StarterPackLandingScreen.tsx:331
-msgid "Download Bluesky"
-msgstr ""
-
 #: src/screens/Settings/components/ExportCarDialog.tsx:79
 #: src/screens/Settings/components/ExportCarDialog.tsx:84
 msgid "Download CAR file"
+msgstr ""
+
+#: src/screens/StarterPack/StarterPackLandingScreen.tsx:331
+msgid "Download SheerSky"
 msgstr ""
 
 #: src/components/moderation/ReportDialog/utils/useReportOptions.ts:115
@@ -3192,7 +3120,7 @@ msgid "Drop to add images"
 msgstr ""
 
 #: src/components/ageAssurance/useAgeAssuranceCopy.ts:11
-msgid "Due to laws in your region, certain features on Bluesky are currently restricted until you're able to verify you're an adult."
+msgid "Due to laws in your region, certain features on SheerSky are currently restricted until you're able to verify you're an adult."
 msgstr ""
 
 #: src/components/dialogs/MutedWords.tsx:158
@@ -3309,12 +3237,12 @@ msgstr ""
 #: src/screens/Profile/Header/EditProfileDialog.tsx:268
 #: src/screens/Profile/Header/EditProfileDialog.tsx:274
 #: src/screens/Profile/Header/ProfileHeaderLabeler.tsx:295
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:324
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:333
 msgid "Edit profile"
 msgstr ""
 
 #: src/screens/Profile/Header/ProfileHeaderLabeler.tsx:298
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:326
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:335
 msgid "Edit Profile"
 msgstr ""
 
@@ -3980,7 +3908,7 @@ msgstr ""
 #: src/screens/Search/SearchResults.tsx:78
 #: src/screens/StarterPack/StarterPackScreen.tsx:193
 #: src/view/screens/Feeds.tsx:511
-#: src/view/screens/Profile.tsx:239
+#: src/view/screens/Profile.tsx:241
 #: src/view/shell/desktop/LeftNav.tsx:726
 #: src/view/shell/Drawer.tsx:532
 msgid "Feeds"
@@ -4078,7 +4006,7 @@ msgid "Find people to follow"
 msgstr ""
 
 #: src/screens/Search/Shell.tsx:526
-msgid "Find posts, users, and feeds on Bluesky"
+msgid "Find posts, users, and feeds on SheerSky"
 msgstr ""
 
 #: src/components/dialogs/nuxs/FindContactsAnnouncement.tsx:96
@@ -4087,7 +4015,7 @@ msgstr ""
 
 #: src/screens/Onboarding/StepFindContactsIntro/index.tsx:45
 #: src/screens/Settings/FindContactsSettings.tsx:125
-msgid "Find your friends on Bluesky by verifying your phone number and matching with your contacts. We protect your information and you control what happens next. <0>Learn more</0>"
+msgid "Find your friends on SheerSky by verifying your phone number and matching with your contacts. We protect your information and you control what happens next. <0>Learn more</0>"
 msgstr ""
 
 #: src/screens/Onboarding/StepFinished/ValuePropositionPager.shared.tsx:21
@@ -4122,11 +4050,11 @@ msgid "Focus code input"
 msgstr ""
 
 #. User is not following this account, click to follow
-#: src/components/ProfileCard.tsx:559
-#: src/components/ProfileHoverCard/index.web.tsx:497
-#: src/components/ProfileHoverCard/index.web.tsx:508
+#: src/components/ProfileCard.tsx:557
+#: src/components/ProfileHoverCard/index.web.tsx:498
+#: src/components/ProfileHoverCard/index.web.tsx:509
 #: src/screens/PostThread/components/ThreadItemAnchorFollowButton.tsx:152
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:381
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:390
 #: src/screens/VideoFeed/index.tsx:874
 #: src/view/com/notifications/NotificationFeedItem.tsx:841
 #: src/view/com/notifications/NotificationFeedItem.tsx:848
@@ -4134,7 +4062,7 @@ msgid "Follow"
 msgstr ""
 
 #: src/screens/PostThread/components/ThreadItemAnchorFollowButton.tsx:139
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:369
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:378
 msgid "Follow {0}"
 msgstr ""
 
@@ -4176,9 +4104,9 @@ msgid "Follow all accounts"
 msgstr ""
 
 #. User is not following this account, click to follow back
-#: src/components/ProfileCard.tsx:553
+#: src/components/ProfileCard.tsx:551
 #: src/screens/PostThread/components/ThreadItemAnchorFollowButton.tsx:150
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:379
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:388
 #: src/view/com/notifications/NotificationFeedItem.tsx:841
 #: src/view/com/notifications/NotificationFeedItem.tsx:848
 msgid "Follow back"
@@ -4219,11 +4147,11 @@ msgstr ""
 
 #. User is following this account, click to unfollow
 #. User is following this account, click to unfollow
-#: src/components/ProfileCard.tsx:546
-#: src/components/ProfileHoverCard/index.web.tsx:496
-#: src/components/ProfileHoverCard/index.web.tsx:507
+#: src/components/ProfileCard.tsx:544
+#: src/components/ProfileHoverCard/index.web.tsx:497
+#: src/components/ProfileHoverCard/index.web.tsx:508
 #: src/screens/PostThread/components/ThreadItemAnchorFollowButton.tsx:155
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:377
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:386
 #: src/screens/VideoFeed/index.tsx:872
 #: src/view/com/notifications/NotificationFeedItem.tsx:819
 #: src/view/com/notifications/NotificationFeedItem.tsx:836
@@ -4236,8 +4164,8 @@ msgctxt "feed-name"
 msgid "Following"
 msgstr ""
 
-#: src/components/ProfileCard.tsx:509
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:244
+#: src/components/ProfileCard.tsx:507
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:253
 #: src/view/com/notifications/NotificationFeedItem.tsx:772
 msgid "Following {0}"
 msgstr ""
@@ -4618,7 +4546,7 @@ msgid "Having trouble?"
 msgstr ""
 
 #: src/components/contacts/screens/PhoneInput.tsx:289
-msgid "Held by Bluesky for 7 days to prevent abuse, then deleted"
+msgid "Held by SheerSky for 7 days to prevent abuse, then deleted"
 msgstr ""
 
 #: src/screens/Settings/Settings.tsx:252
@@ -4830,7 +4758,7 @@ msgid "Human trafficking"
 msgstr ""
 
 #: src/components/contacts/screens/GetContacts.tsx:266
-msgid "I consent to Bluesky using my contacts for mutual friend discovery and to retain hashed data for matching until I opt out."
+msgid "I consent to SheerSky using my contacts for mutual friend discovery and to retain hashed data for matching until I opt out."
 msgstr ""
 
 #: src/screens/Settings/components/DisableEmail2FADialog.tsx:133
@@ -4849,7 +4777,7 @@ msgid "I understand"
 msgstr ""
 
 #: src/components/contacts/screens/ViewMatches.tsx:577
-msgid "I'm on Bluesky as {0} - come find me! https://bsky.app/download"
+msgid "I'm on SheerSky as {0} - come find me! https://bsky.app/download"
 msgstr ""
 
 #: src/view/com/lightbox/Lightbox.web.tsx:194
@@ -5073,7 +5001,7 @@ msgid "Invite"
 msgstr ""
 
 #: src/components/contacts/screens/ViewMatches.tsx:566
-msgid "Invite {name} to join Bluesky"
+msgid "Invite {name} to join SheerSky"
 msgstr ""
 
 #: src/screens/Signup/StepInfo/index.tsx:193
@@ -5130,7 +5058,7 @@ msgstr ""
 msgid "Job ID: {0}"
 msgstr ""
 
-#. Link to a page with job openings at Bluesky
+#. Link to a page with job openings at SheerSky
 #: src/view/com/auth/SplashScreen.web.tsx:184
 msgid "Jobs"
 msgstr ""
@@ -5139,7 +5067,7 @@ msgstr ""
 #: src/screens/StarterPack/StarterPackLandingScreen.tsx:216
 #: src/screens/StarterPack/StarterPackScreen.tsx:468
 #: src/screens/StarterPack/StarterPackScreen.tsx:479
-msgid "Join Bluesky"
+msgid "Join SheerSky"
 msgstr ""
 
 #: src/components/StarterPack/QrCode.tsx:73
@@ -5168,7 +5096,7 @@ msgid "Labeled by the author."
 msgstr ""
 
 #: src/view/com/composer/labels/LabelsBtn.tsx:73
-#: src/view/screens/Profile.tsx:232
+#: src/view/screens/Profile.tsx:234
 msgid "Labels"
 msgstr ""
 
@@ -5236,10 +5164,6 @@ msgstr ""
 msgid "Learn more about age assurance"
 msgstr ""
 
-#: src/view/com/auth/SplashScreen.web.tsx:172
-msgid "Learn more about Bluesky"
-msgstr ""
-
 #: src/components/contacts/components/InviteInfo.tsx:32
 msgid "Learn more about how inviting friends works"
 msgstr ""
@@ -5253,6 +5177,10 @@ msgstr ""
 
 #: src/components/dialogs/ServerInput.tsx:223
 msgid "Learn more about self hosting your PDS."
+msgstr ""
+
+#: src/view/com/auth/SplashScreen.web.tsx:172
+msgid "Learn more about SheerSky"
 msgstr ""
 
 #: src/components/moderation/ContentHider.tsx:168
@@ -5276,12 +5204,12 @@ msgstr ""
 #: src/components/verification/VerificationsDialog.tsx:152
 #: src/components/verification/VerifierDialog.tsx:120
 msgctxt "english-only-resource"
-msgid "Learn more about verification on Bluesky"
+msgid "Learn more about verification on SheerSky"
 msgstr ""
 
 #: src/screens/Settings/PrivacyAndSecuritySettings.tsx:127
 #: src/screens/Settings/PrivacyAndSecuritySettings.tsx:130
-msgid "Learn more about what is public on Bluesky."
+msgid "Learn more about what is public on SheerSky."
 msgstr ""
 
 #: src/components/ageAssurance/AgeAssuranceAdmonition.tsx:89
@@ -5316,7 +5244,7 @@ msgstr ""
 
 #: src/components/dialogs/LinkWarning.tsx:67
 #: src/components/dialogs/LinkWarning.tsx:75
-msgid "Leaving Bluesky"
+msgid "Leaving SheerSky"
 msgstr ""
 
 #: src/screens/SignupQueued.tsx:155
@@ -5352,7 +5280,7 @@ msgid "Like"
 msgstr ""
 
 #. Accessibility label for the like button when the post has not been liked, verb form followed by number of likes and noun form
-#: src/components/PostControls/index.tsx:288
+#: src/components/PostControls/index.tsx:283
 msgid "Like ({0, plural, one {# like} other {# likes}})"
 msgstr ""
 
@@ -5403,7 +5331,7 @@ msgstr ""
 #: src/lib/hooks/useNotificationHandler.ts:129
 #: src/screens/Settings/NotificationSettings/index.tsx:126
 #: src/screens/Settings/NotificationSettings/LikeNotificationSettings.tsx:41
-#: src/view/screens/Profile.tsx:238
+#: src/view/screens/Profile.tsx:240
 msgid "Likes"
 msgstr ""
 
@@ -5508,8 +5436,8 @@ msgstr ""
 
 #: src/Navigation.tsx:175
 #: src/view/screens/Lists.tsx:67
-#: src/view/screens/Profile.tsx:233
-#: src/view/screens/Profile.tsx:241
+#: src/view/screens/Profile.tsx:235
+#: src/view/screens/Profile.tsx:243
 #: src/view/shell/desktop/LeftNav.tsx:744
 #: src/view/shell/Drawer.tsx:547
 msgid "Lists"
@@ -5681,7 +5609,7 @@ msgstr ""
 msgid "Maybe later"
 msgstr ""
 
-#: src/view/screens/Profile.tsx:236
+#: src/view/screens/Profile.tsx:238
 msgid "Media"
 msgstr ""
 
@@ -6085,7 +6013,7 @@ msgstr ""
 #: src/screens/ProfileList/index.tsx:284
 #: src/view/screens/Feeds.tsx:552
 #: src/view/screens/Notifications.tsx:166
-#: src/view/screens/Profile.tsx:594
+#: src/view/screens/Profile.tsx:596
 msgid "New post"
 msgstr ""
 
@@ -6152,7 +6080,7 @@ msgid "Next image"
 msgstr ""
 
 #: src/screens/Onboarding/StepFinished/ValuePropositionPager.shared.tsx:32
-msgid "No ads, no invasive tracking, no engagement traps. Bluesky respects your time and attention."
+msgid "No ads, no invasive tracking, no engagement traps. SheerSky respects your time and attention."
 msgstr ""
 
 #: src/screens/Settings/AppPasswords.tsx:107
@@ -6202,7 +6130,7 @@ msgstr ""
 
 #: src/components/LikedByList.tsx:84
 #: src/view/com/post-thread/PostLikedBy.tsx:84
-#: src/view/screens/Profile.tsx:526
+#: src/view/screens/Profile.tsx:528
 msgid "No likes yet"
 msgstr ""
 
@@ -6210,13 +6138,13 @@ msgstr ""
 msgid "No lists"
 msgstr ""
 
-#: src/components/ProfileCard.tsx:531
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:269
+#: src/components/ProfileCard.tsx:529
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:278
 #: src/view/com/notifications/NotificationFeedItem.tsx:792
 msgid "No longer following {0}"
 msgstr ""
 
-#: src/view/screens/Profile.tsx:472
+#: src/view/screens/Profile.tsx:474
 msgid "No media yet"
 msgstr ""
 
@@ -6253,7 +6181,7 @@ msgid "No posts here"
 msgstr ""
 
 #: src/screens/Profile/Sections/Feed.tsx:80
-#: src/view/screens/Profile.tsx:431
+#: src/view/screens/Profile.tsx:433
 msgid "No posts yet"
 msgstr ""
 
@@ -6261,7 +6189,7 @@ msgstr ""
 msgid "No quotes yet"
 msgstr ""
 
-#: src/view/screens/Profile.tsx:457
+#: src/view/screens/Profile.tsx:459
 msgid "No replies yet"
 msgstr ""
 
@@ -6304,7 +6232,7 @@ msgstr ""
 msgid "No search results found for \"{search}\"."
 msgstr ""
 
-#: src/view/screens/Profile.tsx:558
+#: src/view/screens/Profile.tsx:560
 msgid "No Starter Packs yet"
 msgstr ""
 
@@ -6313,7 +6241,7 @@ msgstr ""
 msgid "No thanks"
 msgstr ""
 
-#: src/view/screens/Profile.tsx:499
+#: src/view/screens/Profile.tsx:501
 msgid "No video posts yet"
 msgstr ""
 
@@ -6360,7 +6288,7 @@ msgid "Not followed by anyone you're following"
 msgstr ""
 
 #: src/Navigation.tsx:170
-#: src/view/screens/Profile.tsx:132
+#: src/view/screens/Profile.tsx:133
 msgid "Not Found"
 msgstr ""
 
@@ -6373,7 +6301,7 @@ msgid "Note about sharing"
 msgstr ""
 
 #: src/screens/Settings/PrivacyAndSecuritySettings.tsx:116
-msgid "Note: Bluesky is an open and public network. This setting only limits the visibility of your content on the Bluesky app and website, and other apps may not respect this setting. Your content may still be shown to logged-out users by other apps and websites."
+msgid "Note: SheerSky is an open and public network. This setting only limits the visibility of your content on the SheerSky app and website, and other apps may not respect this setting. Your content may still be shown to logged-out users by other apps and websites."
 msgstr ""
 
 #: src/components/PostControls/ShareMenu/ShareMenuItems.web.tsx:134
@@ -6538,7 +6466,7 @@ msgstr ""
 #: src/components/StarterPack/ProfileStarterPacks.tsx:371
 #: src/screens/Settings/AppPasswords.tsx:58
 #: src/screens/Settings/components/ChangeHandleDialog.tsx:106
-#: src/view/screens/Profile.tsx:132
+#: src/view/screens/Profile.tsx:133
 msgid "Oops!"
 msgstr ""
 
@@ -6678,12 +6606,12 @@ msgstr ""
 
 #: src/view/com/auth/SplashScreen.tsx:101
 #: src/view/com/auth/SplashScreen.web.tsx:115
-msgid "Opens flow to create a new Bluesky account"
+msgid "Opens flow to create a new SheerSky account"
 msgstr ""
 
 #: src/view/com/auth/SplashScreen.tsx:119
 #: src/view/com/auth/SplashScreen.web.tsx:129
-msgid "Opens flow to sign in to your existing Bluesky account"
+msgid "Opens flow to sign in to your existing SheerSky account"
 msgstr ""
 
 #: src/view/com/composer/photos/SelectGifBtn.tsx:37
@@ -6803,7 +6731,7 @@ msgid "Our moderation team has received your report."
 msgstr ""
 
 #: src/screens/Messages/components/ChatDisabled.tsx:34
-msgid "Our moderators have reviewed reports and decided to disable your access to chats on Bluesky."
+msgid "Our moderators have reviewed reports and decided to disable your access to chats on SheerSky."
 msgstr ""
 
 #: src/components/Lists.tsx:204
@@ -7011,7 +6939,7 @@ msgid "Please choose your password."
 msgstr ""
 
 #: src/components/dialogs/EmailDialog/screens/Update.tsx:290
-msgid "Please click on the link in the email we just sent you to verify your new email address. This is an important step to allow you to continue enjoying all the features of Bluesky."
+msgid "Please click on the link in the email we just sent you to verify your new email address. This is an important step to allow you to continue enjoying all the features of SheerSky."
 msgstr ""
 
 #: src/screens/Signup/state.ts:308
@@ -7164,23 +7092,19 @@ msgctxt "action"
 msgid "Post"
 msgstr ""
 
-#: src/view/screens/Profile.tsx:476
-#: src/view/screens/Profile.tsx:477
+#: src/view/screens/Profile.tsx:478
+#: src/view/screens/Profile.tsx:479
 msgid "Post a photo"
 msgstr ""
 
-#: src/view/screens/Profile.tsx:503
-#: src/view/screens/Profile.tsx:504
+#: src/view/screens/Profile.tsx:505
+#: src/view/screens/Profile.tsx:506
 msgid "Post a video"
 msgstr ""
 
 #: src/view/com/composer/Composer.tsx:1530
 msgctxt "action"
 msgid "Post All"
-msgstr ""
-
-#: src/screens/PostThread/components/ThreadItemPostTombstone.tsx:22
-msgid "Post blocked"
 msgstr ""
 
 #: src/Navigation.tsx:267
@@ -7230,6 +7154,10 @@ msgstr ""
 msgid "Post language selection"
 msgstr ""
 
+#: src/screens/PostThread/components/ThreadItemPostTombstone.tsx:22
+msgid "Post not available"
+msgstr ""
+
 #: src/screens/PostThread/components/ThreadError.tsx:32
 #: src/screens/PostThread/components/ThreadItemPostTombstone.tsx:25
 msgid "Post not found"
@@ -7254,7 +7182,7 @@ msgstr ""
 #: src/screens/ProfileList/index.tsx:166
 #: src/screens/Settings/NotificationSettings/ActivityNotificationSettings.tsx:216
 #: src/screens/StarterPack/StarterPackScreen.tsx:194
-#: src/view/screens/Profile.tsx:234
+#: src/view/screens/Profile.tsx:236
 msgid "Posts"
 msgstr ""
 
@@ -7364,7 +7292,7 @@ msgid "Processing..."
 msgstr ""
 
 #: src/view/screens/DebugMod.tsx:936
-#: src/view/screens/Profile.tsx:384
+#: src/view/screens/Profile.tsx:386
 msgid "profile"
 msgstr ""
 
@@ -7530,17 +7458,17 @@ msgid "Read our blog post"
 msgstr ""
 
 #: src/view/com/auth/SplashScreen.web.tsx:177
-msgid "Read the Bluesky blog"
+msgid "Read the SheerSky blog"
 msgstr ""
 
 #: src/screens/Signup/StepInfo/Policies.tsx:52
 #: src/screens/Signup/StepInfo/Policies.tsx:78
-msgid "Read the Bluesky Privacy Policy"
+msgid "Read the SheerSky Privacy Policy"
 msgstr ""
 
 #: src/screens/Signup/StepInfo/Policies.tsx:45
 #: src/screens/Signup/StepInfo/Policies.tsx:65
-msgid "Read the Bluesky Terms of Service"
+msgid "Read the SheerSky Terms of Service"
 msgstr ""
 
 #: src/components/WelcomeModal.tsx:148
@@ -7776,14 +7704,14 @@ msgctxt "description"
 msgid "Replied to <0><1/></0>"
 msgstr ""
 
-#: src/components/Post/PostRepliedTo.tsx:28
-msgctxt "description"
-msgid "Replied to a blocked post"
-msgstr ""
-
 #: src/components/Post/PostRepliedTo.tsx:30
 msgctxt "description"
 msgid "Replied to a post"
+msgstr ""
+
+#: src/components/Post/PostRepliedTo.tsx:28
+msgctxt "description"
+msgid "Replied to an unavailable post"
 msgstr ""
 
 #: src/components/Post/PostRepliedTo.tsx:36
@@ -7797,7 +7725,7 @@ msgstr ""
 #: src/screens/Settings/NotificationSettings/ActivityNotificationSettings.tsx:218
 #: src/screens/Settings/NotificationSettings/index.tsx:148
 #: src/screens/Settings/NotificationSettings/ReplyNotificationSettings.tsx:41
-#: src/view/screens/Profile.tsx:235
+#: src/view/screens/Profile.tsx:237
 msgid "Replies"
 msgstr ""
 
@@ -7815,7 +7743,7 @@ msgid "Reply"
 msgstr ""
 
 #. Accessibility label for the reply button, verb form followed by number of replies and noun form
-#: src/components/PostControls/index.tsx:242
+#: src/components/PostControls/index.tsx:237
 msgid "Reply ({0, plural, one {# reply} other {# replies}})"
 msgstr ""
 
@@ -8386,7 +8314,7 @@ msgid "See #{tag} posts by user"
 msgstr ""
 
 #: src/view/com/auth/SplashScreen.web.tsx:182
-msgid "See jobs at Bluesky"
+msgid "See jobs at SheerSky"
 msgstr ""
 
 #: src/components/FeedInterstitials.tsx:699
@@ -8792,7 +8720,7 @@ msgid "Share this starter pack"
 msgstr ""
 
 #: src/components/StarterPack/ShareDialog.tsx:85
-msgid "Share this starter pack and help people join your community on Bluesky."
+msgid "Share this starter pack and help people join your community on SheerSky."
 msgstr ""
 
 #: src/components/PostControls/ShareMenu/ShareMenuItems.tsx:118
@@ -8816,6 +8744,76 @@ msgstr ""
 
 #: src/Navigation.tsx:319
 msgid "Shared Preferences Tester"
+msgstr ""
+
+#: src/components/dialogs/ServerInput.tsx:147
+#: src/components/dialogs/ServerInput.tsx:149
+msgid "SheerSky"
+msgstr ""
+
+#: src/screens/PostThread/components/ThreadItemAnchor.tsx:699
+msgid "SheerSky cannot confirm the authenticity of the claimed date."
+msgstr ""
+
+#: src/screens/Settings/AppIconSettings/useAppIconSets.ts:165
+msgctxt "Name of app icon variant"
+msgid "SheerSky Classic™"
+msgstr ""
+
+#: src/components/contacts/screens/GetContacts.tsx:234
+msgid "SheerSky helps friends find each other by creating an encoded digital fingerprint, called a \"hash\", and then looking for matching hashes."
+msgstr ""
+
+#: src/components/dialogs/ServerInput.tsx:217
+msgid "SheerSky is an open network where you can choose your hosting provider. If you're a developer, you can host your own server."
+msgstr ""
+
+#: src/components/dialogs/ServerInput.tsx:165
+msgid "SheerSky is an open network where you can choose your own provider. If you're new here, we recommend sticking with the default SheerSky option."
+msgstr ""
+
+#: src/components/ProgressGuide/List.tsx:103
+msgid "SheerSky is better with friends!"
+msgstr ""
+
+#: src/screens/Onboarding/StepFindContactsIntro/index.tsx:42
+msgid "SheerSky is more fun with friends"
+msgstr ""
+
+#: src/components/dialogs/nuxs/FindContactsAnnouncement.tsx:106
+msgid "SheerSky is more fun with friends! Import your contacts to see who’s already here."
+msgstr ""
+
+#: src/components/contacts/screens/ViewMatches.tsx:314
+msgid "SheerSky is more fun with friends. Do you want to invite some of yours? <0/>"
+msgstr ""
+
+#: src/screens/Settings/FindContactsSettings.tsx:548
+msgid "SheerSky stores your contacts as encoded data. Removing your contacts will immediately delete this data."
+msgstr ""
+
+#: src/screens/Takendown.tsx:215
+msgid "SheerSky Terms of Service"
+msgstr ""
+
+#: src/components/StarterPack/ProfileStarterPacks.tsx:339
+msgid "SheerSky will choose a set of recommended accounts from people in your network."
+msgstr ""
+
+#: src/screens/Settings/components/PwiOptOut.tsx:99
+msgid "SheerSky will not show your profile and posts to logged-out users. Other apps may not honor this request. This does not make your account private."
+msgstr ""
+
+#: src/components/dialogs/nuxs/InitialVerificationAnnouncement.tsx:133
+msgid "SheerSky will proactively verify notable and authentic accounts."
+msgstr ""
+
+#: src/screens/Settings/AppIconSettings/index.tsx:96
+msgid "SheerSky+"
+msgstr ""
+
+#: src/screens/Settings/AppIconSettings/index.tsx:99
+msgid "SheerSky+ icons"
 msgstr ""
 
 #: src/components/moderation/ContentHider.tsx:219
@@ -8983,7 +8981,7 @@ msgid "Sign in to account that is not listed"
 msgstr ""
 
 #: src/components/dialogs/Signin.tsx:46
-msgid "Sign in to Bluesky or create a new account"
+msgid "Sign in to SheerSky or create a new account"
 msgstr ""
 
 #: src/components/PostControls/PostMenu/PostMenuItems.tsx:522
@@ -9211,7 +9209,7 @@ msgid "Starter pack is invalid"
 msgstr ""
 
 #: src/screens/Search/Explore.tsx:629
-#: src/view/screens/Profile.tsx:240
+#: src/view/screens/Profile.tsx:242
 msgid "Starter Packs"
 msgstr ""
 
@@ -9223,7 +9221,7 @@ msgstr ""
 msgid "Starter packs let you share your favorite feeds and people with your friends."
 msgstr ""
 
-#: src/view/screens/Profile.tsx:556
+#: src/view/screens/Profile.tsx:558
 msgid "Starter Packs let you share your favorite feeds and people with your friends."
 msgstr ""
 
@@ -9251,7 +9249,7 @@ msgid "Storybook"
 msgstr ""
 
 #: src/components/dialogs/nuxs/LiveNowBetaDialog.tsx:180
-msgid "Streaming on Twitch? Set your live status on Bluesky to add a badge to your avatar. Tapping it takes people straight to your stream."
+msgid "Streaming on Twitch? Set your live status on SheerSky to add a badge to your avatar. Tapping it takes people straight to your stream."
 msgstr ""
 
 #: src/components/ageAssurance/AgeAssuranceAppealDialog.tsx:119
@@ -9391,7 +9389,7 @@ msgid "Tags only"
 msgstr ""
 
 #: src/components/dialogs/DeviceLocationRequestDialog.tsx:109
-msgid "Tap below to allow Bluesky to access your GPS location. We will then use that data to more accurately determine the content and features available in your region."
+msgid "Tap below to allow SheerSky to access your GPS location. We will then use that data to more accurately determine the content and features available in your region."
 msgstr ""
 
 #: src/view/com/feeds/MissingFeed.tsx:89
@@ -9407,7 +9405,7 @@ msgid "Tap here to confirm your location with GPS."
 msgstr ""
 
 #: src/components/PolicyUpdateOverlay/updates/202508/index.tsx:164
-msgid "Tap to acknowledge that you understand and agree to these updates and continue using Bluesky"
+msgid "Tap to acknowledge that you understand and agree to these updates and continue using SheerSky"
 msgstr ""
 
 #: src/components/ContextMenu/Backdrop.ios.tsx:54
@@ -9517,8 +9515,8 @@ msgstr ""
 msgid "That's everything!"
 msgstr ""
 
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:186
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:394
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:195
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:403
 #: src/view/com/profile/ProfileMenu.tsx:539
 msgid "The account will be able to interact with you after unblocking."
 msgstr ""
@@ -9535,10 +9533,6 @@ msgstr ""
 
 #: src/components/dialogs/BirthDateSettings.tsx:169
 msgid "The birthdate you've entered means you are under 18 years old. Certain content and features may be unavailable to you."
-msgstr ""
-
-#: src/screens/Moderation/index.tsx:397
-msgid "The Bluesky web application"
 msgstr ""
 
 #: src/view/screens/CommunityGuidelines.tsx:41
@@ -9558,7 +9552,7 @@ msgid "The Discover feed now knows what you like"
 msgstr ""
 
 #: src/screens/StarterPack/StarterPackLandingScreen.tsx:334
-msgid "The experience is better in the app. Download Bluesky now and we'll pick back up where you left off."
+msgid "The experience is better in the app. Download SheerSky now and we'll pick back up where you left off."
 msgstr ""
 
 #: src/view/com/posts/FeedShutdownMsg.tsx:67
@@ -9601,6 +9595,10 @@ msgstr ""
 #: src/lib/hooks/useCleanError.ts:40
 #: src/lib/strings/errors.ts:19
 msgid "The server appears to be experiencing issues. Please try again in a few moments."
+msgstr ""
+
+#: src/screens/Moderation/index.tsx:397
+msgid "The SheerSky web application"
 msgstr ""
 
 #: src/screens/StarterPack/StarterPackScreen.tsx:748
@@ -9702,10 +9700,10 @@ msgstr ""
 #: src/components/PostControls/PostMenu/PostMenuItems.tsx:450
 #: src/screens/PostThread/components/ThreadItemAnchorFollowButton.tsx:116
 #: src/screens/PostThread/components/ThreadItemAnchorFollowButton.tsx:127
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:88
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:253
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:279
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:294
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:89
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:262
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:288
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:303
 #: src/view/com/profile/ProfileMenu.tsx:152
 #: src/view/com/profile/ProfileMenu.tsx:162
 #: src/view/com/profile/ProfileMenu.tsx:176
@@ -9735,7 +9733,7 @@ msgid "There was an unexpected issue in the application. Please let us know if t
 msgstr ""
 
 #: src/screens/SignupQueued.tsx:130
-msgid "There's been a rush of new users to Bluesky! We'll activate your account as soon as we can."
+msgid "There's been a rush of new users to SheerSky! We'll activate your account as soon as we can."
 msgstr ""
 
 #: src/components/dialogs/PostInteractionSettingsDialog.tsx:657
@@ -9776,7 +9774,7 @@ msgstr ""
 
 #: src/components/live/GoLiveDisabledDialog.tsx:113
 #: src/screens/Messages/components/ChatDisabled.tsx:116
-msgid "This appeal will be sent to Bluesky's moderation service."
+msgid "This appeal will be sent to SheerSky's moderation service."
 msgstr ""
 
 #: src/screens/PostThread/components/ThreadItemAnchorNoUnauthenticated.tsx:27
@@ -9814,7 +9812,7 @@ msgid "This content is not available because one of the users involved has block
 msgstr ""
 
 #: src/view/com/posts/PostFeedErrorMessage.tsx:121
-msgid "This content is not viewable without a Bluesky account."
+msgid "This content is not viewable without a SheerSky account."
 msgstr ""
 
 #: src/screens/Messages/components/ChatListItem.tsx:366
@@ -9897,11 +9895,11 @@ msgid "This link is taking you to the following website:"
 msgstr ""
 
 #: src/screens/List/ListHiddenScreen.tsx:151
-msgid "This list – created by <0>{0}</0> – contains possible violations of Bluesky's community guidelines in its name or description."
+msgid "This list – created by <0>{0}</0> – contains possible violations of SheerSky's community guidelines in its name or description."
 msgstr ""
 
 #: src/screens/List/ListHiddenScreen.tsx:146
-msgid "This list – created by you – contains possible violations of Bluesky's community guidelines in its name or description."
+msgid "This list – created by you – contains possible violations of SheerSky's community guidelines in its name or description."
 msgstr ""
 
 #: src/screens/ProfileList/AboutSection.tsx:99
@@ -9913,7 +9911,7 @@ msgid "This moderation service is unavailable. See below for more details. If th
 msgstr ""
 
 #: src/screens/PostThread/components/ThreadItemAnchor.tsx:686
-msgid "This post claims to have been created on <0>{0}</0>, but was first seen by Bluesky on <1>{1}</1>."
+msgid "This post claims to have been created on <0>{0}</0>, but was first seen by SheerSky on <1>{1}</1>."
 msgstr ""
 
 #: src/components/WhoCanReply.tsx:273
@@ -9969,12 +9967,18 @@ msgid "This user doesn't have any followers."
 msgstr ""
 
 #: src/components/dms/MessagesListBlockedFooter.tsx:68
+#: src/components/PostControls/index.tsx:106
+#: src/state/shell/composer/index.tsx:103
 msgid "This user has blocked you"
+msgstr ""
+
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:182
+msgid "This user has blocked you. Some interactions may be limited."
 msgstr ""
 
 #: src/components/moderation/ModerationDetailsDialog.tsx:81
 #: src/lib/moderation/useModerationCauseDescription.ts:76
-msgid "This user has blocked you. You cannot view their content."
+msgid "This user has blocked you. You can still view their content, but some interactions may be limited."
 msgstr ""
 
 #: src/lib/moderation/useGlobalLabelStrings.ts:30
@@ -10159,7 +10163,7 @@ msgid "Type:"
 msgstr ""
 
 #: src/components/dialogs/DeviceLocationRequestDialog.tsx:85
-msgid "Unable to access location. You'll need to visit your system settings to enable location services for Bluesky."
+msgid "Unable to access location. You'll need to visit your system settings to enable location services for SheerSky."
 msgstr ""
 
 #: src/lib/hooks/useCleanError.ts:27
@@ -10204,16 +10208,16 @@ msgstr ""
 #: src/components/dms/MessagesListBlockedFooter.tsx:104
 #: src/components/dms/MessagesListBlockedFooter.tsx:112
 #: src/components/dms/MessagesListBlockedFooter.tsx:119
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:190
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:337
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:397
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:199
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:346
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:406
 #: src/screens/ProfileList/components/Header.tsx:165
 #: src/screens/ProfileList/components/Header.tsx:172
 #: src/view/com/profile/ProfileMenu.tsx:551
 msgid "Unblock"
 msgstr ""
 
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:341
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:350
 msgctxt "action"
 msgid "Unblock"
 msgstr ""
@@ -10225,8 +10229,8 @@ msgstr ""
 msgid "Unblock account"
 msgstr ""
 
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:184
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:392
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:193
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:401
 #: src/view/com/profile/ProfileMenu.tsx:533
 msgid "Unblock Account?"
 msgstr ""
@@ -10260,7 +10264,7 @@ msgstr ""
 msgid "Undo repost ({0, plural, one {# repost} other {# reposts}})"
 msgstr ""
 
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:368
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:377
 msgid "Unfollow {0}"
 msgstr ""
 
@@ -10278,11 +10282,11 @@ msgid "Unfortunately, none of your subscribed labelers supports this report type
 msgstr ""
 
 #: src/ageAssurance/components/NoAccessScreen.tsx:194
-msgid "Unfortunately, the birthdate you have saved to your profile makes you too young to access Bluesky."
+msgid "Unfortunately, the birthdate you have saved to your profile makes you too young to access SheerSky."
 msgstr ""
 
 #: src/ageAssurance/components/NoAccessScreen.tsx:179
-msgid "Unfortunately, your declared age indicates that you are not old enough to access Bluesky in your region."
+msgid "Unfortunately, your declared age indicates that you are not old enough to access SheerSky in your region."
 msgstr ""
 
 #: src/components/verification/VerificationsDialog.tsx:208
@@ -10302,7 +10306,7 @@ msgid "Unlike"
 msgstr ""
 
 #. Accessibility label for the like button when the post has been liked, verb followed by number of likes and noun
-#: src/components/PostControls/index.tsx:278
+#: src/components/PostControls/index.tsx:273
 msgid "Unlike ({0, plural, one {# like} other {# likes}})"
 msgstr ""
 
@@ -10499,7 +10503,7 @@ msgid "Uploading video..."
 msgstr ""
 
 #: src/screens/Settings/AppPasswords.tsx:66
-msgid "Use app passwords to sign in to other Bluesky clients without giving full access to your account or password."
+msgid "Use app passwords to sign in to other SheerSky clients without giving full access to your account or password."
 msgstr ""
 
 #: src/screens/Settings/components/ChangeHandleDialog.tsx:574
@@ -10530,7 +10534,7 @@ msgid "Use this to sign in to the other app along with your handle."
 msgstr ""
 
 #: src/components/ageAssurance/AgeAssuranceInitDialog.tsx:277
-msgid "Use your account email address, or another real email address you control, in case KWS or Bluesky needs to contact you."
+msgid "Use your account email address, or another real email address you control, in case KWS or SheerSky needs to contact you."
 msgstr ""
 
 #: src/components/dms/AfterReportDialog.tsx:152
@@ -10632,7 +10636,7 @@ msgid "Verification Settings"
 msgstr ""
 
 #: src/screens/Moderation/VerificationSettings.tsx:42
-msgid "Verifications on Bluesky work differently than on other platforms. <0>Learn more here.</0>"
+msgid "Verifications on SheerSky work differently than on other platforms. <0>Learn more here.</0>"
 msgstr ""
 
 #: src/components/verification/VerificationsDialog.tsx:104
@@ -10773,7 +10777,7 @@ msgstr ""
 msgid "Video: {0}"
 msgstr ""
 
-#: src/view/screens/Profile.tsx:237
+#: src/view/screens/Profile.tsx:239
 msgid "Videos"
 msgstr ""
 
@@ -10802,7 +10806,7 @@ msgstr ""
 msgid "View {displayName}'s profile"
 msgstr ""
 
-#: src/components/ProfileHoverCard/index.web.tsx:481
+#: src/components/ProfileHoverCard/index.web.tsx:482
 msgid "View blocked user's profile"
 msgstr ""
 
@@ -10842,9 +10846,9 @@ msgstr ""
 msgid "View post"
 msgstr ""
 
-#: src/components/ProfileHoverCard/index.web.tsx:467
-#: src/components/ProfileHoverCard/index.web.tsx:487
-#: src/components/ProfileHoverCard/index.web.tsx:514
+#: src/components/ProfileHoverCard/index.web.tsx:468
+#: src/components/ProfileHoverCard/index.web.tsx:488
+#: src/components/ProfileHoverCard/index.web.tsx:515
 #: src/view/com/posts/PostFeedErrorMessage.tsx:182
 #: src/view/com/util/PostMeta.tsx:90
 #: src/view/com/util/PostMeta.tsx:127
@@ -10982,7 +10986,7 @@ msgid "We estimate {estimatedTime} until your account is ready."
 msgstr ""
 
 #: src/components/ageAssurance/AgeAssuranceInitDialog.tsx:196
-msgid "We have partnered with <0>KWS</0> to handle age verification. When you click \"Begin\" below, KWS will email you instructions to complete the verification process. If your email address has already been used to verify your age for another game or service that uses KWS, you won’t need to do it again. When you’re done, you'll be brought back to continue using Bluesky."
+msgid "We have partnered with <0>KWS</0> to handle age verification. When you click \"Begin\" below, KWS will email you instructions to complete the verification process. If your email address has already been used to verify your age for another game or service that uses KWS, you won’t need to do it again. When you’re done, you'll be brought back to continue using SheerSky."
 msgstr ""
 
 #: src/components/intents/VerifyEmailIntentDialog.tsx:101
@@ -11073,7 +11077,7 @@ msgid "We're having network issues, try again"
 msgstr ""
 
 #: src/components/dialogs/nuxs/InitialVerificationAnnouncement.tsx:95
-msgid "We’re introducing a new layer of verification on Bluesky — an easy-to-see checkmark."
+msgid "We're introducing a new layer of verification on SheerSky — an easy-to-see checkmark."
 msgstr ""
 
 #: src/screens/Signup/index.tsx:136
@@ -11239,8 +11243,8 @@ msgstr ""
 msgid "Write a message"
 msgstr ""
 
-#: src/view/screens/Profile.tsx:435
-#: src/view/screens/Profile.tsx:436
+#: src/view/screens/Profile.tsx:437
+#: src/view/screens/Profile.tsx:438
 msgid "Write a post"
 msgstr ""
 
@@ -11300,7 +11304,7 @@ msgid "You are a trusted verifier"
 msgstr ""
 
 #: src/ageAssurance/components/NoAccessScreen.tsx:170
-msgid "You are accessing Bluesky from a region that legally requires us to verify your age before allowing you to access the app."
+msgid "You are accessing SheerSky from a region that legally requires us to verify your age before allowing you to access the app."
 msgstr ""
 
 #: src/components/forms/HostingProvider.tsx:45
@@ -11313,7 +11317,7 @@ msgstr ""
 
 #: src/ageAssurance/components/NoAccessScreen.tsx:299
 #: src/components/ageAssurance/AgeAssuranceAccountCard.tsx:136
-msgid "You are currently unable to access Bluesky's Age Assurance flow. Please <0>contact our moderation team</0> if you believe this is an error."
+msgid "You are currently unable to access SheerSky's Age Assurance flow. Please <0>contact our moderation team</0> if you believe this is an error."
 msgstr ""
 
 #: src/screens/SignupQueued.tsx:157
@@ -11547,11 +11551,11 @@ msgid "You initiated this flow already, {0} ago. It may take up to 5 minutes for
 msgstr ""
 
 #: src/components/NewskieDialog.tsx:105
-msgid "You joined Bluesky {timeAgoString} ago"
+msgid "You joined SheerSky {timeAgoString} ago"
 msgstr ""
 
 #: src/components/NewskieDialog.tsx:102
-msgid "You joined Bluesky using a starter pack {timeAgoString} ago"
+msgid "You joined SheerSky using a starter pack {timeAgoString} ago"
 msgstr ""
 
 #: src/components/moderation/LabelsOnMeDialog.tsx:83
@@ -11579,7 +11583,7 @@ msgid "You must be {MIN_ACCESS_AGE} years of age or older to create an account."
 msgstr ""
 
 #: src/components/dialogs/BirthDateSettings.tsx:178
-msgid "You must be at least 13 years old to use Bluesky. Read our <0>Terms of Service</0> for more information."
+msgid "You must be at least 13 years old to use SheerSky. Read our <0>Terms of Service</0> for more information."
 msgstr ""
 
 #: src/components/StarterPack/ProfileStarterPacks.tsx:364
@@ -11673,7 +11677,7 @@ msgid "You'll follow these people right away"
 msgstr ""
 
 #: src/components/contacts/screens/GetContacts.tsx:313
-msgid "You'll need to go to the System Settings for Bluesky and give permission if you want to use this feature."
+msgid "You'll need to go to the System Settings for SheerSky and give permission if you want to use this feature."
 msgstr ""
 
 #: src/components/activity-notifications/SubscribeProfileDialog.tsx:169
@@ -11759,7 +11763,7 @@ msgid "Your account repository, containing all public data records, can be downl
 msgstr ""
 
 #: src/screens/Takendown.tsx:212
-msgid "Your account was found to be in violation of the <0>Bluesky Social Terms of Service</0>. You have been sent an email outlining the specific violation and suspension period, if applicable. You can appeal this decision if you believe it was made in error."
+msgid "Your account was found to be in violation of the <0>SheerSky Terms of Service</0>. You have been sent an email outlining the specific violation and suspension period, if applicable. You can appeal this decision if you believe it was made in error."
 msgstr ""
 
 #: src/screens/Takendown.tsx:152
@@ -11783,11 +11787,11 @@ msgid "Your choice will be remembered for future links. You can change it at any
 msgstr ""
 
 #: src/view/com/notifications/NotificationFeedItem.tsx:374
-msgid "Your contact {firstAuthorLink} is on Bluesky"
+msgid "Your contact {firstAuthorLink} is on SheerSky"
 msgstr ""
 
 #: src/view/com/notifications/NotificationFeedItem.tsx:372
-msgid "Your contact {firstAuthorName} is on Bluesky"
+msgid "Your contact {firstAuthorName} is on SheerSky"
 msgstr ""
 
 #: src/components/contacts/screens/ViewMatches.tsx:453
@@ -11816,7 +11820,7 @@ msgid "Your email appears to be invalid."
 msgstr ""
 
 #: src/components/dialogs/EmailDialog/screens/VerificationReminder.tsx:65
-msgid "Your email has not yet been verified. Please verify your email in order to enjoy all the features of Bluesky."
+msgid "Your email has not yet been verified. Please verify your email in order to enjoy all the features of SheerSky."
 msgstr ""
 
 #: src/state/shell/progress-guide.tsx:216
@@ -11869,7 +11873,7 @@ msgid "Your muted words"
 msgstr ""
 
 #: src/screens/Settings/components/ChangePasswordDialog.tsx:71
-msgid "Your password has been changed successfully! Please use your new password when you sign in to Bluesky from now on."
+msgid "Your password has been changed successfully! Please use your new password when you sign in to SheerSky from now on."
 msgstr ""
 
 #: src/screens/Signup/StepInfo/index.tsx:160
@@ -11898,7 +11902,7 @@ msgid "Your profile picture surrounded by concentric circles of other users' pro
 msgstr ""
 
 #: src/screens/Settings/components/DeactivateAccountDialog.tsx:74
-msgid "Your profile, posts, feeds, and lists will no longer be visible to other Bluesky users. You can reactivate your account at any time by logging in."
+msgid "Your profile, posts, feeds, and lists will no longer be visible to other SheerSky users. You can reactivate your account at any time by logging in."
 msgstr ""
 
 #: src/view/com/composer/Composer.tsx:905

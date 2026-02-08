@@ -78,7 +78,7 @@ function ModerationDetailsDialogInner({
   } else if (modcause.type === 'blocked-by') {
     name = _(msg`User Blocks You`)
     description = _(
-      msg`This user has blocked you. You cannot view their content.`,
+      msg`This user has blocked you. You can still view their content, but some interactions may be limited.`,
     )
   } else if (modcause.type === 'block-other') {
     name = _(msg`Content Not Available`)

@@ -20,7 +20,9 @@ export function ProfileHeaderHandle({
   const t = useTheme()
   const {_} = useLingui()
   const invalidHandle = isInvalidHandle(profile.handle)
-  const blockHide = profile.viewer?.blocking || profile.viewer?.blockedBy
+  const blockHide = !!(
+    profile.viewer?.blocking || profile.viewer?.blockingByList
+  )
   return (
     <View
       style={[a.flex_row, a.gap_sm, a.align_center, {maxWidth: '100%'}]}

@@ -91,23 +91,24 @@ let PostControls = ({
   const {sendInteraction} = useFeedFeedbackContext()
   const {captureAction} = useProgressGuideControls()
   const playHaptic = useHaptics()
-  const isBlocked = Boolean(
-    post.author.viewer?.blocking ||
-      post.author.viewer?.blockedBy ||
-      post.author.viewer?.blockingByList,
+  const isBlockingAuthor = Boolean(
+    post.author.viewer?.blocking || post.author.viewer?.blockingByList,
   )
+  const isBlockedByAuthor = Boolean(post.author.viewer?.blockedBy)
+  const isBlocked = isBlockingAuthor || isBlockedByAuthor
   const replyDisabled = post.viewer?.replyDisabled
   const {gtPhone} = useBreakpoints()
   const formatPostStatCount = useFormatPostStatCount()
 
   const [hasLikeIconBeenToggled, setHasLikeIconBeenToggled] = useState(false)
 
+  const blockedToastMsg = isBlockedByAuthor
+    ? _(msg`This user has blocked you`)
+    : _(msg`Cannot interact with a blocked user`)
+
   const onPressToggleLike = async () => {
     if (isBlocked) {
-      Toast.show(
-        _(msg`Cannot interact with a blocked user`),
-        'exclamation-circle',
-      )
+      Toast.show(blockedToastMsg, 'exclamation-circle')
       return
     }
 
@@ -135,10 +136,7 @@ let PostControls = ({
 
   const onRepost = async () => {
     if (isBlocked) {
-      Toast.show(
-        _(msg`Cannot interact with a blocked user`),
-        'exclamation-circle',
-      )
+      Toast.show(blockedToastMsg, 'exclamation-circle')
       return
     }
 
@@ -163,10 +161,7 @@ let PostControls = ({
 
   const onQuote = () => {
     if (isBlocked) {
-      Toast.show(
-        _(msg`Cannot interact with a blocked user`),
-        'exclamation-circle',
-      )
+      Toast.show(blockedToastMsg, 'exclamation-circle')
       return
     }
 

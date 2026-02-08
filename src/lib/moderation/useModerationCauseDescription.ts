@@ -70,10 +70,10 @@ export function useModerationCauseDescription(
     }
     if (cause.type === 'blocked-by') {
       return {
-        icon: CircleBanSign,
+        icon: CircleInfo,
         name: _(msg`User Blocking You`),
         description: _(
-          msg`This user has blocked you. You cannot view their content.`,
+          msg`This user has blocked you. You can still view their content, but some interactions may be limited.`,
         ),
       }
     }

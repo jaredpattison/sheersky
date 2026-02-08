@@ -416,9 +416,7 @@ export function Description({
   if (!rt) return null
   if (
     profile.viewer &&
-    (profile.viewer.blockedBy ||
-      profile.viewer.blocking ||
-      profile.viewer.blockingByList)
+    (profile.viewer.blocking || profile.viewer.blockingByList)
   )
     return null
   return (

@@ -436,10 +436,11 @@ function Inner({
     profile: profileShadow,
     logContext: 'ProfileHoverCard',
   })
-  const isBlockedUser =
-    profile.viewer?.blocking ||
-    profile.viewer?.blockedBy ||
-    profile.viewer?.blockingByList
+  const isBlockingUser = !!(
+    profile.viewer?.blocking || profile.viewer?.blockingByList
+  )
+  const isBlockedByUser = !!profile.viewer?.blockedBy
+  const isBlockedUser = isBlockingUser || isBlockedByUser
   const following = formatCount(i18n, profile.followsCount || 0)
   const followers = formatCount(i18n, profile.followersCount || 0)
   const pluralizedFollowers = plural(profile.followersCount || 0, {
@@ -547,7 +548,7 @@ function Inner({
         </View>
       </Link>
 
-      {isBlockedUser && (
+      {isBlockingUser && (
         <View style={[a.flex_row, a.flex_wrap, a.gap_xs]}>
           {moderation.ui('profileView').alerts.map(cause => (
             <Pills.Label
@@ -560,7 +561,7 @@ function Inner({
         </View>
       )}
 
-      {!isBlockedUser && (
+      {!isBlockingUser && (
         <>
           <View style={[a.flex_row, a.flex_wrap, a.gap_md, a.pt_xs]}>
             <InlineLinkText
