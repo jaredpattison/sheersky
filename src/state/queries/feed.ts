@@ -419,7 +419,7 @@ const PWI_DISCOVER_FEED_STUB: SavedFeedSourceInfo = {
 const createPinnedFeedInfosQueryKeyRoot = (
   kind: 'pinned' | 'saved',
   feedUris: string[],
-) => [PERSISTED_QUERY_ROOT, 'feed-info', kind, feedUris]
+) => [PERSISTED_QUERY_ROOT, 'feed-info-v2', kind, feedUris]
 
 export function usePinnedFeedsInfos() {
   const {hasSession} = useSession()
@@ -507,6 +507,36 @@ export function usePinnedFeedsInfos() {
           })
         }
       }
+
+      // Append "Blocked Me" feed (SheerSky-specific feature)
+      result.push({
+        type: 'feed',
+        displayName: 'Blocked Me',
+        uri: 'blocked-by',
+        feedDescriptor: 'blockedby',
+        route: {
+          href: '/',
+          name: 'Home',
+          params: {},
+        },
+        cid: '',
+        avatar: '',
+        description: new RichText({
+          text: 'Posts from users who blocked you',
+        }),
+        creatorDid: '',
+        creatorHandle: '',
+        likeCount: 0,
+        likeUri: '',
+        savedFeed: {
+          id: 'blocked-by',
+          type: 'feed' as const,
+          value: 'blocked-by',
+          pinned: true,
+        },
+        contentMode: undefined,
+      })
+
       return result
     },
   })

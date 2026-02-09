@@ -12,6 +12,7 @@ import {
   type NativeStackScreenProps,
 } from '#/lib/routes/types'
 import {emitSoftReset} from '#/state/events'
+import {useBlockedByUsersQuery} from '#/state/queries/blocked-by-users'
 import {
   type SavedFeedSourceInfo,
   usePinnedFeedsInfos,
@@ -98,6 +99,10 @@ export function HomeScreen(props: Props) {
   }
 }
 
+function BlockedByEmptyState() {
+  return <CustomFeedEmptyState />
+}
+
 function HomeScreenReady({
   preferences,
   pinnedFeedInfos,
@@ -105,6 +110,7 @@ function HomeScreenReady({
   preferences: UsePreferencesQueryResponse
   pinnedFeedInfos: SavedFeedSourceInfo[]
 }) {
+  const {data: blockedByUsers} = useBlockedByUsersQuery()
   const ax = useAnalytics()
   const allFeeds = React.useMemo(
     () => pinnedFeedInfos.map(f => f.feedDescriptor),
@@ -293,6 +299,20 @@ function HomeScreenReady({
                 feedParams={homeFeedParams}
                 renderEmptyState={renderFollowingEmptyState}
                 renderEndOfFeed={FollowingEndOfFeed}
+                feedInfo={feedInfo}
+              />
+            )
+          }
+          if (feed === 'blockedby') {
+            return (
+              <FeedPage
+                key={feed}
+                testID="blockedByFeedPage"
+                isPageFocused={maybeSelectedFeed === feed}
+                isPageAdjacent={Math.abs(selectedIndex - index) === 1}
+                feed={feed}
+                feedParams={{blockedByDids: blockedByUsers ?? []}}
+                renderEmptyState={BlockedByEmptyState}
                 feedInfo={feedInfo}
               />
             )

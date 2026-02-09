@@ -18,6 +18,7 @@ import {
 } from '@tanstack/react-query'
 
 import {AuthorFeedAPI} from '#/lib/api/feed/author'
+import {BlockedByFeedAPI} from '#/lib/api/feed/blocked-by'
 import {CustomFeedAPI} from '#/lib/api/feed/custom'
 import {DemoFeedAPI} from '#/lib/api/feed/demo'
 import {FollowingFeedAPI} from '#/lib/api/feed/following'
@@ -30,6 +31,7 @@ import {type FeedAPI, type ReasonFeedSource} from '#/lib/api/feed/types'
 import {aggregateUserInterests} from '#/lib/api/feed/utils'
 import {FeedTuner, type FeedTunerFn} from '#/lib/api/feed-manip'
 import {DISCOVER_FEED_URI} from '#/lib/constants'
+import {filterBlockedByCauses} from '#/lib/moderation/soft-block'
 import {logger} from '#/logger'
 import {STALE} from '#/state/queries'
 import {DEFAULT_LOGGED_OUT_PREFERENCES} from '#/state/queries/preferences/const'
@@ -64,10 +66,12 @@ export type FeedDescriptor =
   | `list|${ListUri}`
   | `posts|${PostsUriList}`
   | 'demo'
+  | 'blockedby'
 export interface FeedParams {
   mergeFeedEnabled?: boolean
   mergeFeedSources?: string[]
   feedCacheKey?: 'discover' | 'explore' | undefined
+  blockedByDids?: string[]
 }
 
 type RQPageParam = {cursor: string | undefined; api: FeedAPI} | undefined
@@ -303,7 +307,8 @@ export function usePostFeedQuery(
                     }
                     if (
                       !ignoreFilter &&
-                      moderations[i]?.ui('contentList').filter
+                      filterBlockedByCauses(moderations[i]?.ui('contentList'))
+                        .filter
                     ) {
                       return undefined
                     }
@@ -487,6 +492,8 @@ function createApi({
   } else if (feedDesc.startsWith('posts')) {
     const [__, uriList] = feedDesc.split('|')
     return new PostListFeedAPI({agent, feedParams: {uris: uriList.split(',')}})
+  } else if (feedDesc === 'blockedby') {
+    return new BlockedByFeedAPI({dids: feedParams.blockedByDids ?? []})
   } else if (feedDesc === 'demo') {
     return new DemoFeedAPI({agent})
   } else {
