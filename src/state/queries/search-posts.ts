@@ -13,6 +13,7 @@ import {
   useInfiniteQuery,
 } from '@tanstack/react-query'
 
+import {filterBlockedByCauses} from '#/lib/moderation/soft-block'
 import {useModerationOpts} from '#/state/preferences/moderation-opts'
 import {useAgent} from '#/state/session'
 import {
@@ -125,7 +126,8 @@ export function useSearchPostsQuery({
                 ...page,
                 posts: page.posts.filter(post => {
                   const mod = moderatePost(post, moderationOpts!)
-                  return !mod.ui('contentList').filter
+                  const modui = filterBlockedByCauses(mod.ui('contentList'))
+                  return !modui.filter
                 }),
               }
             }),

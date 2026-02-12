@@ -13,6 +13,7 @@ import {useLingui} from '@lingui/react'
 import {useActorStatus} from '#/lib/actor-status'
 import {useOpenComposer} from '#/lib/hooks/useOpenComposer'
 import {useTranslate} from '#/lib/hooks/useTranslate'
+import {filterBlockedByCauses} from '#/lib/moderation/soft-block'
 import {makeProfileLink} from '#/lib/routes/links'
 import {sanitizeDisplayName} from '#/lib/strings/display-names'
 import {sanitizeHandle} from '#/lib/strings/handles'
@@ -392,11 +393,11 @@ const ThreadItemAnchorInner = memo(function ThreadItemAnchorInner({
         <View style={[a.pb_sm]}>
           <LabelsOnMyPost post={post} style={[a.pb_sm]} />
           <ContentHider
-            modui={moderation.ui('contentView')}
+            modui={filterBlockedByCauses(moderation.ui('contentView'))}
             ignoreMute
             childContainerStyle={[a.pt_sm]}>
             <PostAlerts
-              modui={moderation.ui('contentView')}
+              modui={filterBlockedByCauses(moderation.ui('contentView'))}
               size="lg"
               includeMute
               style={[a.pb_sm]}

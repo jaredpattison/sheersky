@@ -30,6 +30,7 @@ import {
   type EmbedType,
   parseEmbed,
 } from '#/types/bsky/post'
+import {BlockedQuoteEmbed} from './BlockedQuoteEmbed'
 import {ExternalEmbed} from './ExternalEmbed'
 import {ModeratedFeedEmbed} from './FeedEmbed'
 import {ImageEmbed} from './ImageEmbed'
@@ -181,11 +182,7 @@ function RecordEmbed({
       )
     }
     case 'post_blocked': {
-      return (
-        <PostPlaceholderText>
-          <Trans>Blocked</Trans>
-        </PostPlaceholderText>
-      )
+      return <BlockedQuoteEmbed embed={embed} {...rest} />
     }
     case 'post_detached': {
       return <PostDetachedEmbed embed={embed} />

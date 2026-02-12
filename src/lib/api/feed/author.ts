@@ -1,20 +1,23 @@
 import {
   AppBskyFeedDefs,
+  AppBskyFeedGetAuthorFeed,
   type AppBskyFeedGetAuthorFeed as GetAuthorFeed,
-  type BskyAgent,
+  BskyAgent,
+  type BskyAgent as BskyAgentType,
+  jsonStringToLex,
 } from '@atproto/api'
 
 import {type FeedAPI, type FeedAPIResponse} from './types'
 
 export class AuthorFeedAPI implements FeedAPI {
-  agent: BskyAgent
+  agent: BskyAgentType
   _params: GetAuthorFeed.QueryParams
 
   constructor({
     agent,
     feedParams,
   }: {
-    agent: BskyAgent
+    agent: BskyAgentType
     feedParams: GetAuthorFeed.QueryParams
   }) {
     this.agent = agent
@@ -28,11 +31,19 @@ export class AuthorFeedAPI implements FeedAPI {
   }
 
   async peekLatest(): Promise<AppBskyFeedDefs.FeedViewPost> {
-    const res = await this.agent.getAuthorFeed({
-      ...this.params,
-      limit: 1,
-    })
-    return res.data.feed[0]
+    try {
+      const res = await this.agent.getAuthorFeed({
+        ...this.params,
+        limit: 1,
+      })
+      return res.data.feed[0]
+    } catch (e) {
+      if (e instanceof AppBskyFeedGetAuthorFeed.BlockedByActorError) {
+        const data = await this._fetchUnauthenticated({limit: 1})
+        return data?.feed[0] as AppBskyFeedDefs.FeedViewPost
+      }
+      throw e
+    }
   }
 
   async fetch({
@@ -42,19 +53,76 @@ export class AuthorFeedAPI implements FeedAPI {
     cursor: string | undefined
     limit: number
   }): Promise<FeedAPIResponse> {
-    const res = await this.agent.getAuthorFeed({
-      ...this.params,
-      cursor,
-      limit,
-    })
-    if (res.success) {
-      return {
-        cursor: res.data.cursor,
-        feed: this._filter(res.data.feed),
+    try {
+      const res = await this.agent.getAuthorFeed({
+        ...this.params,
+        cursor,
+        limit,
+      })
+      if (res.success) {
+        return {
+          cursor: res.data.cursor,
+          feed: this._filter(res.data.feed),
+        }
       }
+      return {
+        feed: [],
+      }
+    } catch (e) {
+      // Soft block: if user blocked us, fetch via unauthenticated request
+      if (e instanceof AppBskyFeedGetAuthorFeed.BlockedByActorError) {
+        const data = await this._fetchUnauthenticated({cursor, limit})
+        if (data) {
+          return {
+            cursor: data.cursor,
+            feed: this._filter(data.feed),
+          }
+        }
+        return {feed: []}
+      }
+      throw e
     }
-    return {
-      feed: [],
+  }
+
+  async _fetchUnauthenticated({
+    cursor,
+    limit,
+  }: {
+    cursor?: string
+    limit: number
+  }): Promise<GetAuthorFeed.OutputSchema | null> {
+    try {
+      const params = this.params
+      const searchParams = new URLSearchParams({
+        actor: params.actor,
+        limit: String(limit),
+      })
+      if (params.filter) searchParams.set('filter', params.filter)
+      if (params.includePins) searchParams.set('includePins', 'true')
+      if (cursor) searchParams.set('cursor', cursor)
+
+      const labelersHeader = {
+        'atproto-accept-labelers': BskyAgent.appLabelers
+          .map(l => `${l};redact`)
+          .join(', '),
+      }
+
+      const res = await fetch(
+        `https://api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed?${searchParams.toString()}`,
+        {
+          method: 'GET',
+          headers: labelersHeader,
+        },
+      )
+
+      if (!res.ok) return null
+
+      const data = jsonStringToLex(
+        await res.text(),
+      ) as GetAuthorFeed.OutputSchema
+      return data?.feed?.length ? data : null
+    } catch {
+      return null
     }
   }
 

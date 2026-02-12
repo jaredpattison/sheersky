@@ -16,6 +16,7 @@ import {type ReasonFeedSource} from '#/lib/api/feed/types'
 import {MAX_POST_LINES} from '#/lib/constants'
 import {useOpenComposer} from '#/lib/hooks/useOpenComposer'
 import {usePalette} from '#/lib/hooks/usePalette'
+import {filterBlockedByCauses} from '#/lib/moderation/soft-block'
 import {makeProfileLink} from '#/lib/routes/links'
 import {countLines} from '#/lib/strings/helpers'
 import {
@@ -457,11 +458,11 @@ let PostContent = ({
   return (
     <ContentHider
       testID="contentHider-post"
-      modui={moderation.ui('contentList')}
+      modui={filterBlockedByCauses(moderation.ui('contentList'))}
       ignoreMute
       childContainerStyle={styles.contentHiderChild}>
       <PostAlerts
-        modui={moderation.ui('contentList')}
+        modui={filterBlockedByCauses(moderation.ui('contentList'))}
         style={[a.pb_xs]}
         additionalCauses={additionalPostAlerts}
       />

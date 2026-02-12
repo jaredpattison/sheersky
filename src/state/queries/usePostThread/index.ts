@@ -1,6 +1,13 @@
 import {useCallback, useMemo, useState} from 'react'
+import {AppBskyFeedDefs, AppBskyUnspeccedDefs} from '@atproto/api'
 import {useQuery, useQueryClient} from '@tanstack/react-query'
 
+import {
+  convertV1ThreadToV2Items,
+  fetchUnauthenticatedPosts,
+  fetchUnauthenticatedThread,
+  postViewToV2ThreadItem,
+} from '#/lib/api/unauthenticated'
 import {useModerationOpts} from '#/state/preferences/moderation-opts'
 import {useThreadPreferences} from '#/state/queries/preferences/useThreadPreferences'
 import {
@@ -71,12 +78,63 @@ export function usePostThread({anchor}: {anchor?: string}) {
     enabled: isThreadPreferencesLoaded && !!anchor && !!moderationOpts,
     queryKey: postThreadQueryKey,
     async queryFn(ctx) {
-      const {data} = await agent.app.bsky.unspecced.getPostThreadV2({
-        anchor: anchor!,
-        branchingFactor: view === 'linear' ? LINEAR_VIEW_BF : TREE_VIEW_BF,
-        below,
-        sort: sort,
-      })
+      let data
+      try {
+        data = (
+          await agent.app.bsky.unspecced.getPostThreadV2({
+            anchor: anchor!,
+            branchingFactor: view === 'linear' ? LINEAR_VIEW_BF : TREE_VIEW_BF,
+            below,
+            sort: sort,
+          })
+        ).data
+      } catch (e) {
+        // Soft block: if the anchor author blocked us, fall back to
+        // unauthenticated V1 API and convert to V2 format
+        const v1Data = await fetchUnauthenticatedThread(anchor!, {
+          depth: below,
+          parentHeight: 10,
+        })
+        if (
+          !v1Data?.thread ||
+          !AppBskyFeedDefs.isThreadViewPost(v1Data.thread)
+        ) {
+          throw e
+        }
+        data = {
+          thread: convertV1ThreadToV2Items(
+            v1Data.thread as AppBskyFeedDefs.ThreadViewPost,
+            anchor!,
+          ),
+          threadgate: v1Data.threadgate,
+          hasOtherReplies: false,
+        }
+      }
+
+      // Soft block: resolve any blocked items in the thread by fetching
+      // them via unauthenticated API
+      const blockedUris: string[] = []
+      const blockedIndices: number[] = []
+      for (let i = 0; i < data.thread.length; i++) {
+        const item = data.thread[i]
+        if (AppBskyUnspeccedDefs.isThreadItemBlocked(item.value)) {
+          blockedUris.push(item.uri)
+          blockedIndices.push(i)
+        }
+      }
+      if (blockedUris.length > 0) {
+        const postsData = await fetchUnauthenticatedPosts(blockedUris)
+        if (postsData?.posts) {
+          const postsByUri = new Map(postsData.posts.map(p => [p.uri, p]))
+          for (const idx of blockedIndices) {
+            const item = data.thread[idx]
+            const post = postsByUri.get(item.uri)
+            if (post) {
+              data.thread[idx] = postViewToV2ThreadItem(post, item.depth)
+            }
+          }
+        }
+      }
 
       /*
        * Initialize `ctx.meta` to track if we know we have additional replies

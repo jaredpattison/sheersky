@@ -13,6 +13,7 @@ import {useQueryClient} from '@tanstack/react-query'
 import {MAX_POST_LINES} from '#/lib/constants'
 import {useOpenComposer} from '#/lib/hooks/useOpenComposer'
 import {usePalette} from '#/lib/hooks/usePalette'
+import {filterBlockedByCauses} from '#/lib/moderation/soft-block'
 import {makeProfileLink} from '#/lib/routes/links'
 import {countLines} from '#/lib/strings/helpers'
 import {colors} from '#/lib/styles'
@@ -191,11 +192,11 @@ function PostInner({
           )}
           <LabelsOnMyPost post={post} />
           <ContentHider
-            modui={moderation.ui('contentView')}
+            modui={filterBlockedByCauses(moderation.ui('contentView'))}
             style={styles.contentHider}
             childContainerStyle={styles.contentHiderChild}>
             <PostAlerts
-              modui={moderation.ui('contentView')}
+              modui={filterBlockedByCauses(moderation.ui('contentView'))}
               style={[a.pb_xs]}
             />
             {richText.text ? (
