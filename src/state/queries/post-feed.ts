@@ -90,6 +90,8 @@ export interface FeedPostSliceItem {
   parentAuthor?: AppBskyActorDefs.ProfileViewBasic
   isParentBlocked?: boolean
   isParentNotFound?: boolean
+  parentUri?: string
+  parentDid?: string
 }
 
 export interface FeedPostSlice {
@@ -349,6 +351,8 @@ export function usePostFeedQuery(
                         parentAuthor: item.parentAuthor,
                         isParentBlocked: item.isParentBlocked,
                         isParentNotFound: item.isParentNotFound,
+                        parentUri: item.parentUri,
+                        parentDid: item.parentDid,
                       }
                       return feedPostSliceItem
                     }),

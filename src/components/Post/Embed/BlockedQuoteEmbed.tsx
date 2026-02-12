@@ -59,10 +59,10 @@ export function BlockedQuoteEmbed({
     )
   }
 
-  // Fetch failed or post not found — fall back to "Blocked" placeholder
+  // Fetch failed or post not found
   return (
     <PostPlaceholderText>
-      <Trans>Blocked</Trans>
+      <Trans>This quoted post could not be loaded</Trans>
     </PostPlaceholderText>
   )
 }

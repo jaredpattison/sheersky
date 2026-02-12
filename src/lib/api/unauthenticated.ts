@@ -1,5 +1,6 @@
 import {
   type $Typed,
+  type AppBskyActorGetProfile,
   AppBskyFeedDefs,
   type AppBskyFeedGetPosts,
   type AppBskyFeedGetPostThread,
@@ -76,6 +77,34 @@ export async function fetchUnauthenticatedPosts(
     if (!res.ok) return null
 
     return jsonStringToLex(await res.text()) as AppBskyFeedGetPosts.OutputSchema
+  } catch {
+    return null
+  }
+}
+
+/**
+ * Fetch a profile via unauthenticated public API.
+ * Used as a fallback when the authenticated API fails due to blocks.
+ */
+export async function fetchUnauthenticatedProfile(
+  actor: string,
+): Promise<AppBskyActorGetProfile.OutputSchema | null> {
+  try {
+    const params = new URLSearchParams({actor})
+
+    const res = await fetch(
+      `${BSKY_PUBLIC_API}/app.bsky.actor.getProfile?${params.toString()}`,
+      {
+        method: 'GET',
+        headers: labelerHeaders(),
+      },
+    )
+
+    if (!res.ok) return null
+
+    return jsonStringToLex(
+      await res.text(),
+    ) as AppBskyActorGetProfile.OutputSchema
   } catch {
     return null
   }

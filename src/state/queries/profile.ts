@@ -20,6 +20,7 @@ import {
 } from '@tanstack/react-query'
 
 import {uploadBlob} from '#/lib/api'
+import {fetchUnauthenticatedProfile} from '#/lib/api/unauthenticated'
 import {until} from '#/lib/async/until'
 import {useToggleMutationQueue} from '#/lib/hooks/useToggleMutationQueue'
 import {updateProfileShadow} from '#/state/cache/profile-shadow'
@@ -79,8 +80,15 @@ export function useProfileQuery({
     refetchOnWindowFocus: true,
     queryKey: RQKEY(did ?? ''),
     queryFn: async () => {
-      const res = await agent.getProfile({actor: did ?? ''})
-      return res.data
+      try {
+        const res = await agent.getProfile({actor: did ?? ''})
+        return res.data
+      } catch (e) {
+        // Soft block: fall back to unauthenticated API when blocked
+        const profile = await fetchUnauthenticatedProfile(did ?? '')
+        if (profile) return profile
+        throw e
+      }
     },
     placeholderData: () => {
       if (!did) return

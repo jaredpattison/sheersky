@@ -1,6 +1,7 @@
 import {useMemo} from 'react'
 import {moderateFeedGenerator} from '@atproto/api'
 
+import {filterBlockedByCauses} from '#/lib/moderation/soft-block'
 import {useModerationOpts} from '#/state/preferences/moderation-opts'
 import {atoms as a, useTheme} from '#/alf'
 import * as FeedCard from '#/components/FeedCard'
@@ -45,7 +46,11 @@ export function ModeratedFeedEmbed({
   }, [embed.view, moderationOpts])
   return (
     <ContentHider
-      modui={moderation?.ui('contentList')}
+      modui={
+        moderation
+          ? filterBlockedByCauses(moderation.ui('contentList'))
+          : undefined
+      }
       childContainerStyle={[a.pt_xs]}>
       <FeedEmbed embed={embed} />
     </ContentHider>

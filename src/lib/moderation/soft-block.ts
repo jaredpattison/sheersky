@@ -1,25 +1,31 @@
-import {ModerationUI} from '@atproto/api'
+import {type ModerationCauseSource, ModerationUI} from '@atproto/api'
+
+type ModerationCause = {type: string; source: ModerationCauseSource}
+
+const SOFT_BLOCK_CAUSES = new Set(['blocked-by', 'block-other'])
+const isBlockCause = (c: ModerationCause) => SOFT_BLOCK_CAUSES.has(c.type)
 
 /**
- * Creates a copy of ModerationUI with 'blocked-by' causes removed.
- * Used for SheerSky's soft-block feature where we show content from
- * users who have blocked us, instead of hiding it.
+ * Creates a copy of ModerationUI with block-related causes removed.
+ * Filters 'blocked-by' (someone blocked you) and 'block-other'
+ * (third-party block between other users). Used for SheerSky's
+ * soft-block feature where we show content regardless of blocks.
  */
 export function filterBlockedByCauses(modui: ModerationUI): ModerationUI {
-  const hasBlockedBy = [
+  const hasBlockCause = [
     ...modui.blurs,
     ...modui.alerts,
     ...modui.informs,
     ...modui.filters,
-  ].some(c => c.type === 'blocked-by')
+  ].some(isBlockCause)
 
-  if (!hasBlockedBy) return modui
+  if (!hasBlockCause) return modui
 
   const filtered = new ModerationUI()
-  filtered.filters = modui.filters.filter(c => c.type !== 'blocked-by')
-  filtered.blurs = modui.blurs.filter(c => c.type !== 'blocked-by')
-  filtered.alerts = modui.alerts.filter(c => c.type !== 'blocked-by')
-  filtered.informs = modui.informs.filter(c => c.type !== 'blocked-by')
+  filtered.filters = modui.filters.filter(c => !isBlockCause(c))
+  filtered.blurs = modui.blurs.filter(c => !isBlockCause(c))
+  filtered.alerts = modui.alerts.filter(c => !isBlockCause(c))
+  filtered.informs = modui.informs.filter(c => !isBlockCause(c))
   filtered.noOverride = filtered.blurs.length > 0 && modui.noOverride
   return filtered
 }

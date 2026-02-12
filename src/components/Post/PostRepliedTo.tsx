@@ -13,10 +13,12 @@ export function PostRepliedTo({
   parentAuthor,
   isParentBlocked,
   isParentNotFound,
+  parentDid,
 }: {
   parentAuthor: string | bsky.profile.AnyProfileView | undefined
   isParentBlocked?: boolean
   isParentNotFound?: boolean
+  parentDid?: string
 }) {
   const t = useTheme()
   const {currentAccount} = useSession()
@@ -24,8 +26,22 @@ export function PostRepliedTo({
   const textStyle = [a.text_sm, t.atoms.text_contrast_medium, a.leading_snug]
 
   let label
-  if (isParentBlocked) {
-    label = <Trans context="description">Replied to an unavailable post</Trans>
+  if (isParentBlocked && parentDid) {
+    // Soft block: show the blocked parent author's name
+    label = (
+      <Trans context="description">
+        Replied to{' '}
+        <ProfileHoverCard did={parentDid}>
+          <UserInfoText did={parentDid} attr="displayName" style={textStyle} />
+        </ProfileHoverCard>
+      </Trans>
+    )
+  } else if (isParentBlocked) {
+    label = (
+      <Trans context="description">
+        Replied to a post that could not be loaded
+      </Trans>
+    )
   } else if (isParentNotFound) {
     label = <Trans context="description">Replied to a post</Trans>
   } else if (parentAuthor) {

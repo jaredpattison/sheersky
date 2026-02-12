@@ -25,6 +25,8 @@ type FeedSliceItem = {
   parentAuthor: AppBskyActorDefs.ProfileViewBasic | undefined
   isParentBlocked: boolean
   isParentNotFound: boolean
+  parentUri?: string
+  parentDid?: string
 }
 
 type AuthorContext = {
@@ -87,6 +89,12 @@ export class FeedViewPostsSlice {
       parentAuthor,
       isParentBlocked,
       isParentNotFound,
+      parentUri: isParentBlocked
+        ? (parent as AppBskyFeedDefs.BlockedPost).uri
+        : undefined,
+      parentDid: isParentBlocked
+        ? (parent as AppBskyFeedDefs.BlockedPost).author.did
+        : undefined,
     })
     if (!reply) {
       if (post.record.reply) {
@@ -104,7 +112,11 @@ export class FeedViewPostsSlice {
       !AppBskyFeedPost.isRecord(parent.record) ||
       !bsky.validate(parent.record, AppBskyFeedPost.validateRecord)
     ) {
-      this.isOrphan = true
+      // Soft block: don't orphan replies where the parent is blocked —
+      // the content is still accessible via unauthenticated API
+      if (!isParentBlocked) {
+        this.isOrphan = true
+      }
       return
     }
     const root = reply.root
@@ -136,17 +148,17 @@ export class FeedViewPostsSlice {
       isParentBlocked: isGrandparentBlocked,
       isParentNotFound: isGrandparentNotFound,
     })
-    if (isGrandparentBlocked) {
-      this.isOrphan = true
-      // Keep going, it might still have a root, and we need this for thread
-      // de-deduping
-    }
+    // Soft block: don't orphan when grandparent is blocked — the content
+    // is still accessible via unauthenticated API
     if (
       !AppBskyFeedDefs.isPostView(root) ||
       !AppBskyFeedPost.isRecord(root.record) ||
       !bsky.validate(root.record, AppBskyFeedPost.validateRecord)
     ) {
-      this.isOrphan = true
+      // Soft block: don't orphan when root is blocked
+      if (!AppBskyFeedDefs.isBlockedPost(root)) {
+        this.isOrphan = true
+      }
       return
     }
     if (root.uri === parent.uri) {

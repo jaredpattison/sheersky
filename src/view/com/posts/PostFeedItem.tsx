@@ -71,6 +71,7 @@ interface FeedItemProps {
   hideTopBorder?: boolean
   isParentBlocked?: boolean
   isParentNotFound?: boolean
+  parentDid?: string
 }
 
 export function PostFeedItem({
@@ -88,6 +89,7 @@ export function PostFeedItem({
   hideTopBorder,
   isParentBlocked,
   isParentNotFound,
+  parentDid,
   rootPost,
   onShowLess,
 }: FeedItemProps & {
@@ -127,6 +129,7 @@ export function PostFeedItem({
         hideTopBorder={hideTopBorder}
         isParentBlocked={isParentBlocked}
         isParentNotFound={isParentNotFound}
+        parentDid={parentDid}
         rootPost={rootPost}
         onShowLess={onShowLess}
       />
@@ -151,6 +154,7 @@ let FeedItemInner = ({
   hideTopBorder,
   isParentBlocked,
   isParentNotFound,
+  parentDid,
   rootPost,
   onShowLess,
 }: FeedItemProps & {
@@ -373,6 +377,7 @@ let FeedItemInner = ({
                 parentAuthor={parentAuthor}
                 isParentBlocked={isParentBlocked}
                 isParentNotFound={isParentNotFound}
+                parentDid={parentDid}
               />
             )}
           <LabelsOnMyPost post={post} />
