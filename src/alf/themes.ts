@@ -20,8 +20,56 @@ const SHEERSKY_PRIMARY = {
   primary_975: '#051E2F',
 }
 
-const sheerskyPalette = {...DEFAULT_PALETTE, ...SHEERSKY_PRIMARY}
-const sheerskySubduedPalette = {...DEFAULT_SUBDUED_PALETTE, ...SHEERSKY_PRIMARY}
+// Teal-tinted contrast scale for light + dark themes
+// Light bg: #EEF4F6 (teal off-white), Dark bg: #000000 (black)
+const SHEERSKY_CONTRAST = {
+  contrast_0: '#EEF4F6',
+  contrast_25: '#E6EDF0',
+  contrast_50: '#DAE5E9',
+  contrast_100: '#C9D8DE',
+  contrast_200: '#AFC2CA',
+  contrast_300: '#95ACB6',
+  contrast_400: '#7B96A2',
+  contrast_500: '#627E8B',
+  contrast_600: '#506773',
+  contrast_700: '#3F525C',
+  contrast_800: '#303F48',
+  contrast_900: '#232F36',
+  contrast_950: '#192328',
+  contrast_975: '#11191E',
+  contrast_1000: '#000000',
+}
+
+// Teal-tinted contrast scale for dim theme
+// Dim bg: #233843 (dark teal)
+const SHEERSKY_SUBDUED_CONTRAST = {
+  contrast_0: '#FFFFFF',
+  contrast_25: '#F7FBFC',
+  contrast_50: '#EEF5F8',
+  contrast_100: '#DDEAEF',
+  contrast_200: '#C0D5DD',
+  contrast_300: '#A5C0CB',
+  contrast_400: '#8AAAB7',
+  contrast_500: '#7093A1',
+  contrast_600: '#5B7D8A',
+  contrast_700: '#4A6773',
+  contrast_800: '#3B535E',
+  contrast_900: '#30434D',
+  contrast_950: '#293B44',
+  contrast_975: '#26363F',
+  contrast_1000: '#233843',
+}
+
+const sheerskyPalette = {
+  ...DEFAULT_PALETTE,
+  ...SHEERSKY_PRIMARY,
+  ...SHEERSKY_CONTRAST,
+}
+const sheerskySubduedPalette = {
+  ...DEFAULT_SUBDUED_PALETTE,
+  ...SHEERSKY_PRIMARY,
+  ...SHEERSKY_SUBDUED_CONTRAST,
+}
 
 const DEFAULT_THEMES = createThemes({
   defaultPalette: sheerskyPalette,
