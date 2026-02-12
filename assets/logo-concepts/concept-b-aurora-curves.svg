@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 64 64">
+  <!-- Concept B: Aurora Curves — Three flowing parallel curves sweeping upward -->
+  <path stroke="#0284C7" stroke-linecap="round" stroke-width="5" d="M10 54 Q28 20 54 10"/>
+  <path stroke="#0EA5E9" stroke-linecap="round" stroke-width="4" d="M10 48 Q32 22 54 18"/>
+  <path stroke="#38BDF8" stroke-linecap="round" stroke-width="3" d="M16 54 Q34 30 54 26"/>
+</svg>

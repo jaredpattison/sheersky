@@ -25,14 +25,14 @@ export const colors = {
   gray7: '#26272D',
   gray8: '#141417',
 
-  blue0: '#bfe1ff',
-  blue1: '#8bc7fd',
-  blue2: '#52acfe',
-  blue3: '#0085ff',
-  blue4: '#0062bd',
-  blue5: '#034581',
-  blue6: '#012561',
-  blue7: '#001040',
+  blue0: '#BAE6FD',
+  blue1: '#7DD3FC',
+  blue2: '#38BDF8',
+  blue3: '#0EA5E9',
+  blue4: '#0284C7',
+  blue5: '#0369A1',
+  blue6: '#075985',
+  blue7: '#0C4A6E',
 
   red1: '#ffe6eb',
   red2: '#fba2b2',
@@ -60,15 +60,15 @@ export const colors = {
   green4: '#148203',
   green5: '#082b03',
 
-  unreadNotifBg: '#ebf6ff',
-  brandBlue: '#0066FF',
+  unreadNotifBg: '#F0F9FF',
+  brandBlue: '#0284C7',
   like: '#ec4899',
 }
 
 export const gradients = {
-  blueLight: {start: '#5A71FA', end: colors.blue3}, // buttons
-  blue: {start: '#5E55FB', end: colors.blue3}, // fab
-  blueDark: {start: '#5F45E0', end: colors.blue3}, // avis, banner
+  blueLight: {start: '#38BDF8', end: colors.blue3}, // buttons
+  blue: {start: '#0369A1', end: colors.blue3}, // fab
+  blueDark: {start: '#075985', end: colors.blue3}, // avis, banner
 }
 
 /**

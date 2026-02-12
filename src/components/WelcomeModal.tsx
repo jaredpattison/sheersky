@@ -159,7 +159,7 @@ export function WelcomeModal({control}: WelcomeModalProps) {
                     color="primary"
                     style={{
                       width: 200,
-                      backgroundColor: '#006AFF',
+                      backgroundColor: '#0284C7',
                     }}>
                     <ButtonText>
                       <Trans>Create account</Trans>
@@ -175,7 +175,7 @@ export function WelcomeModal({control}: WelcomeModalProps) {
                     hoverStyle={[a.bg_transparent]}>
                     {({hovered}) => (
                       <ButtonText
-                        style={[hovered && [a.underline], {color: '#006AFF'}]}>
+                        style={[hovered && [a.underline], {color: '#0284C7'}]}>
                         <Trans>Explore the app</Trans>
                       </ButtonText>
                     )}
@@ -199,7 +199,7 @@ export function WelcomeModal({control}: WelcomeModalProps) {
                         style={[
                           a.font_medium,
                           {
-                            color: '#006AFF',
+                            color: '#0284C7',
                             fontSize: undefined,
                           },
                           signInLinkHovered && a.underline,

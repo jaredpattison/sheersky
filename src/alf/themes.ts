@@ -4,9 +4,28 @@ import {
   DEFAULT_SUBDUED_PALETTE,
 } from '@bsky.app/alf'
 
+const SHEERSKY_PRIMARY = {
+  primary_25: '#F0F9FF',
+  primary_50: '#E0F2FE',
+  primary_100: '#BAE6FD',
+  primary_200: '#7DD3FC',
+  primary_300: '#38BDF8',
+  primary_400: '#0EA5E9',
+  primary_500: '#0284C7',
+  primary_600: '#0369A1',
+  primary_700: '#075985',
+  primary_800: '#0C4A6E',
+  primary_900: '#0C3B5A',
+  primary_950: '#082C44',
+  primary_975: '#051E2F',
+}
+
+const sheerskyPalette = {...DEFAULT_PALETTE, ...SHEERSKY_PRIMARY}
+const sheerskySubduedPalette = {...DEFAULT_SUBDUED_PALETTE, ...SHEERSKY_PRIMARY}
+
 const DEFAULT_THEMES = createThemes({
-  defaultPalette: DEFAULT_PALETTE,
-  subduedPalette: DEFAULT_SUBDUED_PALETTE,
+  defaultPalette: sheerskyPalette,
+  subduedPalette: sheerskySubduedPalette,
 })
 
 export const themes = {
