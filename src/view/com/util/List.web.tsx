@@ -500,6 +500,7 @@ let Row = function RowImpl<ItemT>({
       ON_ITEM_SEEN_INTERSECTION_OPTS,
     )
     const row: Element | null = rowRef.current
+    if (!row) return
     observer.observe(row)
     return () => {
       observer.unobserve(row)
@@ -553,6 +554,7 @@ let Visibility = ({
       rootMargin: `${topMargin} 0px ${bottomMargin} 0px`,
     })
     const tail: Element | null = tailRef.current
+    if (!tail) return
     observer.observe(tail)
     return () => {
       observer.unobserve(tail)
