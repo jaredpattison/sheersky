@@ -627,6 +627,57 @@ function assertSomePostsPassModeration(
   }
 }
 
+/**
+ * Fetch the latest items for a feed and return only the new ones
+ * (not already present in page 0 of the cache).
+ */
+export async function fetchLatestItems(
+  queryClient: QueryClient,
+  queryKey: QueryKey,
+): Promise<AppBskyFeedDefs.FeedViewPost[] | null> {
+  const data =
+    queryClient.getQueryData<InfiniteData<FeedPageUnselected>>(queryKey)
+  if (!data?.pages[0]) return null
+
+  const api = data.pages[0].api
+  const res = await api.fetch({cursor: undefined, limit: MIN_POSTS})
+
+  const existingUris = new Set(data.pages[0].feed.map(item => item.post.uri))
+  const newItems = res.feed.filter(item => !existingUris.has(item.post.uri))
+
+  if (newItems.length === 0) return null
+  return newItems
+}
+
+/**
+ * Prepend new items to page 0 of the feed cache.
+ * Deduplicates against current page 0 data inside the setQueryData callback
+ * for safety against concurrent mutations.
+ */
+export function applyPrependedItems(
+  queryClient: QueryClient,
+  queryKey: QueryKey,
+  newItems: AppBskyFeedDefs.FeedViewPost[],
+) {
+  queryClient.setQueryData<InfiniteData<FeedPageUnselected>>(queryKey, data => {
+    if (!data?.pages[0]) return data
+    const existingUris = new Set(data.pages[0].feed.map(item => item.post.uri))
+    const filtered = newItems.filter(item => !existingUris.has(item.post.uri))
+    if (filtered.length === 0) return data
+    return {
+      ...data,
+      pages: [
+        {
+          ...data.pages[0],
+          feed: [...filtered, ...data.pages[0].feed],
+          fetchedAt: Date.now(),
+        },
+        ...data.pages.slice(1),
+      ],
+    }
+  })
+}
+
 export function resetPostsFeedQueries(queryClient: QueryClient, timeout = 0) {
   setTimeout(() => {
     queryClient.resetQueries({

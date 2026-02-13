@@ -115,7 +115,7 @@ function ListImpl<ItemT>(
 
   const getScrollableNode = React.useCallback(() => {
     if (disableFullWindowScroll) {
-      const element = nativeRef.current as HTMLDivElement | null
+      const element = nativeRef.current
       if (!element) return
 
       return {
@@ -216,6 +216,15 @@ function ListImpl<ItemT>(
             top: element.scrollHeight,
             behavior: animated ? 'smooth' : 'instant',
           })
+        },
+
+        getScrollState() {
+          const el = getScrollableNode()
+          if (!el) return null
+          return {
+            scrollY: el.scrollY ?? 0,
+            scrollHeight: el.scrollHeight ?? 0,
+          }
         },
       }) as any, // TODO: Better types.
     [getScrollableNode],
@@ -468,12 +477,12 @@ let Row = function RowImpl<ItemT>({
             if (!intersectionTimeout.current) {
               intersectionTimeout.current = setTimeout(() => {
                 intersectionTimeout.current = undefined
-                onItemSeen!(item)
+                onItemSeen(item)
               }, ON_ITEM_SEEN_WAIT_DURATION)
             }
           } else {
             if (intersectionTimeout.current) {
-              clearTimeout(intersectionTimeout.current as NodeJS.Timeout)
+              clearTimeout(intersectionTimeout.current)
               intersectionTimeout.current = undefined
             }
           }
@@ -490,7 +499,7 @@ let Row = function RowImpl<ItemT>({
       handleIntersection,
       ON_ITEM_SEEN_INTERSECTION_OPTS,
     )
-    const row: Element | null = rowRef.current!
+    const row: Element | null = rowRef.current
     observer.observe(row)
     return () => {
       observer.unobserve(row)
@@ -543,7 +552,7 @@ let Visibility = ({
       root: root?.current ?? null,
       rootMargin: `${topMargin} 0px ${bottomMargin} 0px`,
     })
-    const tail: Element | null = tailRef.current!
+    const tail: Element | null = tailRef.current
     observer.observe(tail)
     return () => {
       observer.unobserve(tail)

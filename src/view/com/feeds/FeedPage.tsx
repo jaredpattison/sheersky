@@ -19,13 +19,16 @@ import {ComposeIcon2} from '#/lib/icons'
 import {getRootNavigation, getTabState, TabState} from '#/lib/routes/helpers'
 import {type AllNavigatorParams} from '#/lib/routes/types'
 import {s} from '#/lib/styles'
+import {logger} from '#/logger'
 import {listenSoftReset} from '#/state/events'
 import {FeedFeedbackProvider, useFeedFeedback} from '#/state/feed-feedback'
 import {useSetHomeBadge} from '#/state/home-badge'
 import {type FeedSourceInfo} from '#/state/queries/feed'
 import {
+  applyPrependedItems,
   type FeedDescriptor,
   type FeedParams,
+  fetchLatestItems,
   RQKEY as FEED_RQKEY,
 } from '#/state/queries/post-feed'
 import {truncateAndInvalidate} from '#/state/queries/util'
@@ -126,16 +129,53 @@ export function FeedPage({
     openComposer({logContext: 'Fab'})
   }, [openComposer])
 
-  const onPressLoadLatest = useCallback(() => {
-    scrollToTop()
-    truncateAndInvalidate(queryClient, FEED_RQKEY(feed))
+  const isLoadingLatest = useRef(false)
+  const onPressLoadLatest = useCallback(async () => {
+    if (isLoadingLatest.current) return
+    isLoadingLatest.current = true
     setHasNew(false)
+    const queryKey = FEED_RQKEY(feed)
+    try {
+      const newItems = await fetchLatestItems(queryClient, queryKey)
+      if (newItems && newItems.length > 0) {
+        if (IS_NATIVE) {
+          // Native: maintainVisibleContentPosition on FlatList handles position
+          applyPrependedItems(queryClient, queryKey, newItems)
+        } else {
+          // Web: capture scroll state, apply prepend, then adjust scroll
+          const scrollState = (scrollElRef.current as any)?.getScrollState?.()
+          applyPrependedItems(queryClient, queryKey, newItems)
+          if (scrollState) {
+            requestAnimationFrame(() => {
+              const newState = (scrollElRef.current as any)?.getScrollState?.()
+              if (newState) {
+                const delta = newState.scrollHeight - scrollState.scrollHeight
+                if (delta > 0) {
+                  scrollElRef.current?.scrollToOffset({
+                    offset: scrollState.scrollY + delta,
+                    animated: false,
+                  })
+                }
+              }
+            })
+          }
+        }
+      }
+    } catch (e) {
+      logger.error('Failed to prepend latest items, falling back', {
+        message: String(e),
+      })
+      scrollToTop()
+      truncateAndInvalidate(queryClient, FEED_RQKEY(feed))
+    } finally {
+      isLoadingLatest.current = false
+    }
     ax.metric('feed:refresh', {
       feedType: feed.split('|')[0],
       feedUrl: feed,
       reason: 'load-latest',
     })
-  }, [ax, scrollToTop, feed, queryClient])
+  }, [ax, scrollToTop, feed, queryClient, scrollElRef])
 
   const shouldPrefetch = IS_NATIVE && isPageAdjacent
   const isDiscoverFeed = feedInfo.uri === DISCOVER_FEED_URI

@@ -1005,6 +1005,7 @@ let PostFeed = ({
         onScrolledDownChange={onScrolledDownChange}
         onEndReached={onEndReached}
         onEndReachedThreshold={2} // number of posts left to trigger load more
+        maintainVisibleContentPosition={{minIndexForVisible: 0}}
         removeClippedSubviews={true}
         extraData={extraData}
         desktopFixedHeight={
