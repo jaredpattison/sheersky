@@ -162,7 +162,11 @@ export function BottomBar({navigation}: BottomTabBarProps) {
                 isAtHome ? (
                   <HomeFilled
                     width={iconWidth + 1}
-                    style={[styles.ctrlIcon, t.atoms.text, styles.homeIcon]}
+                    style={[
+                      styles.ctrlIcon,
+                      {color: t.palette.primary_500},
+                      styles.homeIcon,
+                    ]}
                   />
                 ) : (
                   <Home
@@ -181,7 +185,11 @@ export function BottomBar({navigation}: BottomTabBarProps) {
                 isAtSearch ? (
                   <MagnifyingGlassFilled
                     width={iconWidth + 2}
-                    style={[styles.ctrlIcon, t.atoms.text, styles.searchIcon]}
+                    style={[
+                      styles.ctrlIcon,
+                      {color: t.palette.primary_500},
+                      styles.searchIcon,
+                    ]}
                   />
                 ) : (
                   <MagnifyingGlass
@@ -202,7 +210,11 @@ export function BottomBar({navigation}: BottomTabBarProps) {
                 isAtMessages ? (
                   <MessageFilled
                     width={iconWidth - 1}
-                    style={[styles.ctrlIcon, t.atoms.text, styles.feedsIcon]}
+                    style={[
+                      styles.ctrlIcon,
+                      {color: t.palette.primary_500},
+                      styles.feedsIcon,
+                    ]}
                   />
                 ) : (
                   <Message
@@ -234,7 +246,11 @@ export function BottomBar({navigation}: BottomTabBarProps) {
                 isAtNotifications ? (
                   <BellFilled
                     width={iconWidth}
-                    style={[styles.ctrlIcon, t.atoms.text, styles.bellIcon]}
+                    style={[
+                      styles.ctrlIcon,
+                      {color: t.palette.primary_500},
+                      styles.bellIcon,
+                    ]}
                   />
                 ) : (
                   <Bell
@@ -270,7 +286,7 @@ export function BottomBar({navigation}: BottomTabBarProps) {
                       isAtMyProfile && [
                         styles.onProfile,
                         {
-                          borderColor: t.atoms.text.color,
+                          borderColor: t.palette.primary_500,
                           borderWidth: live ? 0 : 1,
                         },
                       ],

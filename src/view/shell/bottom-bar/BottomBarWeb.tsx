@@ -100,7 +100,11 @@ export function BottomBarWeb() {
                   <Icon
                     aria-hidden={true}
                     width={iconWidth + 1}
-                    style={[styles.ctrlIcon, t.atoms.text, styles.homeIcon]}
+                    style={[
+                      styles.ctrlIcon,
+                      isActive ? {color: t.palette.primary_500} : t.atoms.text,
+                      styles.homeIcon,
+                    ]}
                   />
                 )
               }}
@@ -112,7 +116,11 @@ export function BottomBarWeb() {
                   <Icon
                     aria-hidden={true}
                     width={iconWidth + 2}
-                    style={[styles.ctrlIcon, t.atoms.text, styles.searchIcon]}
+                    style={[
+                      styles.ctrlIcon,
+                      isActive ? {color: t.palette.primary_500} : t.atoms.text,
+                      styles.searchIcon,
+                    ]}
                   />
                 )
               }}
@@ -133,7 +141,9 @@ export function BottomBarWeb() {
                         width={iconWidth - 1}
                         style={[
                           styles.ctrlIcon,
-                          t.atoms.text,
+                          isActive
+                            ? {color: t.palette.primary_500}
+                            : t.atoms.text,
                           styles.messagesIcon,
                         ]}
                       />
@@ -150,7 +160,13 @@ export function BottomBarWeb() {
                       <Icon
                         aria-hidden={true}
                         width={iconWidth}
-                        style={[styles.ctrlIcon, t.atoms.text, styles.bellIcon]}
+                        style={[
+                          styles.ctrlIcon,
+                          isActive
+                            ? {color: t.palette.primary_500}
+                            : t.atoms.text,
+                          styles.bellIcon,
+                        ]}
                       />
                     )
                   }}
@@ -174,7 +190,7 @@ export function BottomBarWeb() {
                           styles.profileIcon,
                           isActive && [
                             styles.onProfile,
-                            {borderColor: t.atoms.text.color},
+                            {borderColor: t.palette.primary_500},
                           ],
                         ]}>
                         <UserAvatar
