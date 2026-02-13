@@ -4,12 +4,14 @@ import {FeedTuner} from '#/lib/api/feed-manip'
 import {type FeedDescriptor} from '../queries/post-feed'
 import {usePreferencesQuery} from '../queries/preferences'
 import {useSession} from '../session'
+import {useHiddenRepostDids} from './hidden-reposts'
 import {useLanguagePrefs} from './languages'
 
 export function useFeedTuners(feedDesc: FeedDescriptor) {
   const langPrefs = useLanguagePrefs()
   const {data: preferences} = usePreferencesQuery()
   const {currentAccount} = useSession()
+  const hiddenRepostDids = useHiddenRepostDids()
 
   return useMemo(() => {
     if (feedDesc.startsWith('author')) {
@@ -30,6 +32,9 @@ export function useFeedTuners(feedDesc: FeedDescriptor) {
       if (preferences?.feedViewPrefs.hideReposts) {
         feedTuners.push(FeedTuner.removeReposts)
       }
+      if (hiddenRepostDids && hiddenRepostDids.length > 0) {
+        feedTuners.push(FeedTuner.hideRepostsFrom(new Set(hiddenRepostDids)))
+      }
       if (preferences?.feedViewPrefs.hideReplies) {
         feedTuners.push(FeedTuner.removeReplies)
       } else {
@@ -43,10 +48,11 @@ export function useFeedTuners(feedDesc: FeedDescriptor) {
         feedTuners.push(FeedTuner.removeQuotePosts)
       }
       feedTuners.push(FeedTuner.dedupThreads)
+      feedTuners.push(FeedTuner.dedupReposts)
       feedTuners.push(FeedTuner.removeMutedThreads)
 
       return feedTuners
     }
     return []
-  }, [feedDesc, currentAccount, preferences, langPrefs])
+  }, [feedDesc, currentAccount, preferences, langPrefs, hiddenRepostDids])
 }

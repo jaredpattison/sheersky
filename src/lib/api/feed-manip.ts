@@ -248,6 +248,7 @@ export class FeedTuner {
   seenKeys: Set<string> = new Set()
   seenUris: Set<string> = new Set()
   seenRootUris: Set<string> = new Set()
+  seenPostUrisForRepostDedup: Set<string> = new Set()
 
   constructor(public tunerFns: FeedTunerFn[]) {}
 
@@ -347,6 +348,28 @@ export class FeedTuner {
     return slices
   }
 
+  static hideRepostsFrom(dids: Set<string>) {
+    return (
+      _tuner: FeedTuner,
+      slices: FeedViewPostsSlice[],
+      _dryRun: boolean,
+    ): FeedViewPostsSlice[] => {
+      for (let i = 0; i < slices.length; i++) {
+        if (slices[i].isRepost) {
+          const reason = slices[i]._feedPost.reason
+          if (
+            AppBskyFeedDefs.isReasonRepost(reason) &&
+            dids.has(reason.by.did)
+          ) {
+            slices.splice(i, 1)
+            i--
+          }
+        }
+      }
+      return slices
+    }
+  }
+
   static removeQuotePosts(
     tuner: FeedTuner,
     slices: FeedViewPostsSlice[],
@@ -403,6 +426,23 @@ export class FeedTuner {
         if (!dryRun) {
           tuner.seenRootUris.add(rootUri)
         }
+      }
+    }
+    return slices
+  }
+
+  static dedupReposts(
+    tuner: FeedTuner,
+    slices: FeedViewPostsSlice[],
+    dryRun: boolean,
+  ): FeedViewPostsSlice[] {
+    for (let i = 0; i < slices.length; i++) {
+      const postUri = slices[i]._feedPost.post.uri
+      if (slices[i].isRepost && tuner.seenPostUrisForRepostDedup.has(postUri)) {
+        slices.splice(i, 1)
+        i--
+      } else if (!dryRun) {
+        tuner.seenPostUrisForRepostDedup.add(postUri)
       }
     }
     return slices

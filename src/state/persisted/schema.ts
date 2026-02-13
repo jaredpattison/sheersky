@@ -115,6 +115,7 @@ const schema = z.object({
     step: z.string(),
   }),
   hiddenPosts: z.array(z.string()).optional(), // should move to server
+  hiddenRepostDids: z.array(z.string()).optional(),
   useInAppBrowser: z.boolean().optional(),
   /** @deprecated */
   lastSelectedHomeFeed: z.string().optional(),
@@ -165,6 +166,7 @@ export const defaults: Schema = {
     step: 'Home',
   },
   hiddenPosts: [],
+  hiddenRepostDids: [],
   useInAppBrowser: undefined,
   lastSelectedHomeFeed: undefined,
   pdsAddressHistory: [],

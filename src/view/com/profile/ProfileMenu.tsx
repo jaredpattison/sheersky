@@ -13,6 +13,10 @@ import {shareText, shareUrl} from '#/lib/sharing'
 import {toShareUrl} from '#/lib/strings/url-helpers'
 import {type Shadow} from '#/state/cache/types'
 import {useModalControls} from '#/state/modals'
+import {
+  useHiddenRepostDids,
+  useHiddenRepostDidsApi,
+} from '#/state/preferences/hidden-reposts'
 import {Nux, useNux, useSaveNux} from '#/state/queries/nuxs'
 import {
   RQKEY as profileQueryKey,
@@ -45,6 +49,7 @@ import {
   PersonX_Stroke2_Corner0_Rounded as PersonX,
 } from '#/components/icons/Person'
 import {PlusLarge_Stroke2_Corner0_Rounded as Plus} from '#/components/icons/Plus'
+import {Repost_Stroke2_Corner2_Rounded as RepostIcon} from '#/components/icons/Repost'
 import {SpeakerVolumeFull_Stroke2_Corner0_Rounded as Unmute} from '#/components/icons/Speaker'
 import {StarterPack} from '#/components/icons/StarterPack'
 import {EditLiveDialog} from '#/components/live/EditLiveDialog'
@@ -94,6 +99,10 @@ let ProfileMenu = ({
     statusNudge.status === 'ready' &&
     !statusNudge.nux?.completed
   const {mutate: saveNux} = useSaveNux()
+
+  const hiddenRepostDids = useHiddenRepostDids()
+  const {hideReposts, showReposts} = useHiddenRepostDidsApi()
+  const isRepostHidden = hiddenRepostDids?.includes(profile.did) ?? false
 
   const [queueMute, queueUnmute] = useProfileMuteMutationQueue(profile)
   const [queueBlock, queueUnblock] = useProfileBlockMutationQueue(profile)
@@ -426,6 +435,45 @@ let ProfileMenu = ({
                   ))}
                 {!isSelf && (
                   <>
+                    <Menu.Item
+                      testID="profileHeaderDropdownHideRepostsBtn"
+                      label={
+                        isRepostHidden
+                          ? _(msg`Show reposts`)
+                          : _(msg`Hide reposts`)
+                      }
+                      onPress={() => {
+                        if (isRepostHidden) {
+                          showReposts(profile.did)
+                          Toast.show(
+                            _(
+                              msg({
+                                message: 'Reposts unhidden',
+                                context: 'toast',
+                              }),
+                            ),
+                          )
+                        } else {
+                          hideReposts(profile.did)
+                          Toast.show(
+                            _(
+                              msg({
+                                message: 'Reposts hidden',
+                                context: 'toast',
+                              }),
+                            ),
+                          )
+                        }
+                      }}>
+                      <Menu.ItemText>
+                        {isRepostHidden ? (
+                          <Trans>Show reposts</Trans>
+                        ) : (
+                          <Trans>Hide reposts from this user</Trans>
+                        )}
+                      </Menu.ItemText>
+                      <Menu.ItemIcon icon={RepostIcon} />
+                    </Menu.Item>
                     {!profile.viewer?.blocking &&
                       !profile.viewer?.mutedByList && (
                         <Menu.Item
