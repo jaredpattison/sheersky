@@ -1,10 +1,20 @@
-import {useMemo} from 'react'
-import {type StyleProp, type TextStyle} from 'react-native'
+import React, {useMemo} from 'react'
+import {type StyleProp, type TextStyle, View} from 'react-native'
 import {AppBskyRichtextFacet, RichText as RichTextAPI} from '@atproto/api'
 
+import {
+  facetsForRegion,
+  hasCodeContent,
+  type InlineCodeSpan,
+  parseCodeRegions,
+  parseInlineCode,
+  type Region,
+} from '#/lib/strings/code-detection'
 import {toShortUrl} from '#/lib/strings/url-helpers'
 import {atoms as a, flatten, type TextStyleProp} from '#/alf'
 import {isOnlyEmoji} from '#/alf/typography'
+import {CodeBlock} from '#/components/CodeBlock'
+import {InlineCode} from '#/components/InlineCode'
 import {InlineLinkText, type LinkProps} from '#/components/Link'
 import {ProfileHoverCard} from '#/components/ProfileHoverCard'
 import {RichTextTag} from '#/components/RichTextTag'
@@ -71,6 +81,36 @@ export function RichText({
 
   const {text, facets} = richText
 
+  const hasCode = hasCodeContent(text)
+
+  // --- Code block path: switch to <View> layout ---
+  if (hasCode) {
+    const regions = parseCodeRegions(text)
+    if (regions.some(r => r.type === 'codeBlock')) {
+      // eslint-disable-next-line bsky-internal/avoid-unwrapped-text
+      return (
+        <RichTextCodeBlocks
+          regions={regions}
+          facets={facets}
+          fullText={text}
+          testID={testID}
+          onLayout={onLayout}
+          style={style}
+          selectable={selectable}
+          disableLinks={disableLinks}
+          enableTags={enableTags}
+          authorHandle={authorHandle}
+          onLinkPress={onLinkPress}
+          interactiveStyle={interactiveStyle}
+          emojiMultiplier={emojiMultiplier}
+          shouldProxyLinks={shouldProxyLinks}
+          disableMentionFacetValidation={disableMentionFacetValidation}
+        />
+      )
+    }
+  }
+
+  // --- No facets path ---
   if (!facets?.length) {
     if (isOnlyEmoji(text)) {
       const flattenedStyle = flatten(style) ?? {}
@@ -90,6 +130,28 @@ export function RichText({
         </Text>
       )
     }
+
+    // Inline code in plain text (no facets)
+    if (hasCode) {
+      const spans = parseInlineCode(text)
+      if (spans.length > 0) {
+        return (
+          <Text
+            emoji
+            selectable={selectable}
+            testID={testID}
+            style={plainStyles}
+            numberOfLines={numberOfLines}
+            onLayout={onLayout}
+            onTextLayout={onTextLayout}
+            // @ts-ignore web only -prf
+            dataSet={WORD_WRAP}>
+            {renderTextWithInlineCode(text, spans)}
+          </Text>
+        )
+      }
+    }
+
     return (
       <Text
         emoji
@@ -106,6 +168,7 @@ export function RichText({
     )
   }
 
+  // --- Facets path ---
   const els = []
   let key = 0
   // N.B. must access segments via `richText.segments`, not via destructuring
@@ -171,7 +234,21 @@ export function RichText({
         />,
       )
     } else {
-      els.push(segment.text)
+      // Plain text segment — check for inline code
+      if (hasCode) {
+        const spans = parseInlineCode(segment.text)
+        if (spans.length > 0) {
+          els.push(
+            <React.Fragment key={key}>
+              {renderTextWithInlineCode(segment.text, spans)}
+            </React.Fragment>,
+          )
+        } else {
+          els.push(segment.text)
+        }
+      } else {
+        els.push(segment.text)
+      }
     }
     key++
   }
@@ -189,5 +266,104 @@ export function RichText({
       dataSet={WORD_WRAP}>
       {els}
     </Text>
+  )
+}
+
+/**
+ * Split text by inline code spans and interleave <InlineCode> components.
+ */
+function renderTextWithInlineCode(
+  text: string,
+  spans: InlineCodeSpan[],
+): React.ReactNode[] {
+  const els: React.ReactNode[] = []
+  let lastEnd = 0
+  for (const span of spans) {
+    if (span.startIndex > lastEnd) {
+      els.push(text.slice(lastEnd, span.startIndex))
+    }
+    els.push(<InlineCode key={`ic-${span.startIndex}`}>{span.code}</InlineCode>)
+    lastEnd = span.endIndex
+  }
+  if (lastEnd < text.length) {
+    els.push(text.slice(lastEnd))
+  }
+  return els
+}
+
+/**
+ * Renders post text that contains code blocks as a <View> with
+ * interleaved <RichText> (for text regions) and <CodeBlock> elements.
+ * Extracted from RichText to satisfy the avoid-unwrapped-text lint rule.
+ */
+function RichTextCodeBlocks({
+  regions,
+  facets,
+  fullText,
+  testID,
+  onLayout,
+  style,
+  selectable,
+  disableLinks,
+  enableTags,
+  authorHandle,
+  onLinkPress,
+  interactiveStyle,
+  emojiMultiplier,
+  shouldProxyLinks,
+  disableMentionFacetValidation,
+}: {
+  regions: Region[]
+  facets: AppBskyRichtextFacet.Main[] | undefined
+  fullText: string
+  testID?: string
+  onLayout?: RichTextProps['onLayout']
+  style?: RichTextProps['style']
+  selectable?: boolean
+  disableLinks?: boolean
+  enableTags?: boolean
+  authorHandle?: string
+  onLinkPress?: RichTextProps['onLinkPress']
+  interactiveStyle?: RichTextProps['interactiveStyle']
+  emojiMultiplier?: number
+  shouldProxyLinks?: boolean
+  disableMentionFacetValidation?: true
+}) {
+  return (
+    <View testID={testID} onLayout={onLayout}>
+      {regions.map((region, i) => {
+        if (region.type === 'codeBlock') {
+          return (
+            <CodeBlock key={i} code={region.code} language={region.language} />
+          )
+        }
+        const subFacets = facetsForRegion(
+          facets,
+          region.startIndex,
+          region.endIndex,
+          fullText,
+        )
+        const subRt = new RichTextAPI({
+          text: region.text,
+          facets: subFacets,
+        })
+        return (
+          <RichText
+            key={i}
+            value={subRt}
+            style={style}
+            selectable={selectable}
+            disableLinks={disableLinks}
+            enableTags={enableTags}
+            authorHandle={authorHandle}
+            onLinkPress={onLinkPress}
+            interactiveStyle={interactiveStyle}
+            emojiMultiplier={emojiMultiplier}
+            shouldProxyLinks={shouldProxyLinks}
+            disableMentionFacetValidation={disableMentionFacetValidation}
+          />
+        )
+      })}
+    </View>
   )
 }
