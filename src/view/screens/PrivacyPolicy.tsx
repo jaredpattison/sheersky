@@ -11,7 +11,6 @@ import {
 } from '#/lib/routes/types'
 import {s} from '#/lib/styles'
 import {useSetMinimalShellMode} from '#/state/shell'
-import {TextLink} from '#/view/com/util/Link'
 import {Text} from '#/view/com/util/text/Text'
 import {ScrollView} from '#/view/com/util/Views'
 import * as Layout from '#/components/Layout'
@@ -34,14 +33,55 @@ export const PrivacyPolicyScreen = (_props: Props) => {
       <ViewHeader title={_(msg`Privacy Policy`)} />
       <ScrollView style={[s.hContentRegion, pal.view]}>
         <View style={[s.p20]}>
-          <Text style={pal.text}>
+          <Text type="title-lg" style={[pal.text, {marginBottom: 16}]}>
+            <Trans>Privacy Policy</Trans>
+          </Text>
+          <Text style={[pal.text, {marginBottom: 12, lineHeight: 22}]}>
             <Trans>
-              The Privacy Policy has been moved to{' '}
-              <TextLink
-                style={pal.link}
-                href="https://bsky.social/about/support/privacy-policy"
-                text="bsky.social/about/support/privacy-policy"
-              />
+              SheerSky is a third-party client for the AT Protocol network. This
+              policy describes how SheerSky handles your data.
+            </Trans>
+          </Text>
+          <Text type="title" style={[pal.text, {marginBottom: 8}]}>
+            <Trans>Data We Collect</Trans>
+          </Text>
+          <Text style={[pal.text, {marginBottom: 12, lineHeight: 22}]}>
+            <Trans>
+              SheerSky stores your preferences and settings locally on your
+              device. Your account credentials are used only to authenticate
+              with your AT Protocol hosting provider (PDS).
+            </Trans>
+          </Text>
+          <Text type="title" style={[pal.text, {marginBottom: 8}]}>
+            <Trans>Network Data</Trans>
+          </Text>
+          <Text style={[pal.text, {marginBottom: 12, lineHeight: 22}]}>
+            <Trans>
+              Your posts, profile, social graph, and other content are stored on
+              the AT Protocol network by your hosting provider. SheerSky does
+              not operate servers that store your content. If you use Bluesky's
+              hosting at bsky.social, their Privacy Policy governs your network
+              data.
+            </Trans>
+          </Text>
+          <Text type="title" style={[pal.text, {marginBottom: 8}]}>
+            <Trans>Analytics</Trans>
+          </Text>
+          <Text style={[pal.text, {marginBottom: 12, lineHeight: 22}]}>
+            <Trans>
+              SheerSky may collect anonymous usage analytics to improve the app
+              experience. No personally identifiable information is shared with
+              third parties.
+            </Trans>
+          </Text>
+          <Text type="title" style={[pal.text, {marginBottom: 8}]}>
+            <Trans>Third-Party Services</Trans>
+          </Text>
+          <Text style={[pal.text, {marginBottom: 12, lineHeight: 22}]}>
+            <Trans>
+              SheerSky connects to AT Protocol services to provide its
+              functionality. These services have their own privacy policies that
+              apply to the data they process.
             </Trans>
           </Text>
         </View>

@@ -11,7 +11,6 @@ import {
 } from '#/lib/routes/types'
 import {s} from '#/lib/styles'
 import {useSetMinimalShellMode} from '#/state/shell'
-import {TextLink} from '#/view/com/util/Link'
 import {Text} from '#/view/com/util/text/Text'
 import {ScrollView} from '#/view/com/util/Views'
 import * as Layout from '#/components/Layout'
@@ -34,14 +33,34 @@ export const CopyrightPolicyScreen = (_props: Props) => {
       <ViewHeader title={_(msg`Copyright Policy`)} />
       <ScrollView style={[s.hContentRegion, pal.view]}>
         <View style={[s.p20]}>
-          <Text style={pal.text}>
+          <Text type="title-lg" style={[pal.text, {marginBottom: 16}]}>
+            <Trans>Copyright Policy</Trans>
+          </Text>
+          <Text style={[pal.text, {marginBottom: 12, lineHeight: 22}]}>
             <Trans>
-              The Copyright Policy has been moved to{' '}
-              <TextLink
-                style={pal.link}
-                href="https://bsky.social/about/support/copyright"
-                text="bsky.social/about/support/copyright"
-              />
+              SheerSky respects intellectual property rights. Copyright
+              enforcement on the AT Protocol network is handled by moderation
+              services.
+            </Trans>
+          </Text>
+          <Text type="title" style={[pal.text, {marginBottom: 8}]}>
+            <Trans>DMCA Notices</Trans>
+          </Text>
+          <Text style={[pal.text, {marginBottom: 12, lineHeight: 22}]}>
+            <Trans>
+              If you believe content on the network infringes your copyright,
+              you can submit a report through the app's reporting feature. DMCA
+              takedown requests for content hosted on the Bluesky network are
+              processed by Bluesky's moderation team.
+            </Trans>
+          </Text>
+          <Text type="title" style={[pal.text, {marginBottom: 8}]}>
+            <Trans>Counter-Notices</Trans>
+          </Text>
+          <Text style={[pal.text, {marginBottom: 12, lineHeight: 22}]}>
+            <Trans>
+              If you believe content was removed in error, you may submit a
+              counter-notice through the network's moderation services.
             </Trans>
           </Text>
         </View>

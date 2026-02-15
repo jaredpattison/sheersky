@@ -4,7 +4,7 @@ import {msg, Trans} from '@lingui/macro'
 import {useLingui} from '@lingui/react'
 import {useNavigation} from '@react-navigation/core'
 
-import {FEEDBACK_FORM_URL, HELP_DESK_URL} from '#/lib/constants'
+import {useOpenComposer} from '#/lib/hooks/useOpenComposer'
 import {useKawaiiMode} from '#/state/preferences/kawaii'
 import {useSession} from '#/state/session'
 import {DesktopFeeds} from '#/view/shell/desktop/Feeds'
@@ -44,7 +44,8 @@ function useWebQueryParams() {
 export function DesktopRightNav({routeName}: {routeName: string}) {
   const t = useTheme()
   const {_} = useLingui()
-  const {hasSession, currentAccount} = useSession()
+  const {hasSession} = useSession()
+  const {openComposer} = useOpenComposer()
   const kawaii = useKawaiiMode()
   const gutters = useGutters(['base', 0, 'base', 'wide'])
   const isSearchScreen = routeName === 'Search'
@@ -98,27 +99,31 @@ export function DesktopRightNav({routeName}: {routeName: string}) {
       <Text style={[a.leading_snug, t.atoms.text_contrast_low]}>
         {hasSession && (
           <>
-            <InlineLinkText
-              to={FEEDBACK_FORM_URL({
-                email: currentAccount?.email,
-                handle: currentAccount?.handle,
-              })}
-              style={[t.atoms.text_contrast_medium]}
-              label={_(msg`Feedback`)}>
+            <Text
+              style={[t.atoms.text_contrast_medium, web({cursor: 'pointer'})]}
+              role="link"
+              accessibilityLabel={_(msg`Feedback`)}
+              accessibilityHint={_(msg`Opens composer to send feedback`)}
+              onPress={() => {
+                openComposer({
+                  mention: 'devagent.bsky.social',
+                  text: '[SheerSky Feedback] ',
+                })
+              }}>
               {_(msg`Feedback`)}
-            </InlineLinkText>
+            </Text>
             <Text style={[t.atoms.text_contrast_low]}>{' ∙ '}</Text>
           </>
         )}
         <InlineLinkText
-          to="https://bsky.social/about/support/privacy-policy"
+          to="/support/privacy"
           style={[t.atoms.text_contrast_medium]}
           label={_(msg`Privacy`)}>
           {_(msg`Privacy`)}
         </InlineLinkText>
         <Text style={[t.atoms.text_contrast_low]}>{' ∙ '}</Text>
         <InlineLinkText
-          to="https://bsky.social/about/support/tos"
+          to="/support/tos"
           style={[t.atoms.text_contrast_medium]}
           label={_(msg`Terms`)}>
           {_(msg`Terms`)}
@@ -126,7 +131,7 @@ export function DesktopRightNav({routeName}: {routeName: string}) {
         <Text style={[t.atoms.text_contrast_low]}>{' ∙ '}</Text>
         <InlineLinkText
           label={_(msg`Help`)}
-          to={HELP_DESK_URL}
+          to="/support"
           style={[t.atoms.text_contrast_medium]}>
           {_(msg`Help`)}
         </InlineLinkText>

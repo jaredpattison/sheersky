@@ -6,7 +6,7 @@ import {AppBskyGraphStarterpack} from '@atproto/api'
 import {msg, Trans} from '@lingui/macro'
 import {useLingui} from '@lingui/react'
 
-import {FEEDBACK_FORM_URL} from '#/lib/constants'
+import {HELP_DESK_URL} from '#/lib/constants'
 import {logger} from '#/logger'
 import {useServiceQuery} from '#/state/queries/service'
 import {useStarterPackQuery} from '#/state/queries/starter-packs'
@@ -231,7 +231,7 @@ export function Signup({onPressBack}: {onPressBack: () => void}) {
                       <Trans>Having trouble?</Trans>{' '}
                       <InlineLinkText
                         label={_(msg`Contact support`)}
-                        to={FEEDBACK_FORM_URL({email: state.email})}
+                        to={HELP_DESK_URL}
                         style={[!gtMobile && a.text_md]}>
                         <Trans>Contact support</Trans>
                       </InlineLinkText>

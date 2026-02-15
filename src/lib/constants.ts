@@ -248,10 +248,11 @@ export const BLUESKY_NOTIF_SERVICE_HEADERS = {
   'atproto-proxy': `${BLUESKY_PROXY_DID}#bsky_notif`,
 }
 
-// TODO: Replace with SheerSky legal pages when available
+// TODO: Replace with SheerSky legal/support pages when available
 export const webLinks = {
   tos: `https://bsky.social/about/support/tos`,
   privacy: `https://bsky.social/about/support/privacy-policy`,
   community: `https://bsky.social/about/support/community-guidelines`,
   communityDeprecated: `https://bsky.social/about/support/community-guidelines-deprecated`,
+  copyright: `https://bsky.social/about/support/copyright`,
 }

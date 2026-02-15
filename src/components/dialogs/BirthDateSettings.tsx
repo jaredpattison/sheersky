@@ -3,6 +3,7 @@ import {View} from 'react-native'
 import {msg, Trans} from '@lingui/macro'
 import {useLingui} from '@lingui/react'
 
+import {webLinks} from '#/lib/constants'
 import {useCleanError} from '#/lib/hooks/useCleanError'
 import {isAppPassword} from '#/lib/jwt'
 import {getAge, getDateAgo} from '#/lib/strings/time'
@@ -178,7 +179,7 @@ function BirthdayInner({
           <Trans>
             You must be at least 13 years old to use SheerSky. Read our{' '}
             <SimpleInlineLinkText
-              to="https://bsky.social/about/support/tos"
+              to={webLinks.tos}
               label={_(msg`Terms of Service`)}>
               Terms of Service
             </SimpleInlineLinkText>{' '}

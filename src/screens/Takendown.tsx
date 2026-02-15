@@ -11,6 +11,7 @@ import {countGraphemes} from 'unicode-segmenter/grapheme'
 import {
   BLUESKY_MOD_SERVICE_HEADERS,
   MAX_REPORT_REASON_GRAPHEME_LENGTH,
+  webLinks,
 } from '#/lib/constants'
 import {useEnableKeyboardController} from '#/lib/hooks/useEnableKeyboardController'
 import {cleanError} from '#/lib/strings/errors'
@@ -213,7 +214,7 @@ export function Takendown() {
                   Your account was found to be in violation of the{' '}
                   <SimpleInlineLinkText
                     label={_(msg`SheerSky Terms of Service`)}
-                    to="https://bsky.social/about/support/tos"
+                    to={webLinks.tos}
                     style={[a.text_md, a.leading_snug]}>
                     SheerSky Terms of Service
                   </SimpleInlineLinkText>

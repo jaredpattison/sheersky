@@ -6,9 +6,10 @@ import {useLingui} from '@lingui/react'
 import {StackActions, useNavigation} from '@react-navigation/native'
 
 import {useActorStatus} from '#/lib/actor-status'
-import {FEEDBACK_FORM_URL, HELP_DESK_URL} from '#/lib/constants'
+import {HELP_DESK_URL} from '#/lib/constants'
 import {type PressableScale} from '#/lib/custom-animations/PressableScale'
 import {useNavigationTabState} from '#/lib/hooks/useNavigationTabState'
+import {useOpenComposer} from '#/lib/hooks/useOpenComposer'
 import {getTabState, TabState} from '#/lib/routes/helpers'
 import {type NavigationProp} from '#/lib/routes/types'
 import {sanitizeHandle} from '#/lib/strings/handles'
@@ -245,14 +246,16 @@ let DrawerContent = ({}: React.PropsWithoutRef<{}>): React.ReactNode => {
     setDrawerOpen(false)
   }, [navigation, setDrawerOpen])
 
+  const {openComposer} = useOpenComposer()
   const onPressFeedback = React.useCallback(() => {
-    Linking.openURL(
-      FEEDBACK_FORM_URL({
-        email: currentAccount?.email,
-        handle: currentAccount?.handle,
-      }),
-    )
-  }, [currentAccount])
+    setDrawerOpen(false)
+    setTimeout(() => {
+      openComposer({
+        mention: 'devagent.bsky.social',
+        text: '[SheerSky Feedback] ',
+      })
+    }, 300)
+  }, [openComposer, setDrawerOpen])
 
   const onPressHelp = React.useCallback(() => {
     Linking.openURL(HELP_DESK_URL)
@@ -697,12 +700,12 @@ function ExtraLinks() {
       <InlineLinkText
         style={[a.text_md]}
         label={_(msg`Terms of Service`)}
-        to="https://bsky.social/about/support/tos">
+        to="/support/tos">
         <Trans>Terms of Service</Trans>
       </InlineLinkText>
       <InlineLinkText
         style={[a.text_md]}
-        to="https://bsky.social/about/support/privacy-policy"
+        to="/support/privacy"
         label={_(msg`Privacy Policy`)}>
         <Trans>Privacy Policy</Trans>
       </InlineLinkText>
