@@ -889,6 +889,7 @@ function RoutesContainer({children}: React.PropsWithChildren<{}>) {
   const previousScreen = useRef<string | undefined>(undefined)
   const emailDialogControl = useEmailDialogControl()
   const closeAllActiveElements = useCloseAllActiveElements()
+  const linkingUrl = Linking.useLinkingURL()
 
   /**
    * Handle navigation to a conversation, or prepares for account switch.
@@ -926,6 +927,9 @@ function RoutesContainer({children}: React.PropsWithChildren<{}>) {
   async function handlePushNotificationEntry() {
     if (!IS_NATIVE) return
 
+    // intent urls are handled by `useIntentHandler`
+    if (linkingUrl) return
+
     // deep links take precedence - on android,
     // getLastNotificationResponseAsync returns a "notification"
     // that is actually a deep link. avoid handling it twice -sfn
@@ -933,10 +937,7 @@ function RoutesContainer({children}: React.PropsWithChildren<{}>) {
       return
     }
 
-    /**
-     * The notification that caused the app to open, if applicable
-     */
-    const response = await Notifications.getLastNotificationResponseAsync()
+    const response = Notifications.getLastNotificationResponse()
 
     if (response) {
       notyLogger.debug(`handlePushNotificationEntry: response`, {response})
