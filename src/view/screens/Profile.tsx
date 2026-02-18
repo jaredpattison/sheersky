@@ -430,6 +430,7 @@ function ProfileScreenLoaded({
                 scrollElRef={scrollElRef as ListRef}
                 ignoreFilterFor={profile.did}
                 setScrollViewTag={setScrollViewTag}
+                showRepostToggle={!isMe}
                 emptyStateMessage={_(msg`No posts yet`)}
                 emptyStateButton={
                   isMe

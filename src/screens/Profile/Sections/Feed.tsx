@@ -1,10 +1,14 @@
 import {useCallback, useEffect, useImperativeHandle, useState} from 'react'
-import {findNodeHandle, View} from 'react-native'
+import {findNodeHandle, Pressable, View} from 'react-native'
 import {msg, Trans} from '@lingui/macro'
 import {useLingui} from '@lingui/react'
 import {useQueryClient} from '@tanstack/react-query'
 
 import {useInitialNumToRender} from '#/lib/hooks/useInitialNumToRender'
+import {
+  useHideProfileReposts,
+  useSetHideProfileReposts,
+} from '#/state/preferences'
 import {
   type FeedDescriptor,
   RQKEY as FEED_RQKEY,
@@ -19,6 +23,7 @@ import {type ListRef} from '#/view/com/util/List'
 import {LoadLatestBtn} from '#/view/com/util/load-latest/LoadLatestBtn'
 import {atoms as a, ios, useTheme} from '#/alf'
 import {EditBig_Stroke1_Corner0_Rounded as EditIcon} from '#/components/icons/EditBig'
+import {Repost_Stroke2_Corner2_Rounded as RepostIcon} from '#/components/icons/Repost'
 import {Text} from '#/components/Typography'
 import {IS_IOS, IS_NATIVE} from '#/env'
 import {type SectionRef} from './types'
@@ -34,6 +39,7 @@ interface FeedSectionProps {
   emptyStateMessage?: string
   emptyStateButton?: EmptyStateButtonProps
   emptyStateIcon?: React.ComponentType<any> | React.ReactElement
+  showRepostToggle?: boolean
 }
 
 export function ProfileFeedSection({
@@ -47,11 +53,15 @@ export function ProfileFeedSection({
   emptyStateMessage,
   emptyStateButton,
   emptyStateIcon,
+  showRepostToggle,
 }: FeedSectionProps) {
   const {_} = useLingui()
+  const t = useTheme()
   const queryClient = useQueryClient()
   const [hasNew, setHasNew] = useState(false)
   const [isScrolledDown, setIsScrolledDown] = useState(false)
+  const hideProfileReposts = useHideProfileReposts()
+  const setHideProfileReposts = useSetHideProfileReposts()
   const shouldUseAdjustedNumToRender = feed.endsWith('posts_and_author_threads')
   const isVideoFeed = IS_NATIVE && feed.endsWith('posts_with_video')
   const adjustedInitialNumToRender = useInitialNumToRender({
@@ -84,6 +94,60 @@ export function ProfileFeedSection({
     )
   }, [_, emptyStateButton, emptyStateIcon, emptyStateMessage])
 
+  const onToggleHideReposts = useCallback(() => {
+    const next = !hideProfileReposts
+    setHideProfileReposts(next)
+    // Invalidate so the feed re-runs tuners with the new setting
+    truncateAndInvalidate(queryClient, FEED_RQKEY(feed))
+  }, [hideProfileReposts, setHideProfileReposts, queryClient, feed])
+
+  const renderListHeader = useCallback(() => {
+    return (
+      <View style={[a.flex_row, a.px_lg, a.pt_xs, a.pb_xs]}>
+        <Pressable
+          accessibilityRole="button"
+          accessibilityLabel={
+            hideProfileReposts ? _(msg`Show reposts`) : _(msg`Hide reposts`)
+          }
+          accessibilityHint={_(msg`Toggle repost visibility in profile feed`)}
+          onPress={onToggleHideReposts}
+          style={[
+            a.flex_row,
+            a.align_center,
+            a.gap_xs,
+            a.px_md,
+            a.py_xs,
+            a.rounded_full,
+            hideProfileReposts
+              ? {backgroundColor: t.palette.primary_100}
+              : t.atoms.bg_contrast_25,
+          ]}>
+          <RepostIcon
+            size="sm"
+            style={[
+              hideProfileReposts
+                ? {color: t.palette.primary_600}
+                : t.atoms.text_contrast_medium,
+            ]}
+          />
+          <Text
+            style={[
+              a.text_xs,
+              hideProfileReposts
+                ? {color: t.palette.primary_600}
+                : t.atoms.text_contrast_medium,
+            ]}>
+            {hideProfileReposts ? (
+              <Trans>Reposts hidden</Trans>
+            ) : (
+              <Trans>Hide reposts</Trans>
+            )}
+          </Text>
+        </Pressable>
+      </View>
+    )
+  }, [hideProfileReposts, onToggleHideReposts, _, t])
+
   useEffect(() => {
     if (IS_IOS && isFocused && scrollElRef.current) {
       const nativeTag = findNodeHandle(scrollElRef.current)
@@ -109,6 +173,7 @@ export function ProfileFeedSection({
           shouldUseAdjustedNumToRender ? adjustedInitialNumToRender : undefined
         }
         isVideoFeed={isVideoFeed}
+        ListHeaderComponent={showRepostToggle ? renderListHeader : undefined}
       />
       {(isScrolledDown || hasNew) && (
         <LoadLatestBtn

@@ -5,6 +5,7 @@ import {type FeedDescriptor} from '../queries/post-feed'
 import {usePreferencesQuery} from '../queries/preferences'
 import {useSession} from '../session'
 import {useHiddenRepostDids} from './hidden-reposts'
+import {useHideProfileReposts} from './hide-profile-reposts'
 import {useLanguagePrefs} from './languages'
 
 export function useFeedTuners(feedDesc: FeedDescriptor) {
@@ -12,11 +13,18 @@ export function useFeedTuners(feedDesc: FeedDescriptor) {
   const {data: preferences} = usePreferencesQuery()
   const {currentAccount} = useSession()
   const hiddenRepostDids = useHiddenRepostDids()
+  const hideProfileReposts = useHideProfileReposts()
 
   return useMemo(() => {
     if (feedDesc.startsWith('author')) {
       if (feedDesc.endsWith('|posts_with_replies')) {
         // TODO: Do this on the server instead.
+        return [FeedTuner.removeReposts]
+      }
+      if (
+        feedDesc.endsWith('|posts_and_author_threads') &&
+        hideProfileReposts
+      ) {
         return [FeedTuner.removeReposts]
       }
     }
@@ -54,5 +62,12 @@ export function useFeedTuners(feedDesc: FeedDescriptor) {
       return feedTuners
     }
     return []
-  }, [feedDesc, currentAccount, preferences, langPrefs, hiddenRepostDids])
+  }, [
+    feedDesc,
+    currentAccount,
+    preferences,
+    langPrefs,
+    hiddenRepostDids,
+    hideProfileReposts,
+  ])
 }
