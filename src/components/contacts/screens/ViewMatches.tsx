@@ -574,7 +574,7 @@ function ContactItem({
                 await SMS.sendSMSAsync(
                   [phoneNumber],
                   _(
-                    msg`I'm on SheerSky as ${currentAccount.handle} - come find me! https://bsky.app/download`,
+                    msg`I'm on SheerSky as ${currentAccount.handle} - come find me! https://sheersky.app/download`,
                   ),
                 )
               } catch (err) {

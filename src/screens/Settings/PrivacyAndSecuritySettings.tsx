@@ -126,7 +126,7 @@ export function PrivacyAndSecuritySettingsScreen({}: Props) {
                       label={_(
                         msg`Learn more about what is public on SheerSky.`,
                       )}
-                      to="https://blueskyweb.zendesk.com/hc/en-us/articles/15835264007693-Data-Privacy">
+                      to="/support/privacy">
                       <Trans>
                         Learn more about what is public on SheerSky.
                       </Trans>

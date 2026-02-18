@@ -398,10 +398,10 @@ export function ModerationScreenInner({
                         to=""
                         onPress={evt => {
                           evt.preventDefault()
-                          Linking.openURL('https://bsky.app/')
+                          Linking.openURL('https://sheersky.app/')
                           return false
                         }}>
-                        bsky.app
+                        sheersky.app
                       </InlineLinkText>
                       .
                     </Trans>

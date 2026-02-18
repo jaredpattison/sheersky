@@ -98,7 +98,7 @@ export function ExportCarDialog({
               exports in{' '}
               <InlineLinkText
                 label={_(msg`View blogpost for more details`)}
-                to="https://docs.bsky.app/blog/repo-export"
+                to="https://atproto.com/guides/data-repos"
                 style={[a.text_sm]}>
                 this blogpost
               </InlineLinkText>

@@ -47,7 +47,7 @@ export function Content({state}: {state: PolicyUpdateState}) {
     },
     blog: {
       overridePresentation: false,
-      to: `https://bsky.social/about/blog/08-14-2025-updated-terms-and-policies`,
+      to: `/support/tos`,
       label: _(msg`Our blog post`),
     },
   }

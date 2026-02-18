@@ -1,12 +1,11 @@
 import React, {type ComponentProps, type JSX} from 'react'
-import {Linking, ScrollView, TouchableOpacity, View} from 'react-native'
+import {ScrollView, TouchableOpacity, View} from 'react-native'
 import {useSafeAreaInsets} from 'react-native-safe-area-context'
 import {msg, Plural, plural, Trans} from '@lingui/macro'
 import {useLingui} from '@lingui/react'
 import {StackActions, useNavigation} from '@react-navigation/native'
 
 import {useActorStatus} from '#/lib/actor-status'
-import {HELP_DESK_URL} from '#/lib/constants'
 import {type PressableScale} from '#/lib/custom-animations/PressableScale'
 import {useNavigationTabState} from '#/lib/hooks/useNavigationTabState'
 import {useOpenComposer} from '#/lib/hooks/useOpenComposer'
@@ -258,8 +257,9 @@ let DrawerContent = ({}: React.PropsWithoutRef<{}>): React.ReactNode => {
   }, [openComposer, setDrawerOpen])
 
   const onPressHelp = React.useCallback(() => {
-    Linking.openURL(HELP_DESK_URL)
-  }, [])
+    setDrawerOpen(false)
+    navigation.navigate('Support')
+  }, [navigation, setDrawerOpen])
 
   // rendering
   // =
