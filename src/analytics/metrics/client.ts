@@ -41,7 +41,8 @@ export class MetricsClient<M extends Record<string, any>> {
     payload: M[E],
     metadata: Record<string, any> = {},
   ) {
-    this.start()
+    // SheerSky: analytics disabled — keep code for future use
+    return
 
     const e = {
       time: Date.now(),

@@ -27,9 +27,10 @@ setPolyfills({
  */
 export type FeatureFetchStrategy = 'prefer-low-latency' | 'prefer-fresh-gates'
 
-const TIMEOUT_INIT = 500 // TODO should base on p99 or something
-const TIMEOUT_PREFER_LOW_LATENCY = 250
-const TIMEOUT_PREFER_FRESH_GATES = 1500
+// SheerSky: feature gates disabled — keep constants for future use
+const _TIMEOUT_INIT = 500 // TODO should base on p99 or something
+const _TIMEOUT_PREFER_LOW_LATENCY = 250
+const _TIMEOUT_PREFER_FRESH_GATES = 1500
 
 export const features = new GrowthBook({
   apiHost: env.GROWTHBOOK_API_HOST,
@@ -43,22 +44,16 @@ export const features = new GrowthBook({
  * that case, we may see a flash of uncustomized content until the
  * initialization completes.
  */
-export const init = new Promise<void>(async y => {
-  await features.init({timeout: TIMEOUT_INIT})
-  y()
-})
+// SheerSky: feature gates disabled — resolve immediately
+export const init = Promise.resolve()
 
 /**
  * Refresh feature gates from GrowthBook. Updates attributes based on the
  * provided account, if any.
  */
 export async function refresh({strategy}: {strategy: FeatureFetchStrategy}) {
-  await features.refreshFeatures({
-    timeout:
-      strategy === 'prefer-low-latency'
-        ? TIMEOUT_PREFER_LOW_LATENCY
-        : TIMEOUT_PREFER_FRESH_GATES,
-  })
+  // SheerSky: feature gates disabled
+  void strategy
 }
 
 /**

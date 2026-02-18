@@ -2,7 +2,8 @@ import {nanoid} from 'nanoid/non-secure'
 
 import {add} from '#/logger/logDump'
 import {consoleTransport} from '#/logger/transports/console'
-import {sentryTransport} from '#/logger/transports/sentry'
+// SheerSky: Sentry disabled — keep import for future use
+// import {sentryTransport} from '#/logger/transports/sentry'
 import {
   LogContext,
   LogLevel,
@@ -15,7 +16,8 @@ import {ENV} from '#/env'
 const TRANSPORTS: Transport[] = (function configureTransports() {
   switch (ENV) {
     case 'production': {
-      return [sentryTransport].filter(Boolean)
+      // SheerSky: Sentry disabled — keep code for future use
+      return []
     }
     case 'test': {
       return []
