@@ -874,11 +874,6 @@ const LINKING = {
   },
 } satisfies LinkingOptions<AllNavigatorParams>
 
-/**
- * Used to ensure we don't handle the same notification twice
- */
-let lastHandledNotificationDateDedupe: number | undefined
-
 function RoutesContainer({children}: React.PropsWithChildren<{}>) {
   const ax = useAnalytics()
   const notyLogger = ax.logger.useChild(ax.logger.Context.Notifications)
@@ -890,6 +885,7 @@ function RoutesContainer({children}: React.PropsWithChildren<{}>) {
   const emailDialogControl = useEmailDialogControl()
   const closeAllActiveElements = useCloseAllActiveElements()
   const linkingUrl = Linking.useLinkingURL()
+  const notificationResponse = Notifications.useLastNotificationResponse()
 
   /**
    * Handle navigation to a conversation, or prepares for account switch.
@@ -930,16 +926,22 @@ function RoutesContainer({children}: React.PropsWithChildren<{}>) {
     // intent urls are handled by `useIntentHandler`
     if (linkingUrl) return
 
-    const response = Notifications.getLastNotificationResponse()
+    if (notificationResponse) {
+      notyLogger.debug(`handlePushNotificationEntry: response`, {
+        response: notificationResponse,
+      })
 
-    if (response) {
-      notyLogger.debug(`handlePushNotificationEntry: response`, {response})
+      // Clear the last notification response to ensure it's not used again
+      try {
+        Notifications.clearLastNotificationResponse()
+      } catch (error) {
+        notyLogger.error(
+          `handlePushNotificationEntry: error clearing notification response`,
+          {error},
+        )
+      }
 
-      if (response.notification.date === lastHandledNotificationDateDedupe)
-        return
-      lastHandledNotificationDateDedupe = response.notification.date
-
-      const payload = getNotificationPayload(response.notification)
+      const payload = getNotificationPayload(notificationResponse.notification)
 
       if (payload) {
         ax.metric('notifications:openApp', {
