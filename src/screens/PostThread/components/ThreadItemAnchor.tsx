@@ -40,7 +40,6 @@ import {
   REPLY_LINE_WIDTH,
 } from '#/screens/PostThread/const'
 import {atoms as a, useTheme} from '#/alf'
-import {colors} from '#/components/Admonition'
 import {Button} from '#/components/Button'
 import {DebugFieldDisplay} from '#/components/DebugFieldDisplay'
 import {CalendarClock_Stroke2_Corner0_Rounded as CalendarClockIcon} from '#/components/icons/CalendarClock'
@@ -648,8 +647,6 @@ function BackdatedPostIndicator({post}: {post: AppBskyFeedDefs.PostView}) {
 
   if (!isBackdated) return null
 
-  const orange = colors.warning
-
   return (
     <>
       <Button
@@ -676,7 +673,7 @@ function BackdatedPostIndicator({post}: {post: AppBskyFeedDefs.PostView}) {
                 paddingVertical: 3,
               },
             ]}>
-            <CalendarClockIcon fill={orange} size="sm" aria-hidden />
+            <CalendarClockIcon fill={t.palette.yellow} size="sm" aria-hidden />
             <Text
               style={[
                 a.text_xs,
