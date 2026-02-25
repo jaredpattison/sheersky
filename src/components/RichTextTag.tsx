@@ -147,7 +147,11 @@ export function RichTextTag({
         </Menu.Group>
         <Menu.Divider />
         <Menu.Item
-          label={isMuted ? _(msg`Unmute ${tag}`) : _(msg`Mute ${tag}`)}
+          label={
+            isMuted
+              ? _(msg`Unmute ${isCashtag ? tag : `#${tag}`}`)
+              : _(msg`Mute ${isCashtag ? tag : `#${tag}`}`)
+          }
           onPress={() => {
             if (isMuted) {
               resetUpsert()
@@ -160,7 +164,9 @@ export function RichTextTag({
             }
           }}>
           <Menu.ItemText>
-            {isMuted ? _(msg`Unmute ${tag}`) : _(msg`Mute ${tag}`)}
+            {isMuted
+              ? _(msg`Unmute ${isCashtag ? tag : `#${tag}`}`)
+              : _(msg`Mute ${isCashtag ? tag : `#${tag}`}`)}
           </Menu.ItemText>
           <Menu.ItemIcon icon={isPreferencesLoading ? Loader : Mute} />
         </Menu.Item>
