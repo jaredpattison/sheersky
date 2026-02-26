@@ -1,6 +1,7 @@
 import type React from 'react'
 
 import {Provider as AltTextRequiredProvider} from './alt-text-required'
+import {Provider as AppLockProvider} from './app-lock'
 import {Provider as AutoplayProvider} from './autoplay'
 import {Provider as DisableHapticsProvider} from './disable-haptics'
 import {Provider as ExternalEmbedsProvider} from './external-embeds-prefs'
@@ -19,6 +20,7 @@ export {
   useRequireAltTextEnabled,
   useSetRequireAltTextEnabled,
 } from './alt-text-required'
+export {useAppLock, useAppLockApi} from './app-lock'
 export {useAutoplayDisabled, useSetAutoplayDisabled} from './autoplay'
 export {useHapticsDisabled, useSetHapticsDisabled} from './disable-haptics'
 export {
@@ -37,32 +39,34 @@ export {useSetSubtitlesEnabled, useSubtitlesEnabled} from './subtitles'
 
 export function Provider({children}: React.PropsWithChildren<{}>) {
   return (
-    <LanguagesProvider>
-      <AltTextRequiredProvider>
-        <LargeAltBadgeProvider>
-          <ExternalEmbedsProvider>
-            <HiddenPostsProvider>
-              <HiddenRepostDidsProvider>
-                <HideProfileRepostsProvider>
-                  <InAppBrowserProvider>
-                    <DisableHapticsProvider>
-                      <AutoplayProvider>
-                        <UsedStarterPacksProvider>
-                          <SubtitlesProvider>
-                            <TrendingSettingsProvider>
-                              <KawaiiProvider>{children}</KawaiiProvider>
-                            </TrendingSettingsProvider>
-                          </SubtitlesProvider>
-                        </UsedStarterPacksProvider>
-                      </AutoplayProvider>
-                    </DisableHapticsProvider>
-                  </InAppBrowserProvider>
-                </HideProfileRepostsProvider>
-              </HiddenRepostDidsProvider>
-            </HiddenPostsProvider>
-          </ExternalEmbedsProvider>
-        </LargeAltBadgeProvider>
-      </AltTextRequiredProvider>
-    </LanguagesProvider>
+    <AppLockProvider>
+      <LanguagesProvider>
+        <AltTextRequiredProvider>
+          <LargeAltBadgeProvider>
+            <ExternalEmbedsProvider>
+              <HiddenPostsProvider>
+                <HiddenRepostDidsProvider>
+                  <HideProfileRepostsProvider>
+                    <InAppBrowserProvider>
+                      <DisableHapticsProvider>
+                        <AutoplayProvider>
+                          <UsedStarterPacksProvider>
+                            <SubtitlesProvider>
+                              <TrendingSettingsProvider>
+                                <KawaiiProvider>{children}</KawaiiProvider>
+                              </TrendingSettingsProvider>
+                            </SubtitlesProvider>
+                          </UsedStarterPacksProvider>
+                        </AutoplayProvider>
+                      </DisableHapticsProvider>
+                    </InAppBrowserProvider>
+                  </HideProfileRepostsProvider>
+                </HiddenRepostDidsProvider>
+              </HiddenPostsProvider>
+            </ExternalEmbedsProvider>
+          </LargeAltBadgeProvider>
+        </AltTextRequiredProvider>
+      </LanguagesProvider>
+    </AppLockProvider>
   )
 }

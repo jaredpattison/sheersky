@@ -30,6 +30,7 @@ import {addSessionDebugLog} from './logging'
 export type {SessionAccount} from '#/state/session/types'
 
 import {clearPersistedQueryStorage} from '#/lib/persisted-query-storage'
+import {clearAllTokens, clearTokens, saveTokens} from '#/lib/secure-credentials'
 import {
   type SessionApiContext,
   type SessionStateContext,
@@ -115,6 +116,17 @@ export function Provider({children}: React.PropsWithChildren<{}>) {
       if (sessionEvent === 'expired' || sessionEvent === 'create-failed') {
         emitSessionDropped()
       }
+      if (
+        (sessionEvent === 'create' || sessionEvent === 'update') &&
+        refreshedAccount?.accessJwt &&
+        refreshedAccount?.refreshJwt
+      ) {
+        saveTokens(
+          accountDid,
+          refreshedAccount.accessJwt,
+          refreshedAccount.refreshJwt,
+        ).catch(() => {})
+      }
       store.dispatch({
         type: 'received-agent-event',
         agent,
@@ -144,6 +156,11 @@ export function Provider({children}: React.PropsWithChildren<{}>) {
         newAgent: agent,
         newAccount: account,
       })
+      if (account.accessJwt && account.refreshJwt) {
+        saveTokens(account.did, account.accessJwt, account.refreshJwt).catch(
+          () => {},
+        )
+      }
       ax.metric('account:create:success', metrics, {
         session: utils.accountToSessionMetadata(account),
       })
@@ -169,6 +186,11 @@ export function Provider({children}: React.PropsWithChildren<{}>) {
         newAgent: agent,
         newAccount: account,
       })
+      if (account.accessJwt && account.refreshJwt) {
+        saveTokens(account.did, account.accessJwt, account.refreshJwt).catch(
+          () => {},
+        )
+      }
       ax.metric(
         'account:loggedIn',
         {logContext, withPassword: true},
@@ -202,6 +224,7 @@ export function Provider({children}: React.PropsWithChildren<{}>) {
       )
       addSessionDebugLog({type: 'method:end', method: 'logout'})
       if (prevState.currentAgentState.did) {
+        clearTokens(prevState.currentAgentState.did).catch(() => {})
         clearAgeAssuranceDataForDid({did: prevState.currentAgentState.did})
         void clearPersistedQueryStorage(prevState.currentAgentState.did)
       }
@@ -233,6 +256,7 @@ export function Provider({children}: React.PropsWithChildren<{}>) {
         },
       )
       addSessionDebugLog({type: 'method:end', method: 'logout'})
+      clearAllTokens(prevState.accounts.map(a => a.did)).catch(() => {})
       clearAgeAssuranceData()
       for (const account of prevState.accounts) {
         void clearPersistedQueryStorage(account.did)
@@ -303,6 +327,7 @@ export function Provider({children}: React.PropsWithChildren<{}>) {
         accountDid: account.did,
       })
       addSessionDebugLog({type: 'method:end', method: 'removeAccount', account})
+      clearTokens(account.did).catch(() => {})
       clearAgeAssuranceDataForDid({did: account.did})
     },
     [store, cancelPendingTask],

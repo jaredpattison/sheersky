@@ -17,6 +17,7 @@ import * as Sentry from '@sentry/react-native'
 import {KeyboardControllerProvider} from '#/lib/hooks/useEnableKeyboardController'
 import {Provider as HideBottomBarBorderProvider} from '#/lib/hooks/useHideBottomBarBorder'
 import {QueryProvider} from '#/lib/react-query'
+import {getTokens} from '#/lib/secure-credentials'
 import {s} from '#/lib/styles'
 import {ThemeProvider} from '#/lib/ThemeContext'
 import I18nProvider from '#/locale/i18nProvider'
@@ -117,6 +118,22 @@ function InnerApp() {
     async function onLaunch(account?: SessionAccount) {
       try {
         if (account) {
+          // Try to load tokens from secure storage (Keychain/EncryptedSharedPreferences)
+          // and override the persisted tokens if available.
+          try {
+            const secureTokens = await getTokens(account.did)
+            if (secureTokens.accessJwt && secureTokens.refreshJwt) {
+              account = {
+                ...account,
+                accessJwt: secureTokens.accessJwt,
+                refreshJwt: secureTokens.refreshJwt,
+              }
+            }
+          } catch (e) {
+            logger.debug('secure-credentials: failed to load tokens', {
+              message: e,
+            })
+          }
           await resumeSession(account)
         } else {
           await features.init

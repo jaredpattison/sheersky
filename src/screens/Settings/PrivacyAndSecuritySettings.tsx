@@ -1,21 +1,28 @@
+import {useState} from 'react'
 import {type AppBskyNotificationDeclaration} from '@atproto/api'
 import {msg, Trans} from '@lingui/macro'
 import {useLingui} from '@lingui/react'
 import {type NativeStackScreenProps} from '@react-navigation/native-stack'
 
 import {type CommonNavigatorParams} from '#/lib/routes/types'
+import {useAppLock, useAppLockApi} from '#/state/preferences'
 import {useNotificationDeclarationQuery} from '#/state/queries/activity-subscriptions'
 import {useAppPasswordsQuery} from '#/state/queries/app-passwords'
 import {useSession} from '#/state/session'
 import * as SettingsList from '#/screens/Settings/components/SettingsList'
 import {atoms as a, useTheme} from '#/alf'
 import * as Admonition from '#/components/Admonition'
+import * as Toggle from '#/components/forms/Toggle'
 import {BellRinging_Stroke2_Corner0_Rounded as BellRingingIcon} from '#/components/icons/BellRinging'
 import {EyeSlash_Stroke2_Corner0_Rounded as EyeSlashIcon} from '#/components/icons/EyeSlash'
 import {Key_Stroke2_Corner2_Rounded as KeyIcon} from '#/components/icons/Key'
+import {Lock_Stroke2_Corner0_Rounded as LockIcon} from '#/components/icons/Lock'
 import {ShieldCheck_Stroke2_Corner0_Rounded as ShieldIcon} from '#/components/icons/Shield'
 import * as Layout from '#/components/Layout'
 import {InlineLinkText} from '#/components/Link'
+import {Text} from '#/components/Typography'
+import {IS_NATIVE} from '#/env'
+import {isAvailable as isAppLockAvailable} from '../../../modules/expo-app-lock'
 import {Email2FAToggle} from './components/Email2FAToggle'
 import {PwiOptOut} from './components/PwiOptOut'
 import {ItemTextWithSubtitle} from './NotificationSettings/components/ItemTextWithSubtitle'
@@ -29,6 +36,9 @@ export function PrivacyAndSecuritySettingsScreen({}: Props) {
   const t = useTheme()
   const {data: appPasswords} = useAppPasswordsQuery()
   const {currentAccount} = useSession()
+  const appLock = useAppLock()
+  const appLockApi = useAppLockApi()
+  const [deviceSupportsLock] = useState(() => IS_NATIVE && isAppLockAvailable())
   const {
     data: notificationDeclaration,
     isPending,
@@ -136,6 +146,77 @@ export function PrivacyAndSecuritySettingsScreen({}: Props) {
               </Admonition.Row>
             </Admonition.Outer>
           </SettingsList.Item>
+          {deviceSupportsLock && (
+            <>
+              <SettingsList.Divider />
+              <Toggle.Item
+                name="app_lock_enabled"
+                label={_(msg`Require authentication to open app`)}
+                value={appLock.enabled}
+                onChange={value => appLockApi.setEnabled(value)}>
+                <SettingsList.Item>
+                  <SettingsList.ItemIcon icon={LockIcon} />
+                  <SettingsList.ItemText>
+                    <Trans>App lock</Trans>
+                  </SettingsList.ItemText>
+                  <Toggle.Platform />
+                </SettingsList.Item>
+              </Toggle.Item>
+              {appLock.enabled && (
+                <SettingsList.Item>
+                  <Text
+                    style={[
+                      a.text_sm,
+                      a.font_bold,
+                      t.atoms.text_contrast_medium,
+                      a.pl_md,
+                    ]}>
+                    <Trans>Auto-lock</Trans>
+                  </Text>
+                  <Toggle.Item
+                    name="auto_lock_0"
+                    label={_(msg`Immediately`)}
+                    value={appLock.autoLockSeconds === 0}
+                    onChange={() => appLockApi.setAutoLockSeconds(0)}>
+                    <Toggle.LabelText>
+                      <Trans>Immediately</Trans>
+                    </Toggle.LabelText>
+                    <Toggle.Radio />
+                  </Toggle.Item>
+                  <Toggle.Item
+                    name="auto_lock_30"
+                    label={_(msg`After 30 seconds`)}
+                    value={appLock.autoLockSeconds === 30}
+                    onChange={() => appLockApi.setAutoLockSeconds(30)}>
+                    <Toggle.LabelText>
+                      <Trans>After 30 seconds</Trans>
+                    </Toggle.LabelText>
+                    <Toggle.Radio />
+                  </Toggle.Item>
+                  <Toggle.Item
+                    name="auto_lock_60"
+                    label={_(msg`After 1 minute`)}
+                    value={appLock.autoLockSeconds === 60}
+                    onChange={() => appLockApi.setAutoLockSeconds(60)}>
+                    <Toggle.LabelText>
+                      <Trans>After 1 minute</Trans>
+                    </Toggle.LabelText>
+                    <Toggle.Radio />
+                  </Toggle.Item>
+                  <Toggle.Item
+                    name="auto_lock_300"
+                    label={_(msg`After 5 minutes`)}
+                    value={appLock.autoLockSeconds === 300}
+                    onChange={() => appLockApi.setAutoLockSeconds(300)}>
+                    <Toggle.LabelText>
+                      <Trans>After 5 minutes</Trans>
+                    </Toggle.LabelText>
+                    <Toggle.Radio />
+                  </Toggle.Item>
+                </SettingsList.Item>
+              )}
+            </>
+          )}
         </SettingsList.Container>
       </Layout.Content>
     </Layout.Screen>

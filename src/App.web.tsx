@@ -9,6 +9,7 @@ import {useLingui} from '@lingui/react'
 import * as Sentry from '@sentry/react-native'
 
 import {QueryProvider} from '#/lib/react-query'
+import {getTokens} from '#/lib/secure-credentials'
 import {ThemeProvider} from '#/lib/ThemeContext'
 import I18nProvider from '#/locale/i18nProvider'
 import {logger} from '#/logger'
@@ -93,6 +94,22 @@ function InnerApp() {
     async function onLaunch(account?: SessionAccount) {
       try {
         if (account) {
+          // Try to load tokens from secure storage (sessionStorage on web)
+          // and override the persisted tokens if available.
+          try {
+            const secureTokens = await getTokens(account.did)
+            if (secureTokens.accessJwt && secureTokens.refreshJwt) {
+              account = {
+                ...account,
+                accessJwt: secureTokens.accessJwt,
+                refreshJwt: secureTokens.refreshJwt,
+              }
+            }
+          } catch (e) {
+            logger.debug('secure-credentials: failed to load tokens', {
+              message: e,
+            })
+          }
           await resumeSession(account)
         } else {
           await features.init
