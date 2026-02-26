@@ -125,6 +125,7 @@ const schema = z.object({
   disableAutoplay: z.boolean().optional(),
   hideProfileReposts: z.boolean().optional(),
   kawaii: z.boolean().optional(),
+  useSkeetTerminology: z.boolean().optional(),
   hasCheckedForStarterPack: z.boolean().optional(),
   subtitlesEnabled: z.boolean().optional(),
   /** @deprecated */
@@ -178,6 +179,7 @@ export const defaults: Schema = {
   disableAutoplay: PlatformInfo.getIsReducedMotionEnabled(),
   hideProfileReposts: false,
   kawaii: false,
+  useSkeetTerminology: false,
   hasCheckedForStarterPack: false,
   subtitlesEnabled: true,
   trendingDisabled: false,

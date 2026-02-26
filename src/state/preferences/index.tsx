@@ -12,6 +12,7 @@ import {Provider as InAppBrowserProvider} from './in-app-browser'
 import {Provider as KawaiiProvider} from './kawaii'
 import {Provider as LanguagesProvider} from './languages'
 import {Provider as LargeAltBadgeProvider} from './large-alt-badge'
+import {Provider as SkeetTerminologyProvider} from './skeet-terminology'
 import {Provider as SubtitlesProvider} from './subtitles'
 import {Provider as TrendingSettingsProvider} from './trending'
 import {Provider as UsedStarterPacksProvider} from './used-starter-packs'
@@ -35,6 +36,7 @@ export {
 } from './hide-profile-reposts'
 export {useLabelDefinitions} from './label-defs'
 export {useLanguagePrefs, useLanguagePrefsApi} from './languages'
+export {useSetSkeetTerminology, useSkeetTerminology} from './skeet-terminology'
 export {useSetSubtitlesEnabled, useSubtitlesEnabled} from './subtitles'
 
 export function Provider({children}: React.PropsWithChildren<{}>) {
@@ -53,7 +55,11 @@ export function Provider({children}: React.PropsWithChildren<{}>) {
                           <UsedStarterPacksProvider>
                             <SubtitlesProvider>
                               <TrendingSettingsProvider>
-                                <KawaiiProvider>{children}</KawaiiProvider>
+                                <KawaiiProvider>
+                                  <SkeetTerminologyProvider>
+                                    {children}
+                                  </SkeetTerminologyProvider>
+                                </KawaiiProvider>
                               </TrendingSettingsProvider>
                             </SubtitlesProvider>
                           </UsedStarterPacksProvider>

@@ -3,6 +3,9 @@ import {I18nProvider as DefaultI18nProvider} from '@lingui/react'
 import type React from 'react'
 
 import {useLocaleLanguage} from './i18n'
+import {setupSkeetTerminologyPatch} from './skeetTerminology'
+
+setupSkeetTerminologyPatch()
 
 export default function I18nProvider({children}: {children: React.ReactNode}) {
   useLocaleLanguage()
