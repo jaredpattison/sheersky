@@ -6,6 +6,7 @@ import {useNavigation} from '@react-navigation/native'
 import {RemoveScrollBar} from 'react-remove-scroll-bar'
 
 import {useIntentHandler} from '#/lib/hooks/useIntentHandler'
+import {useKeyboardShortcuts} from '#/lib/hooks/useKeyboardShortcuts'
 import {type NavigationProp} from '#/lib/routes/types'
 import {useSession} from '#/state/session'
 import {useIsDrawerOpen, useSetDrawerOpen} from '#/state/shell'
@@ -18,12 +19,14 @@ import {Deactivated} from '#/screens/Deactivated'
 import {Takendown} from '#/screens/Takendown'
 import {atoms as a, select, useBreakpoints, useTheme} from '#/alf'
 import {AgeAssuranceRedirectDialog} from '#/components/ageAssurance/AgeAssuranceRedirectDialog'
+import * as Dialog from '#/components/Dialog'
 import {EmailDialog} from '#/components/dialogs/EmailDialog'
 import {LinkWarningDialog} from '#/components/dialogs/LinkWarning'
 import {MutedWordsDialog} from '#/components/dialogs/MutedWords'
 import {NuxDialogs} from '#/components/dialogs/nuxs'
 import {SigninDialog} from '#/components/dialogs/Signin'
 import {useWelcomeModal} from '#/components/hooks/useWelcomeModal'
+import {KeyboardShortcutsDialog} from '#/components/KeyboardShortcutsDialog'
 import {GlobalReportDialog} from '#/components/moderation/ReportDialog'
 import {
   Outlet as PolicyUpdateOverlayPortalOutlet,
@@ -44,8 +47,10 @@ function ShellInner() {
   const closeAllActiveElements = useCloseAllActiveElements()
   const {state: policyUpdateState} = usePolicyUpdateContext()
   const welcomeModalControl = useWelcomeModal()
+  const shortcutsHelpControl = Dialog.useDialogControl()
 
   useComposerKeyboardShortcut()
+  useKeyboardShortcuts({onOpenHelp: shortcutsHelpControl.open})
   useIntentHandler()
 
   useEffect(() => {
@@ -76,6 +81,7 @@ function ShellInner() {
       <Lightbox />
       <NuxDialogs />
       <GlobalReportDialog />
+      <KeyboardShortcutsDialog control={shortcutsHelpControl} />
 
       {welcomeModalControl.isOpen && (
         <WelcomeModal control={welcomeModalControl} />
