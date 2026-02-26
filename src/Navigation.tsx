@@ -1,5 +1,5 @@
 import {type JSX, useCallback, useRef} from 'react'
-import {Linking} from 'react-native'
+import * as Linking from 'expo-linking'
 import * as Notifications from 'expo-notifications'
 import {i18n, type MessageDescriptor} from '@lingui/core'
 import {msg} from '@lingui/macro'
@@ -924,18 +924,11 @@ function RoutesContainer({children}: React.PropsWithChildren<{}>) {
     },
   )
 
-  async function handlePushNotificationEntry() {
+  function handlePushNotificationEntry() {
     if (!IS_NATIVE) return
 
     // intent urls are handled by `useIntentHandler`
     if (linkingUrl) return
-
-    // deep links take precedence - on android,
-    // getLastNotificationResponseAsync returns a "notification"
-    // that is actually a deep link. avoid handling it twice -sfn
-    if (await Linking.getInitialURL()) {
-      return
-    }
 
     const response = Notifications.getLastNotificationResponse()
 
