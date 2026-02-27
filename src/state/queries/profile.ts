@@ -368,7 +368,7 @@ export function useProfileFollowMutationQueue(
     return queueToggle(false)
   }, [queryClient, did, queueToggle])
 
-  return [queueFollow, queueUnfollow]
+  return [queueFollow, queueUnfollow] as const
 }
 
 function useProfileFollowMutation(
@@ -468,7 +468,7 @@ export function useProfileMuteMutationQueue(
     return queueToggle(false)
   }, [queryClient, did, queueToggle])
 
-  return [queueMute, queueUnmute]
+  return [queueMute, queueUnmute] as const
 }
 
 function useProfileMuteMutation() {
@@ -549,7 +549,7 @@ export function useProfileBlockMutationQueue(
     return queueToggle(false)
   }, [queryClient, did, queueToggle])
 
-  return [queueBlock, queueUnblock]
+  return [queueBlock, queueUnblock] as const
 }
 
 function useProfileBlockMutation() {
