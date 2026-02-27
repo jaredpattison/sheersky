@@ -99,10 +99,6 @@ export function HomeScreen(props: Props) {
   }
 }
 
-function BlockedByEmptyState() {
-  return <CustomFeedEmptyState />
-}
-
 function HomeScreenReady({
   preferences,
   pinnedFeedInfos,
@@ -312,7 +308,7 @@ function HomeScreenReady({
                 isPageAdjacent={Math.abs(selectedIndex - index) === 1}
                 feed={feed}
                 feedParams={{blockedByDids: blockedByUsers ?? []}}
-                renderEmptyState={BlockedByEmptyState}
+                renderEmptyState={renderCustomFeedEmptyState}
                 feedInfo={feedInfo}
               />
             )

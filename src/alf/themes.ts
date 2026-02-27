@@ -41,7 +41,7 @@ const SHEERSKY_CONTRAST = {
 }
 
 // Teal-tinted contrast scale for dim theme
-// Dim bg: #233843 (dark teal)
+// Dim bg: #1A2C35 (dark teal)
 const SHEERSKY_SUBDUED_CONTRAST = {
   contrast_0: '#FFFFFF',
   contrast_25: '#F7FBFC',
@@ -53,11 +53,11 @@ const SHEERSKY_SUBDUED_CONTRAST = {
   contrast_500: '#7093A1',
   contrast_600: '#5B7D8A',
   contrast_700: '#4A6773',
-  contrast_800: '#3B535E',
-  contrast_900: '#38505C',
-  contrast_950: '#293B44',
-  contrast_975: '#26363F',
-  contrast_1000: '#233843',
+  contrast_800: '#344852',
+  contrast_900: '#2E424C',
+  contrast_950: '#233843',
+  contrast_975: '#1F313A',
+  contrast_1000: '#1A2C35',
 }
 
 const sheerskyPalette = {
