@@ -13,7 +13,6 @@ import {
   MAX_REPORT_REASON_GRAPHEME_LENGTH,
   webLinks,
 } from '#/lib/constants'
-import {useEnableKeyboardController} from '#/lib/hooks/useEnableKeyboardController'
 import {cleanError} from '#/lib/strings/errors'
 import {useAgent, useSession, useSessionApi} from '#/state/session'
 import {CharProgress} from '#/view/com/composer/char-progress/CharProgress'
@@ -121,8 +120,6 @@ export function Takendown() {
   )
 
   const webLayout = IS_WEB && gtMobile
-
-  useEnableKeyboardController(true)
 
   return (
     <View style={[a.util_screen_outer, a.flex_1]}>
