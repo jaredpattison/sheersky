@@ -11,7 +11,7 @@ Android and web deployment deferred until post-launch.
 
 **Done:**
 - App name, slug, scheme → "SheerSky" / "sheersky"
-- Bundle IDs in `app.config.js` → `com.sheersky.space` (iOS + Android)
+- Bundle IDs in `app.config.js` → `com.sheersky.app` (iOS + Android)
 - Visual rebrand (colors, logo, logotype, tab bar, borders)
 - In-app legal pages (Terms, Privacy, Community Guidelines, Copyright, Support)
 - Centralized URLs in `webLinks` object
@@ -20,11 +20,11 @@ Android and web deployment deferred until post-launch.
 - Analytics/telemetry disabled (metrics, feature flags, Sentry)
 - CSS hardcoded colors updated
 - Embed page titles/meta → "SheerSky"
-- App group entitlement → `group.com.sheersky.space` (in app.config.js)
-- Share extension → `Share-with-SheerSky` (bundle: `com.sheersky.space.Share-with-SheerSky`)
-- Notification extension → `SheerSkyNSE` (bundle: `com.sheersky.space.SheerSkyNSE`)
-- App Clip → `SheerSkyClip` (bundle: `com.sheersky.space.AppClip`)
-- App group `group.app.bsky` → `group.com.sheersky.space` (all modules + plugins — 13 files)
+- App group entitlement → `group.com.sheersky.app` (in app.config.js)
+- Share extension → `Share-with-SheerSky` (bundle: `com.sheersky.app.Share-with-SheerSky`)
+- Notification extension → `SheerSkyNSE` (bundle: `com.sheersky.app.SheerSkyNSE`)
+- App Clip → `SheerSkyClip` (bundle: `com.sheersky.app.AppClip`)
+- App group `group.app.bsky` → `group.com.sheersky.app` (all modules + plugins — 13 files)
 - Deep link scheme `bluesky` → `sheersky` (module Info.plists + Swift fallbacks)
 - NSE display name `Bluesky Notifications` → `SheerSky Notifications` (module + plugin)
 - Export compliance: `ITSAppUsesNonExemptEncryption: false` already in Info.plist
@@ -55,13 +55,13 @@ Google Play Console ($25 one-time) deferred until decision to launch on Android.
 Personal Apple Developer account enrolled (Individual). Team ID: `8U43G9PFFY`.
 
 **Remaining portal steps:**
-- [ ] Register Bundle ID `com.sheersky.space` in Certificates, Identifiers & Profiles
-- [ ] Register App Group `group.com.sheersky.space` in Certificates, Identifiers & Profiles
+- [ ] Register Bundle ID `com.sheersky.app` in Certificates, Identifiers & Profiles
+- [ ] Register App Group `group.com.sheersky.app` in Certificates, Identifiers & Profiles
 - [ ] Create a new app in App Store Connect:
-  - Bundle ID: `com.sheersky.space`
+  - Bundle ID: `com.sheersky.app`
   - App name: "SheerSky"
   - Primary language: English (U.S.)
-  - SKU: `com.sheersky.space`
+  - SKU: `com.sheersky.app`
 - [ ] Note the new **App Store ID** (numeric, shown in App Store Connect URL)
 - [ ] Create App Store Connect API Key (for EAS Submit):
   - App Store Connect > Users and Access > Integrations > App Store Connect API
@@ -87,7 +87,7 @@ Needed for push notifications (FCM).
 1. Go to [console.firebase.google.com](https://console.firebase.google.com)
 2. Click "Add project", name it "SheerSky"
 3. **Add iOS app:**
-   - Bundle ID: `com.sheersky.space`
+   - Bundle ID: `com.sheersky.app`
    - Download `GoogleService-Info.plist`
    - Place in project root (Expo handles placement during prebuild)
 
@@ -137,13 +137,13 @@ sheersky.space/
     "apps": [],
     "details": [
       {
-        "appID": "8U43G9PFFY.com.sheersky.space",
+        "appID": "8U43G9PFFY.com.sheersky.app",
         "paths": ["*"]
       }
     ]
   },
   "appclips": {
-    "apps": ["8U43G9PFFY.com.sheersky.space.AppClip"]
+    "apps": ["8U43G9PFFY.com.sheersky.app.AppClip"]
   }
 }
 ```
@@ -156,7 +156,7 @@ sheersky.space/
 
 | What | Status |
 |------|--------|
-| App group → `group.com.sheersky.space` (13 files) | DONE |
+| App group → `group.com.sheersky.app` (13 files) | DONE |
 | Deep link scheme → `sheersky` (3 files) | DONE |
 | NSE display name → `SheerSky Notifications` | DONE |
 | Privacy manifest, export compliance | Already configured |
@@ -170,20 +170,20 @@ Team ID `8U43G9PFFY` applied to all files:
 - `bskylink/src/routes/siteAssociation.ts` (appID + appClip)
 - `bskyweb/static/.well-known/apple-app-site-association` (appID + appClip)
 
-### 2C. Needs App Store ID — Do After Creating App in App Store Connect
+### 2C. App Store ID — DONE
 
-| What | Where | Change to |
-|------|-------|-----------|
-| App Store ID `6444370199` | `eas.json` (`ascAppId`) | New App Store ID |
-| | `bskyweb/cmd/bskyweb/server.go` | New App Store ID |
-| StarterPack meta tag | `src/screens/StarterPack/StarterPackLandingScreen.tsx:367` | `app-id=NEW_ID, app-clip-bundle-id=com.sheersky.space.AppClip` |
+App Store ID `6759801426` set in:
+- `eas.json` (`ascAppId`)
+- `src/screens/StarterPack/StarterPackLandingScreen.tsx` (meta tag)
 
-### 2D. Needs Domain — Do After Domain Is Configured
+### 2D. Domain — DONE
 
-| What | Where | Change to |
-|------|-------|-----------|
-| Associated domains | `app.config.js` (lines 25-32) | `applinks:sheersky.space` |
-| Android intent filters | `app.config.js` (lines 193-212) | `sheersky.space` (defer, Android later) |
+Associated domains updated to `sheersky.space` in `app.config.js`.
+
+| What | Where | Status |
+|------|-------|--------|
+| Associated domains | `app.config.js` | DONE — `applinks:sheersky.space` |
+| Android intent filters | `app.config.js` | Defer — Android later |
 
 ### 2E. Expo Project — DONE
 
@@ -201,7 +201,7 @@ Team ID `8U43G9PFFY` applied to all files:
 
 ### 2G. Known Issues — Push Notifications
 
-The `appId` field in `src/lib/notifications/notifications.ts` (lines 45, 311) is set to `xyz.blueskyweb.app`. This is the identifier registered with Bluesky's push notification service, NOT the bundle ID. Changing it to `com.sheersky.space` would break push notifications because Bluesky's server doesn't know about SheerSky.
+The `appId` field in `src/lib/notifications/notifications.ts` (lines 45, 311) is set to `xyz.blueskyweb.app`. This is the identifier registered with Bluesky's push notification service, NOT the bundle ID. Changing it to `com.sheersky.app` would break push notifications because Bluesky's server doesn't know about SheerSky.
 
 **Options:**
 1. Leave as-is — push notifications may work if Bluesky's service doesn't validate the appId against the sender
