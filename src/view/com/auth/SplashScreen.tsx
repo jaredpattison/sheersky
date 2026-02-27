@@ -33,7 +33,7 @@ export const SplashScreen = ({
   const playHaptic = useHaptics()
 
   const styles = useMemo(() => {
-    const logoFill = isDarkMode ? 'white' : t.palette.primary_500
+    const logoFill = isDarkMode ? 'sky' : t.palette.primary_500
     return {
       logoFill,
       logoShadow: isDarkMode

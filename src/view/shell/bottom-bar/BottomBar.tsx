@@ -326,7 +326,7 @@ export function BottomBar({navigation}: BottomTabBarProps) {
               }}>
               <View
                 style={{flexDirection: 'row', alignItems: 'center', gap: 8}}>
-                <Logo width={28} />
+                <Logo width={28} fill="sky" />
                 <View style={{paddingTop: 4}}>
                   <Logotype width={80} fill={t.atoms.text.color} />
                 </View>
