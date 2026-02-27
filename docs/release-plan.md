@@ -40,7 +40,7 @@ Android and web deployment deferred until post-launch.
 | Apple Developer Program | $99 | Annual | Yes |
 | Expo EAS (Free tier) | $0 | Monthly | Yes — 30 builds/mo (max 15 iOS) |
 | Domain (`sheersky.space`) | ~$12-15 | Annual | Yes (privacy policy, universal links) |
-| Firebase (FCM) | $0 | Free forever | Yes (push notifications) |
+| Firebase (FCM) | $0 | Free forever | No — Android only, defer |
 | Sentry (free tier) | $0 | Monthly | No — can add post-launch |
 | **Total Year 1** | **~$111-114** | | |
 
@@ -80,16 +80,15 @@ Personal Apple Developer account enrolled (Individual). Team ID: `8U43G9PFFY`.
 - EAS Submit (to App Store)
 - EAS Update with 1,000 monthly active users
 
-### 1C. Firebase Project (Free)
+### 1C. Firebase Project — DEFERRED
 
-Needed for push notifications (FCM).
+Firebase (FCM) is only needed for Android push notifications. iOS uses APNs directly.
 
-1. Go to [console.firebase.google.com](https://console.firebase.google.com)
-2. Click "Add project", name it "SheerSky"
-3. **Add iOS app:**
-   - Bundle ID: `com.sheersky.app`
-   - Download `GoogleService-Info.plist`
-   - Place in project root (Expo handles placement during prebuild)
+**Note on push notifications:** Push notifications will NOT work for SheerSky regardless of
+Firebase setup. The app registers device tokens with Bluesky's notification service using
+`appId: 'xyz.blueskyweb.app'` (in `src/lib/notifications/notifications.ts:45`). Bluesky's
+server only delivers to their own app. Running your own notification relay is a post-launch
+consideration. The app handles missing notifications gracefully (no crash).
 
 ### 1D. Domain Registration — DONE
 
@@ -418,7 +417,7 @@ TEST ACCOUNT: [username] / [password]
 - [ ] Register `sheersky.space` on Namecheap
 - [ ] Set up S3 bucket + CloudFront for domain
 - [ ] Create Expo account + run `eas init`
-- [ ] Create Firebase project, download `GoogleService-Info.plist`
+- [x] ~~Create Firebase project~~ — deferred, not needed for iOS
 - [ ] Make Team ID code changes (Phase 2B) — single commit
 - [ ] Make App Store ID + domain changes (Phase 2C, 2D)
 - [ ] Disable OTA updates
@@ -430,7 +429,7 @@ TEST ACCOUNT: [username] / [password]
 - [ ] Full bug bash (see checklist below)
 - [ ] Run production build
 - [ ] Submit to TestFlight
-- [ ] Test push notifications — determine if they work with SheerSky bundle ID
+- [ ] Verify push notifications fail gracefully (expected — Bluesky's relay won't deliver to our app ID)
 
 ### Week 3: Store Submission
 - [ ] Upload privacy policy + support pages to S3/CloudFront

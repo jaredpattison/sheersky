@@ -118,8 +118,10 @@ export function Inner({
           <Toggle.Item
             label={_(msg`Receive push notifications`)}
             name="push"
+            disabled
             style={[
               a.py_xs,
+              {opacity: 0.5},
               platform({
                 native: [a.justify_between],
                 web: [a.flex_row_reverse, a.gap_sm],
@@ -127,7 +129,7 @@ export function Inner({
             ]}>
             <Toggle.LabelText
               style={[t.atoms.text, a.font_normal, a.text_md, a.flex_1]}>
-              <Trans>Push notifications</Trans>
+              <Trans>Push notifications (coming soon)</Trans>
             </Toggle.LabelText>
             <Toggle.Platform />
           </Toggle.Item>
