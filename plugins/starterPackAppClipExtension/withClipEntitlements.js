@@ -4,7 +4,6 @@ const path = require('path')
 const fs = require('fs')
 
 const withClipEntitlements = (config, {targetName}) => {
-  // eslint-disable-next-line no-shadow
   return withInfoPlist(config, config => {
     const entitlementsPath = path.join(
       config.modRequest.platformProjectRoot,
@@ -13,7 +12,7 @@ const withClipEntitlements = (config, {targetName}) => {
     )
 
     const appClipEntitlements = {
-      'com.apple.security.application-groups': [`group.app.bsky`],
+      'com.apple.security.application-groups': [`group.com.sheersky.app`],
       'com.apple.developer.parent-application-identifiers': [
         `$(AppIdentifierPrefix)${config.ios.bundleIdentifier}`,
       ],

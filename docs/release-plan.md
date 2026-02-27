@@ -1,10 +1,17 @@
 # SheerSky Release Plan
 
+## Strategy: iOS-First
+
+Release on Apple App Store first. If there's user traction, proceed to Google Play.
+Android and web deployment deferred until post-launch.
+
+---
+
 ## Current State
 
 **Done:**
 - App name, slug, scheme → "SheerSky" / "sheersky"
-- Bundle IDs in `app.config.js` → `com.sheersky.app` (iOS + Android)
+- Bundle IDs in `app.config.js` → `com.sheersky.space` (iOS + Android)
 - Visual rebrand (colors, logo, logotype, tab bar, borders)
 - In-app legal pages (Terms, Privacy, Community Guidelines, Copyright, Support)
 - Centralized URLs in `webLinks` object
@@ -13,189 +20,198 @@
 - Analytics/telemetry disabled (metrics, feature flags, Sentry)
 - CSS hardcoded colors updated
 - Embed page titles/meta → "SheerSky"
-- App group entitlement → `group.com.sheersky.app` (in app.config.js)
-- Share extension → `Share-with-SheerSky` (bundle: `com.sheersky.app.Share-with-SheerSky`)
-- Notification extension → `SheerSkyNSE` (bundle: `com.sheersky.app.SheerSkyNSE`)
-- App Clip → `SheerSkyClip` (bundle: `com.sheersky.app.AppClip`)
+- App group entitlement → `group.com.sheersky.space` (in app.config.js)
+- Share extension → `Share-with-SheerSky` (bundle: `com.sheersky.space.Share-with-SheerSky`)
+- Notification extension → `SheerSkyNSE` (bundle: `com.sheersky.space.SheerSkyNSE`)
+- App Clip → `SheerSkyClip` (bundle: `com.sheersky.space.AppClip`)
+- App group `group.app.bsky` → `group.com.sheersky.space` (all modules + plugins — 13 files)
+- Deep link scheme `bluesky` → `sheersky` (module Info.plists + Swift fallbacks)
+- NSE display name `Bluesky Notifications` → `SheerSky Notifications` (module + plugin)
+- Export compliance: `ITSAppUsesNonExemptEncryption: false` already in Info.plist
+- Privacy manifest: `PrivacyInfo.xcprivacy` configured with Required Reason APIs
+- Tablet support disabled: `supportsTablet: false` (no iPad screenshots needed)
 
 ---
 
-## Cost Summary
+## Cost Summary (iOS-First)
 
-| Item | Cost | Frequency | Required for Launch? |
-|------|------|-----------|---------------------|
-| Apple Developer Program | $99 | Annual | Yes (iOS) |
-| Google Play Console | $25 | One-time | Yes (Android) |
+| Item | Cost | Frequency | Required for iOS Launch? |
+|------|------|-----------|------------------------|
+| Apple Developer Program | $99 | Annual | Yes |
 | Expo EAS (Free tier) | $0 | Monthly | Yes — 30 builds/mo (max 15 iOS) |
+| Domain (`sheersky.space`) | ~$12-15 | Annual | Yes (privacy policy, universal links) |
 | Firebase (FCM) | $0 | Free forever | Yes (push notifications) |
-| Domain (`.app`) | ~$12-15 | Annual | Yes (universal links, web) |
 | Sentry (free tier) | $0 | Monthly | No — can add post-launch |
-| **Total Year 1** | **~$136-140** | | |
-| **Total Year 2+** | **~$111-114** | | |
+| **Total Year 1** | **~$111-114** | | |
 
-If you outgrow the free EAS build tier (30 low-priority builds/mo), Starter is $19/mo.
+Google Play Console ($25 one-time) deferred until decision to launch on Android.
 
 ---
 
 ## Phase 1: Accounts & Infrastructure Setup
 
-This is the first thing to do — everything else depends on having these accounts.
+### 1A. Apple Developer Program ($99/year) — DONE
 
-### 1A. Apple Developer Program ($99/year)
+Personal Apple Developer account enrolled (Individual). Team ID: `8U43G9PFFY`.
 
-**Enroll as Individual** (simplest, no D-U-N-S number needed):
-
-1. Go to [developer.apple.com/programs/enroll](https://developer.apple.com/programs/enroll/)
-2. Sign in with your Apple ID (must have two-factor auth enabled)
-3. Select "Individual / Sole Proprietor"
-4. Enter your legal name exactly as on your government ID
-5. Accept the Apple Developer Program License Agreement
-6. Pay $99
-7. Wait for approval — typically **a few hours to 48 hours**
-
-**What you get:**
-- **Team ID** — a 10-character string (e.g., `ABCDE12345`). You'll need this immediately for code changes.
-- **App Store Connect** access — where you create your app listing, manage TestFlight, submit for review
-- Auto-managed signing via EAS (certificates, provisioning profiles, push keys — all handled for you)
-
-**After approval, do these immediately:**
-- [ ] Note your Team ID (Membership > Team ID)
+**Remaining portal steps:**
+- [ ] Register Bundle ID `com.sheersky.space` in Certificates, Identifiers & Profiles
+- [ ] Register App Group `group.com.sheersky.space` in Certificates, Identifiers & Profiles
 - [ ] Create a new app in App Store Connect:
-  - Bundle ID: `com.sheersky.app`
+  - Bundle ID: `com.sheersky.space`
   - App name: "SheerSky"
   - Primary language: English (U.S.)
-  - SKU: `com.sheersky.app`
+  - SKU: `com.sheersky.space`
 - [ ] Note the new **App Store ID** (numeric, shown in App Store Connect URL)
 - [ ] Create App Store Connect API Key (for EAS Submit):
   - App Store Connect > Users and Access > Integrations > App Store Connect API
   - Role: "App Manager" or "Admin"
   - Download the `.p8` file — you only get one download
 
-### 1B. Google Play Console ($25 one-time)
+### 1B. Expo / EAS Account — DONE
 
-1. Go to [play.google.com/console](https://play.google.com/console)
-2. Sign in with a Google Account
-3. Select "Personal" (individual) account type
-4. Pay $25
-5. Complete identity verification (government-issued photo ID)
-6. Wait for approval — typically **2-5 business days**
-
-**After approval:**
-- [ ] Create app listing for `com.sheersky.app`
-- [ ] Create a Google Cloud Service Account for EAS Submit:
-  - Google Cloud Console > IAM & Admin > Service Accounts > Create
-  - Grant it "Service Account User" role
-  - Create JSON key, download it
-  - In Play Console > Setup > API access > link the service account
-  - Grant "Release manager" permissions
-
-### 1C. Expo / EAS Account (Free)
-
-1. Create account at [expo.dev](https://expo.dev) if you don't have one
-2. Install EAS CLI: `npm install -g eas-cli`
-3. Log in: `eas login`
-4. Initialize the project: `eas init` (links to your Expo account, gives new project ID)
-5. Note the new **Expo Project ID** (UUID format)
+- Account: `jaredpattison` on expo.dev
+- Project: `@jaredpattison/sheersky`
+- Project ID: `1a308a86-dca7-4cbb-b4e6-2c361d5f468f` (set in `app.config.js`)
+- Owner: `jaredpattison` (set in `app.config.js`)
 
 **Free tier includes:**
 - 30 low-priority builds/month (max 15 iOS)
-- EAS Submit (to App Store and Play Store)
+- EAS Submit (to App Store)
 - EAS Update with 1,000 monthly active users
-- Low-priority builds queue behind paid users but still complete
 
-### 1D. Firebase Project (Free)
+### 1C. Firebase Project (Free)
 
-Needed for push notifications (FCM). Completely free, no usage limits that matter.
+Needed for push notifications (FCM).
 
 1. Go to [console.firebase.google.com](https://console.firebase.google.com)
 2. Click "Add project", name it "SheerSky"
-3. Enable or disable Google Analytics (optional)
-4. **Add Android app:**
-   - Package name: `com.sheersky.app`
-   - Download `google-services.json`
-   - Place in project root (replaces `google-services.json.example`)
-5. **Add iOS app:**
-   - Bundle ID: `com.sheersky.app`
+3. **Add iOS app:**
+   - Bundle ID: `com.sheersky.space`
    - Download `GoogleService-Info.plist`
    - Place in project root (Expo handles placement during prebuild)
 
-### 1E. Domain Registration (~$12-15/year)
+### 1D. Domain Registration — DONE
 
-Register `sheersky.app` (or your preferred domain). The `.app` TLD enforces HTTPS by default, which is good.
+Domain `sheersky.space` registered on Namecheap ($2.50/yr).
 
-**Cheapest registrars:**
-| Registrar | Price/year |
-|-----------|-----------|
-| Cloudflare Registrar | ~$11.18 (at-cost) |
-| Dynadot | ~$10.00 first year |
-| Namecheap | ~$12.98 |
+**Separate repo for website:** Create a `sheersky-web` (or `sheersky.space`) repo with:
 
-**You'll need to host two files for deep linking:**
-- `https://sheersky.app/.well-known/apple-app-site-association` (iOS universal links)
-- `https://sheersky.app/.well-known/assetlinks.json` (Android app links)
+```
+sheersky.space/
+├── index.html                                # Landing page (optional, not required for App Store)
+├── privacy/index.html                        # Privacy policy (REQUIRED for App Store Connect)
+├── support/index.html                        # Support page (REQUIRED for App Store Connect)
+├── .well-known/
+│   └── apple-app-site-association            # Universal links (JSON, no file extension)
+└── assets/                                   # Logo, favicon, etc.
+```
 
-These can be static files on any hosting (GitHub Pages, Cloudflare Pages, Vercel, etc.).
+**Hosting: AWS S3 + CloudFront**
+
+1. **Create S3 bucket** (any name, e.g., `sheersky-app-web`)
+   - Enable static website hosting
+2. **Create CloudFront distribution:**
+   - Origin: S3 bucket (use S3 website endpoint, NOT the REST API endpoint)
+   - Alternate domain: `sheersky.space`
+   - SSL certificate: Request in ACM (**us-east-1 region**) for `sheersky.space`
+   - Default root object: `index.html`
+   - **Important:** For `.well-known/apple-app-site-association`, set `Content-Type: application/json` in S3 metadata (Apple requires this, no file extension)
+3. **DNS in Namecheap:**
+   - For apex domain (`sheersky.space`): CNAME won't work at apex — either:
+     - Transfer DNS to Route 53 for native ALIAS record, OR
+     - Use Namecheap's URL redirect to `www.sheersky.space` + CNAME `www` → CloudFront
+   - Simplest: use Route 53 for DNS ($0.50/mo per hosted zone)
+4. **Deploy:** `aws s3 sync ./build s3://your-bucket --delete`
+
+**What you need before App Store submission:**
+- Privacy Policy URL: `https://sheersky.space/privacy`
+- Support URL: `https://sheersky.space/support`
+- A landing page is NOT required — Apple doesn't review it
+- You can also use the GitHub repo URL as the support URL initially
+
+**apple-app-site-association file content:**
+```json
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "8U43G9PFFY.com.sheersky.space",
+        "paths": ["*"]
+      }
+    ]
+  },
+  "appclips": {
+    "apps": ["8U43G9PFFY.com.sheersky.space.AppClip"]
+  }
+}
+```
 
 ---
 
 ## Phase 2: Code Changes
 
-Once you have your Team ID and App Store ID, make these changes. Most can be done in a single commit.
+### 2A. Already Done (This Session)
 
-### 2A. Critical — Required for Build
+| What | Status |
+|------|--------|
+| App group → `group.com.sheersky.space` (13 files) | DONE |
+| Deep link scheme → `sheersky` (3 files) | DONE |
+| NSE display name → `SheerSky Notifications` | DONE |
+| Privacy manifest, export compliance | Already configured |
+
+### 2B. Team ID — DONE
+
+Team ID `8U43G9PFFY` applied to all files:
+- `plugins/shareExtension/withXcodeTarget.js` (3 occurrences)
+- `plugins/notificationsExtension/withXcodeTarget.js` (3 occurrences)
+- `plugins/starterPackAppClipExtension/withXcodeTarget.js` (2 occurrences)
+- `bskylink/src/routes/siteAssociation.ts` (appID + appClip)
+- `bskyweb/static/.well-known/apple-app-site-association` (appID + appClip)
+
+### 2C. Needs App Store ID — Do After Creating App in App Store Connect
 
 | What | Where | Change to |
 |------|-------|-----------|
-| Apple Team ID `B3LX46C5HS` | `plugins/shareExtension/withXcodeTarget.js` | Your new Team ID |
-| | `plugins/notificationsExtension/withXcodeTarget.js` | Your new Team ID |
-| | `plugins/starterPackAppClipExtension/withXcodeTarget.js` | Your new Team ID |
-| App group `group.app.bsky` | `modules/Share-with-Bluesky/Share-with-Bluesky.entitlements` | `group.com.sheersky.app` |
-| | `modules/BlueskyNSE/BlueskyNSE.entitlements` | `group.com.sheersky.app` |
-| | `modules/BlueskyClip/ViewController.swift` | `group.com.sheersky.app` |
-| | `modules/expo-background-notification-handler/ios/ExpoBackgroundNotificationHandlerModule.swift` | `group.com.sheersky.app` |
-| | `modules/BlueskyNSE/NotificationService.swift` | `group.com.sheersky.app` |
-| | `modules/expo-bluesky-swiss-army/ios/SharedPrefs/ExpoBlueskySharedPrefsModule.swift` | `group.com.sheersky.app` |
-| | `plugins/shareExtension/withExtensionEntitlements.js` | `group.com.sheersky.app` |
-| | `plugins/notificationsExtension/withExtensionEntitlements.js` | `group.com.sheersky.app` |
-| | `plugins/starterPackAppClipExtension/withClipEntitlements.js` | `group.com.sheersky.app` |
-| Deep link `bluesky://` | `modules/Share-with-Bluesky/Info.plist` | `sheersky` |
-| | `modules/BlueskyNSE/Info.plist` | `sheersky` |
-| | `modules/Share-with-Bluesky/ShareViewController.swift` | `sheersky` |
-| | `modules/expo-receive-android-intents/android/src/.../ExpoReceiveAndroidIntentsModule.kt` (3 occurrences) | `sheersky://` |
-| Bundle ID `xyz.blueskyweb.app` | `bskylink/src/routes/siteAssociation.ts` | `com.sheersky.app` |
-| | `bskyweb/static/.well-known/apple-app-site-association` | `com.sheersky.app` |
-| | `src/screens/NotificationSettings/index.tsx` | `com.sheersky.app` |
-| | `src/screens/StarterPack/StarterPackLandingScreen.tsx` | `com.sheersky.app` |
-| | `src/lib/notifications/notifications.ts` | `com.sheersky.app` |
-| | `__e2e__/setupApp.yml` | `com.sheersky.app` |
-| | `__e2e__/perf-test.yml` | `com.sheersky.app` |
-| | `__e2e__/flows/*.yaml` | `com.sheersky.app` |
-| | `package.json` (perf:test:measure script) | `com.sheersky.app` |
-| Associated domains | `app.config.js` (lines 25-32) | `applinks:sheersky.app` or remove |
-| Android intent filters | `app.config.js` (lines 193-212) | `sheersky.app` or remove |
-| App Store ID `6444370199` | `bskyweb/cmd/bskyweb/server.go` | New App Store ID |
-| | `eas.json` (`ascAppId`) | New App Store ID |
-| App Store link | `bskyweb/cmd/bskyweb/server.go` | New App Store URL |
-| AppClip appID | `bskylink/src/routes/siteAssociation.ts` | New Team ID + `com.sheersky.app.AppClip` |
-| Expo Project ID | `app.config.js` (line 447) | New Expo project ID from `eas init` |
+| App Store ID `6444370199` | `eas.json` (`ascAppId`) | New App Store ID |
+| | `bskyweb/cmd/bskyweb/server.go` | New App Store ID |
+| StarterPack meta tag | `src/screens/StarterPack/StarterPackLandingScreen.tsx:367` | `app-id=NEW_ID, app-clip-bundle-id=com.sheersky.space.AppClip` |
 
-### 2B. Important — Not Blocking First Build
+### 2D. Needs Domain — Do After Domain Is Configured
+
+| What | Where | Change to |
+|------|-------|-----------|
+| Associated domains | `app.config.js` (lines 25-32) | `applinks:sheersky.space` |
+| Android intent filters | `app.config.js` (lines 193-212) | `sheersky.space` (defer, Android later) |
+
+### 2E. Expo Project — DONE
+
+- Project ID `1a308a86-dca7-4cbb-b4e6-2c361d5f468f` set in `app.config.js`
+- Owner changed from `sheersky` to `jaredpattison` in `app.config.js`
+
+### 2F. Important — Not Blocking First Build
 
 | What | Where | Action |
 |------|-------|--------|
-| OTA update URL | `app.config.js` (line 218) | Set `enabled: false` for now (disable OTA updates) |
-| OTA deploy script | `scripts/bundleUpdate.sh` | Leave as-is (won't be used with OTA disabled) |
-| Code signing cert | `code-signing/certificate.pem` | Generate new (only needed if enabling OTA later) |
-| CI repo check | `.github/workflows/*.yml` | Change `bluesky-social/social-app` → your repo |
+| OTA update URL | `app.config.js` (line 218) | Set `enabled: false` for now |
 | Firebase config | `google-services.json` | Replace with your Firebase project config |
 | Sentry org/project | `app.config.js` (lines 245-246) | Remove or set up free Sentry project |
-| Android module package | `modules/expo-receive-android-intents/.../xyz/blueskyweb/app/` | Rename Java package path |
-| Module names | `modules/expo-bluesky-gif-view/`, `modules/expo-bluesky-swiss-army/` | Cosmetic — consider renaming later |
-| Short link service | `src/state/queries/shorten-link.ts`, `resolve-short-link.ts` | Uses `go.bsky.app` — disable or leave (still works) |
-| Web preconnect | `web/index.html:17`, `bskyweb/templates/base.html:10` | Remove `go.bsky.app` preconnect |
 | `.env` file | `.env` | Create from `.env.example`, fill SheerSky values or leave blank |
 
-### 2C. App Store Connect API Key (for EAS Submit)
+### 2G. Known Issues — Push Notifications
+
+The `appId` field in `src/lib/notifications/notifications.ts` (lines 45, 311) is set to `xyz.blueskyweb.app`. This is the identifier registered with Bluesky's push notification service, NOT the bundle ID. Changing it to `com.sheersky.space` would break push notifications because Bluesky's server doesn't know about SheerSky.
+
+**Options:**
+1. Leave as-is — push notifications may work if Bluesky's service doesn't validate the appId against the sender
+2. Set up your own notification relay service (more complex, post-launch)
+3. Contact Bluesky about registering the new appId (unlikely to succeed)
+4. Accept that push notifications may not work initially — the app still shows notifications when opened
+
+Test this during TestFlight to determine which option is needed.
+
+### 2H. App Store Connect API Key (for EAS Submit)
 
 Add to `eas.json` under `submit.production.ios`:
 ```json
@@ -206,57 +222,37 @@ Add to `eas.json` under `submit.production.ios`:
 }
 ```
 
-Add to `eas.json` under `submit.production.android`:
-```json
-{
-  "serviceAccountKeyPath": "./path-to-google-service-account.json"
-}
-```
-
 ---
 
-## Phase 3: First Builds
+## Phase 3: First iOS Build
 
 ### 3A. Development Build (Test on Simulator/Device)
 
 ```bash
-# iOS simulator build
 eas build --platform ios --profile development
-
-# Android emulator build
-eas build --platform android --profile development
 ```
 
 On first iOS build, EAS will prompt you to sign in with your Apple Developer account and auto-generate certificates. Say yes to auto-managed credentials.
-
-On first Android build, EAS auto-generates and stores the Android keystore.
 
 ### 3B. Preview Build (Installable on Real Devices)
 
 ```bash
 eas build --platform ios --profile preview
-eas build --platform android --profile preview
 ```
 
-Preview builds produce installable artifacts:
-- iOS: `.ipa` file (install via Xcode or Apple Configurator)
-- Android: `.apk` file (install directly on device)
+Produces `.ipa` file (install via Xcode or Apple Configurator).
 
 ### 3C. Production Build (For Store Submission)
 
 ```bash
 eas build --platform ios --profile production
-eas build --platform android --profile production
 ```
 
-- iOS: Produces `.ipa` signed for App Store distribution
-- Android: Produces `.aab` (Android App Bundle) for Play Store
+Produces `.ipa` signed for App Store distribution.
 
 ---
 
-## Phase 4: TestFlight & Internal Testing
-
-### 4A. iOS TestFlight
+## Phase 4: TestFlight
 
 **Submit to TestFlight:**
 ```bash
@@ -269,156 +265,188 @@ This uploads to App Store Connect. Then:
 2. Fill out "Test Information" in App Store Connect > TestFlight:
    - What to test (describe key features)
    - Feedback email
-   - Privacy policy URL (can use in-app page URL for now)
-3. **Internal testers** (up to 100): Available immediately after processing. Add testers in App Store Connect > Users and Access.
-4. **External testers** (up to 10,000): Requires a one-time Beta App Review (~24-48 hours). Share via email invite or public TestFlight link.
+   - Privacy policy URL
+3. **Internal testers** (up to 100): Available immediately after processing
+4. **External testers** (up to 10,000): Requires a one-time Beta App Review (~24-48 hours)
 
 Builds expire after 90 days.
 
-### 4B. Google Play Internal Testing
+---
 
-**First time — manual upload required:**
+## Phase 5: App Store Listing Preparation
 
-1. Go to Play Console > Your app > Testing > Internal testing
-2. Click "Create new release"
-3. Upload the `.aab` file from the EAS build
-4. Fill out the store listing (minimum required fields)
-5. Create an email list of testers (Testers tab)
-6. Share the opt-in link with testers
+### 5A. Required Metadata
 
-**Subsequent builds** can use EAS Submit:
-```bash
-eas submit --platform android --profile production
+- [ ] **App name:** "SheerSky" (up to 30 characters)
+- [ ] **Subtitle:** e.g., "AT Protocol Social Client" (up to 30 characters)
+- [ ] **Description:** Up to 4,000 characters — emphasize unique features, differentiation from official app
+- [ ] **Keywords:** Up to 100 characters — e.g., "bluesky,atprotocol,social,decentralized,code,blocks"
+- [ ] **Category:** Social Networking
+- [ ] **Privacy Policy URL:** `https://sheersky.space/privacy` (must be publicly accessible)
+- [ ] **Support URL:** `https://sheersky.space/support` (or GitHub repo URL)
+- [ ] **Copyright:** "2026 Jared Pattison" (or your preferred name)
+
+### 5B. Required Assets
+
+| Asset | Spec |
+|-------|------|
+| App icon | 1024x1024 PNG, no transparency, no rounded corners (Expo generates this) |
+| Screenshots (iPhone 6.9") | 1320x2868 px, minimum 1, max 10 |
+
+**Note:** iPad screenshots not needed since `supportsTablet: false`.
+
+**Screenshot strategy:** Take 5-6 screenshots showcasing:
+1. Home feed (shows SheerSky branding, theme)
+2. Code blocks in a post (unique feature)
+3. Blocked-me feed tab (unique feature)
+4. Hide reposts menu (unique feature)
+5. Dark/dim theme (visual differentiation)
+6. Profile view
+
+### 5C. Privacy Nutrition Labels (App Store Connect)
+
+Declare in App Store Connect under "App Privacy":
+
+**Data Linked to You:**
+| Data Type | Purpose |
+|-----------|---------|
+| Email Address | Account creation, authentication |
+| User ID (DID) | App functionality |
+| Other User Content (posts, messages) | App functionality |
+| Photos or Videos | User uploads |
+
+**Data Not Linked to You:**
+| Data Type | Purpose |
+|-----------|---------|
+| Crash Data | App diagnostics |
+| Performance Data | App diagnostics |
+
+**Tracking:** No
+
+### 5D. Age Rating Questionnaire
+
+Apple updated the age rating system in 2025. New tiers: 4+, 9+, 13+, 16+, 18+.
+
+For SheerSky (social media with UGC), answer:
+- User-generated content: **Yes**
+- Social features: **Yes**
+- Web browsing: **Yes** (via in-app browser)
+- Violence/sexual content/profanity: **Infrequent/mild** (user-generated, moderated)
+
+Expected rating: **13+** or **16+**
+
+### 5E. Export Compliance
+
+Already handled via `ITSAppUsesNonExemptEncryption: false` in Info.plist. On first submission, confirm:
+- App uses encryption: Yes (HTTPS)
+- Exempt under Category 5, Part 2: Yes (standard encryption for authentication)
+
+### 5F. Test Account for Apple Review
+
+**This is critical — Apple will reject without it.**
+
+Create a dedicated test account on bsky.social:
+- [ ] Create account (e.g., `sheersky-review.bsky.social`)
+- [ ] Populate with sample posts (including code blocks to showcase)
+- [ ] Follow some accounts so feeds have content
+- [ ] Provide credentials in App Store Connect review notes
+
+---
+
+## Phase 6: Apple App Store Submission
+
+### 6A. Avoiding Guideline 4.2 (Copycat) Rejection
+
+This is the highest risk for a third-party client. See `docs/differentiation-ideas.md` for full strategy.
+
+**Key mitigations:**
+1. **Distinct visual identity** — teal/cyan palette, mountain logo (already done)
+2. **Unique features visible within 30 seconds** — Blocked-Me feed tab is immediately visible on home screen
+3. **Thorough review notes** — explain differentiation, list unique features with navigation steps
+4. **AT Protocol is open by design** — Bluesky explicitly encourages third-party clients
+
+### 6B. Review Notes Template
+
+Provide these in App Store Connect > App Review Information > Notes:
+
+```
+SheerSky is a third-party client for the AT Protocol social network (Bluesky).
+AT Protocol is an open, federated protocol that explicitly encourages third-party
+clients — see https://docs.bsky.app/docs/starter-templates/clients
+
+UNIQUE FEATURES (not in the official Bluesky app):
+1. Soft Block Transparency — View posts from users who blocked you (public API)
+2. Blocked-By Feed — Dedicated home tab aggregating posts from blockers
+3. Code Block Rendering — Triple-backtick fenced code with monospace, copy button
+4. Per-Account Repost Hiding — Hide reposts from specific accounts
+5. Repost Deduplication — Auto-removes duplicate reposts in feeds
+6. Biometric App Lock — Face ID / Touch ID protection
+7. Secure Keychain Storage — Custom native module for credential security
+
+VISUAL IDENTITY:
+- Unique teal/cyan color palette (#0284C7) vs Bluesky's blue (#006AFF)
+- Mountain peak logo and "SheerSky" logotype
+- Custom dark/dim themes with teal-tinted grays
+
+TO TEST UNIQUE FEATURES:
+- Blocked-By Feed: Home screen > swipe to "Blocked By" tab
+- Code Blocks: View any post containing triple-backtick markdown
+- Hide Reposts: Profile > three-dot menu > "Hide reposts from [user]"
+- App Lock: Settings > Privacy & Security > App Lock
+
+TEST ACCOUNT: [username] / [password]
 ```
 
-Internal testing track: No Google review, builds available within minutes. Up to 100 testers.
-
-**Testing tracks progression:**
-| Track | Testers | Review? | Timeline |
-|-------|---------|---------|----------|
-| Internal | Up to 100 | No | Minutes |
-| Closed | Unlimited (by email) | Yes | 1-3 days |
-| Open | Anyone with link | Yes | 1-3 days |
-| Production | Everyone | Yes | 1-7 days |
-
----
-
-## Phase 5: Store Listing Preparation
-
-### 5A. Required for Both Stores
-
-- [ ] **Privacy Policy URL** — must be publicly accessible. Can host on `sheersky.app/privacy` or use a hosted page.
-- [ ] **App Description** — emphasize it's a third-party AT Protocol client with unique features (soft block, code blocks, hide reposts, etc.)
-- [ ] **App Icon** — 1024x1024 PNG (already generated via Expo)
-- [ ] **Screenshots** — see sizes below
-
-### 5B. Apple App Store Requirements
-
-| Asset | Spec |
-|-------|------|
-| App icon | 1024x1024 PNG, no transparency, no rounded corners |
-| Screenshots (iPhone 6.9") | 1320x2868, minimum 1, max 10 |
-| Screenshots (iPad 13") | 2064x2752 (if supporting iPad) |
-| App name | Up to 30 characters |
-| Subtitle | Up to 30 characters |
-| Description | Up to 4,000 characters |
-| Keywords | Up to 100 characters |
-| Category | Social Networking |
-| Age rating | Complete questionnaire (2026 updated version required) |
-| Content rights | Declaration that you have rights to use the content |
-| Privacy policy URL | Required |
-| Support URL | Required |
-
-**Apple Review Considerations for Third-Party Social Clients:**
-- **Guideline 4.2 (Minimum Functionality):** Must clearly differentiate from official Bluesky app. SheerSky's unique features (soft block, code blocks, hide reposts, blocked-me feed, dedup reposts) provide strong differentiation.
-- **Guideline 1.2 (User Generated Content):** Must include: report mechanism (already have via AT Protocol moderation), block users (already have), content filtering (already have via labeling system).
-- **Guideline 5.1 (Privacy):** Complete Apple's privacy nutrition labels honestly.
-- **Review timeline:** Typically 24-48 hours. Rejections add 24-72 hours per resubmission cycle.
-
-### 5C. Google Play Requirements
-
-| Asset | Spec |
-|-------|------|
-| App icon | 512x512 PNG |
-| Feature graphic | 1024x500 PNG/JPEG (mandatory) |
-| Screenshots (phone) | Min 2, max 8 |
-| App title | Up to 50 characters |
-| Short description | Up to 80 characters |
-| Full description | Up to 4,000 characters |
-| Content rating | Complete IARC questionnaire |
-| Data safety section | Declare all data collection |
-| Privacy policy URL | Required |
-| Target audience | Declare target age group |
-
-**Google Play Review Timeline:** New app 1-7 days (typically 1-3).
-
----
-
-## Phase 6: Production Release
-
-### 6A. Apple App Store Submission
+### 6C. Submission Steps
 
 1. In App Store Connect, go to your app > App Store tab
 2. Fill out all metadata (description, keywords, screenshots, etc.)
 3. Select the TestFlight build to submit
-4. Answer the export compliance question (uses HTTPS = yes, exempt = yes for standard encryption)
-5. Submit for review
-6. Wait 24-48 hours
-7. If approved, choose release option: manual or automatic
-
-### 6B. Google Play Production Release
-
-1. In Play Console, go to Production > Create new release
-2. Upload AAB or promote from internal/closed testing
-3. Ensure all store listing fields are complete
 4. Submit for review
-5. Wait 1-7 days
-6. If approved, rollout begins (can do staged rollout: 5% → 20% → 50% → 100%)
+5. Wait 24-48 hours (first-time submissions may take up to 72 hours)
+6. If approved, choose release option: manual or automatic
 
 ---
 
-## Recommended Order of Operations
+## Recommended Order of Operations (iOS-First)
 
-Here's the sequence that minimizes blocking/waiting time:
-
-### Week 1: Accounts
-- [ ] Enroll in Apple Developer Program ($99) — up to 48hr wait
-- [ ] Register for Google Play Console ($25) — 2-5 day wait
+### Week 1: Setup & Code Changes
+- [x] Apple Developer account enrolled
+- [ ] Get Team ID from developer.apple.com
+- [ ] Register bundle ID + app group in Apple Developer portal
+- [ ] Create App Store Connect app record
+- [ ] Register `sheersky.space` on Namecheap
+- [ ] Set up S3 bucket + CloudFront for domain
 - [ ] Create Expo account + run `eas init`
-- [ ] Register domain `sheersky.app`
-- [ ] Create Firebase project, download config files
+- [ ] Create Firebase project, download `GoogleService-Info.plist`
+- [ ] Make Team ID code changes (Phase 2B) — single commit
+- [ ] Make App Store ID + domain changes (Phase 2C, 2D)
+- [ ] Disable OTA updates
 
-### Week 2: Code Changes (after Apple approval)
-- [ ] Note Team ID and create App Store Connect listing
-- [ ] Make all critical code changes (Phase 2A) in a single commit
-- [ ] Make important code changes (Phase 2B)
-- [ ] Disable OTA updates (`enabled: false`)
-- [ ] Replace `google-services.json` with real Firebase config
-- [ ] Set up `.env` file
-- [ ] Host `apple-app-site-association` and `assetlinks.json` on domain
-
-### Week 3: Build & Test
-- [ ] Run development build (`eas build --profile development`)
+### Week 2: Build & Test
+- [ ] Run development build (`eas build --platform ios --profile development`)
 - [ ] Fix any build errors
 - [ ] Run preview build for device testing
-- [ ] Test all items from Bug Bash checklist (see below)
+- [ ] Full bug bash (see checklist below)
 - [ ] Run production build
-- [ ] Submit to TestFlight + Play Store internal testing
-- [ ] Recruit beta testers, gather feedback
+- [ ] Submit to TestFlight
+- [ ] Test push notifications — determine if they work with SheerSky bundle ID
 
-### Week 4: Store Submission
-- [ ] Create screenshots (iPhone, optionally iPad)
-- [ ] Create feature graphic (Android)
-- [ ] Write store descriptions
-- [ ] Complete privacy questionnaires on both platforms
-- [ ] Submit to App Store and Play Store
+### Week 3: Store Submission
+- [ ] Upload privacy policy + support pages to S3/CloudFront
+- [ ] Create App Store screenshots
+- [ ] Write app description and keywords
+- [ ] Complete privacy nutrition labels
+- [ ] Complete age rating questionnaire
+- [ ] Create test account with sample content
+- [ ] Submit to App Store for review
 - [ ] Address any review feedback/rejections
 
 ---
 
 ## Bug Bash / QA Checklist
 
-Test on **at least one real iOS device, one Android device, and web browser**.
+Test on **at least one real iOS device**.
 
 ### Core Functionality
 - [ ] Login/signup flow
@@ -428,6 +456,8 @@ Test on **at least one real iOS device, one Android device, and web browser**.
 - [ ] Notifications
 - [ ] Direct messages
 - [ ] Search (posts, users, feeds)
+- [ ] Account deletion flow (Apple tests this)
+- [ ] Content reporting (Apple tests this for UGC apps)
 
 ### SheerSky-Specific Features
 - [ ] Code blocks (triple backtick rendering, copy button, inline code)
@@ -444,13 +474,26 @@ Test on **at least one real iOS device, one Android device, and web browser**.
 - [ ] Dim theme colors correct
 - [ ] Tab bar active states use primary_500 (Sky Cyan)
 - [ ] Borders visible in all themes
+- [ ] No "Bluesky" text visible anywhere in the UI
 
-### Platform-Specific
+### Platform-Specific (iOS)
 - [ ] Deep links (`sheersky://intent/compose`)
 - [ ] Share extension (Share-with-SheerSky)
-- [ ] Push notifications
-- [ ] App clip (or verify it's removed)
-- [ ] Universal links (if domain configured)
+- [ ] Push notifications (test if they work)
+- [ ] Cold start — no crash, loads within 3 seconds
+- [ ] Background/foreground transitions
+- [ ] Dark mode system setting respected
+
+### Apple Review Preparedness
+- [ ] Test account works and has content
+- [ ] Privacy policy URL loads correctly
+- [ ] Support URL loads correctly
+- [ ] All settings screens functional
+- [ ] VoiceOver works on key screens (Apple sometimes tests)
+- [ ] No crashes or ANRs
+- [ ] Network error states handled gracefully (airplane mode test)
+- [ ] Age gate blocks under-13 signup
+- [ ] Adult content toggle disabled for under-18 on iOS
 
 ### Legal & Settings
 - [ ] In-app Terms of Service page
@@ -459,7 +502,6 @@ Test on **at least one real iOS device, one Android device, and web browser**.
 - [ ] In-app Copyright page
 - [ ] In-app Support page
 - [ ] Feedback composer opens correctly
-- [ ] All settings screens functional
 
 ---
 
@@ -467,11 +509,13 @@ Test on **at least one real iOS device, one Android device, and web browser**.
 
 | Item | Priority | Notes |
 |------|----------|-------|
-| OTA updates (EAS Update) | Medium | Enable after first stable release, generate code signing cert |
-| Sentry error reporting | Medium | Free tier: 5K errors/mo. Set up project, add DSN to `.env` |
-| Web deployment | Medium | Deploy to `sheersky.app` via Cloudflare Pages or similar |
-| Short link service | Low | Replace `go.bsky.app` with own service, or leave (still works) |
-| CI/CD pipelines | Low | Update GitHub Actions workflows for automated builds |
-| App Clip | Low | Update or remove — low priority feature |
+| Push notification fix | High | Test during TestFlight; may need own relay service |
+| OTA updates (EAS Update) | Medium | Enable after first stable release |
+| Sentry error reporting | Medium | Free tier: 5K errors/mo |
+| Google Play launch | Medium | Only if iOS shows traction |
+| Web deployment | Medium | Deploy to `sheersky.space` |
+| Differentiation features | Medium | See `docs/differentiation-ideas.md` |
+| CI/CD pipelines | Low | Update GitHub Actions for automated builds |
+| App Clip | Low | Update or remove |
 | Tauri desktop app | Future | Phase 3 from project plan |
 | Own PDS/infrastructure | Future | Phase 4 from project plan |

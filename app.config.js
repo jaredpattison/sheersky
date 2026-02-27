@@ -23,10 +23,8 @@ module.exports = function (_config) {
   const IS_DEV = !IS_TESTFLIGHT && !IS_PRODUCTION
 
   const ASSOCIATED_DOMAINS = [
-    'applinks:bsky.app',
-    'applinks:staging.bsky.app',
-    'appclips:bsky.app',
-    'appclips:go.bsky.app', // Allows App Clip to work when scanning QR codes
+    'applinks:sheersky.space',
+    'appclips:sheersky.space',
     // When testing local services, enter an ngrok (et al) domain here. It must use a standard HTTP/HTTPS port.
     ...(IS_DEV || IS_TESTFLIGHT ? [] : []),
   ]
@@ -41,7 +39,7 @@ module.exports = function (_config) {
       name: 'SheerSky',
       slug: 'sheersky',
       scheme: 'sheersky',
-      owner: 'sheersky',
+      owner: 'jaredpattison',
       runtimeVersion: {
         policy: 'appVersion',
       },
@@ -450,7 +448,7 @@ module.exports = function (_config) {
               },
             },
           },
-          projectId: '55bd077a-d905-4184-9c7f-94789ba0f302',
+          projectId: '1a308a86-dca7-4cbb-b4e6-2c361d5f468f',
         },
       },
     },

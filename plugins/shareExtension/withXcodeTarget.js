@@ -1,7 +1,6 @@
 const {withXcodeProject} = require('@expo/config-plugins')
 
 const withXcodeTarget = (config, {extensionName, controllerName}) => {
-  // eslint-disable-next-line no-shadow
   return withXcodeProject(config, config => {
     const pbxProject = config.modResults
 
@@ -44,17 +43,17 @@ const withXcodeTarget = (config, {extensionName, controllerName}) => {
           buildSettingsObj.SWIFT_EMIT_LOC_STRINGS = 'YES'
           buildSettingsObj.SWIFT_VERSION = '5.0'
           buildSettingsObj.TARGETED_DEVICE_FAMILY = `"1,2"`
-          buildSettingsObj.DEVELOPMENT_TEAM = 'B3LX46C5HS'
+          buildSettingsObj.DEVELOPMENT_TEAM = '8U43G9PFFY'
         }
       }
     }
 
     pbxProject.addTargetAttribute(
       'DevelopmentTeam',
-      'B3LX46C5HS',
+      '8U43G9PFFY',
       extensionName,
     )
-    pbxProject.addTargetAttribute('DevelopmentTeam', 'B3LX46C5HS')
+    pbxProject.addTargetAttribute('DevelopmentTeam', '8U43G9PFFY')
 
     return config
   })

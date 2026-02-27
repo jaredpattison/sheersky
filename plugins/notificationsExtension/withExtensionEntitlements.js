@@ -4,7 +4,6 @@ const path = require('path')
 const fs = require('fs')
 
 const withExtensionEntitlements = (config, {extensionName}) => {
-  // eslint-disable-next-line no-shadow
   return withInfoPlist(config, config => {
     const extensionEntitlementsPath = path.join(
       config.modRequest.platformProjectRoot,
@@ -13,7 +12,7 @@ const withExtensionEntitlements = (config, {extensionName}) => {
     )
 
     const notificationsExtensionEntitlements = {
-      'com.apple.security.application-groups': [`group.app.bsky`],
+      'com.apple.security.application-groups': [`group.com.sheersky.app`],
     }
 
     fs.mkdirSync(path.dirname(extensionEntitlementsPath), {

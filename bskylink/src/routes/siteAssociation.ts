@@ -1,6 +1,6 @@
-import {Express} from 'express'
+import {type Express} from 'express'
 
-import {AppContext} from '../context.js'
+import {type AppContext} from '../context.js'
 
 export default function (ctx: AppContext, app: Express) {
   return app.get('/.well-known/apple-app-site-association', (req, res) => {
@@ -9,13 +9,13 @@ export default function (ctx: AppContext, app: Express) {
         apps: [],
         details: [
           {
-            appID: 'B3LX46C5HS.xyz.blueskyweb.app',
+            appID: '8U43G9PFFY.com.sheersky.app',
             paths: ['*'],
           },
         ],
       },
       appclips: {
-        apps: ['B3LX46C5HS.xyz.blueskyweb.app.AppClip'],
+        apps: ['8U43G9PFFY.com.sheersky.app.AppClip'],
       },
     })
   })
