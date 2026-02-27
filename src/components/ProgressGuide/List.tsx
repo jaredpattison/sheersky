@@ -17,7 +17,7 @@ import {
 import {UserAvatar} from '#/view/com/util/UserAvatar'
 import {atoms as a, useBreakpoints, useLayoutBreakpoints, useTheme} from '#/alf'
 import {Button, ButtonIcon} from '#/components/Button'
-import {Person_Stroke2_Corner2_Rounded as PersonIcon} from '#/components/icons/Person'
+import {Person_Filled as PersonIcon} from '#/components/icons/Person'
 import {TimesLarge_Stroke2_Corner0_Rounded as Times} from '#/components/icons/Times'
 import {Text} from '#/components/Typography'
 import type * as bsky from '#/types/bsky'
@@ -57,7 +57,7 @@ export function ProgressGuideList({style}: {style?: StyleProp<ViewStyle>}) {
           a.flex_col,
           a.gap_md,
           a.rounded_md,
-          t.atoms.bg_contrast_25,
+          t.atoms.bg_contrast_50,
           a.p_lg,
           style,
         ]}>
@@ -132,7 +132,7 @@ function StackedAvatars({follows}: {follows?: bsky.profile.AnyProfileView[]}) {
   const visiblePortions = TOTAL_AVATARS - overlapRatio * (TOTAL_AVATARS - 1)
   const avatarSize = containerWidth > 0 ? containerWidth / visiblePortions : 0
   const overlap = avatarSize * overlapRatio
-  const iconSize = avatarSize * 0.5
+  const iconSize = avatarSize * 0.45
 
   const followedAvatars = follows?.slice(0, TOTAL_AVATARS) ?? []
   const remainingSlots = TOTAL_AVATARS - followedAvatars.length
@@ -147,18 +147,17 @@ function StackedAvatars({follows}: {follows?: bsky.profile.AnyProfileView[]}) {
               key={follow.did}
               style={[
                 a.rounded_full,
-                a.border,
-                t.atoms.border_contrast_low,
                 {
                   marginLeft: i === 0 ? 0 : -overlap,
                   zIndex: TOTAL_AVATARS - i,
+                  borderWidth: 1,
+                  borderColor: t.atoms.bg_contrast_25.backgroundColor,
                 },
               ]}>
               <UserAvatar
                 type="user"
                 size={avatarSize - 2}
                 avatar={follow.avatar}
-                noBorder
               />
             </View>
           ))}
@@ -173,14 +172,14 @@ function StackedAvatars({follows}: {follows?: bsky.profile.AnyProfileView[]}) {
                   a.justify_center,
                   a.rounded_full,
                   t.atoms.bg_contrast_300,
-                  a.border,
-                  t.atoms.border_contrast_low,
                   {
                     width: avatarSize,
                     height: avatarSize,
                     marginLeft:
                       followedAvatars.length === 0 && i === 0 ? 0 : -overlap,
                     zIndex: TOTAL_AVATARS - followedAvatars.length - i,
+                    borderWidth: 1,
+                    borderColor: t.atoms.border_contrast_low.borderColor,
                   },
                 ]}>
                 <PersonIcon
